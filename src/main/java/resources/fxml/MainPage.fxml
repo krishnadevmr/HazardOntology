@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="464.0" prefWidth="799.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hazard.Controllers.MainPageController">
+   <top>
+      <MenuBar prefWidth="600.0" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#newSession" text="New" />
+                  <MenuItem mnemonicParsing="false" onAction="#loadSession" text="Load" />
+                  <MenuItem mnemonicParsing="false" text="Exit" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <left>
+      <VBox fx:id="navBox" prefHeight="375.0" prefWidth="168.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="400.0" prefWidth="204.0" style="-fx-border-width: 0;" VBox.vgrow="ALWAYS">
+               <children>
+                  <SplitPane dividerPositions="0.52" layoutY="27.0" prefHeight="413.0" prefWidth="204.0" style="-fx-border-color: transparent;" AnchorPane.bottomAnchor="-1.0" AnchorPane.topAnchor="27.0">
+                    <items>
+                      <AnchorPane fx:id="firstPane" minHeight="0.0" minWidth="0.0" prefHeight="375.0" prefWidth="99.0">
+                           <children>
+                              <ToggleButton fx:id="ohiButton1" layoutY="1.0" mnemonicParsing="false" onAction="#onOhi1" text="ToggleButton" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.6666666666666572">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="toggleGroup" />
+                                 </toggleGroup></ToggleButton>
+                              <ToggleButton fx:id="ohiButton2" layoutY="26.0" mnemonicParsing="false" onAction="#onOhi2" text="ToggleButton" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.6666666666666572" />
+                              <ToggleButton fx:id="ohiButton3" layoutY="51.0" mnemonicParsing="false" onAction="#onOhi3" text="ToggleButton" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.6666666666666572" />
+                              <ToggleButton fx:id="ochButton1" layoutX="1.0" layoutY="76.0" mnemonicParsing="false" onAction="#onOch1" text="ToggleButton" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-0.3333333333333428" />
+                              <ToggleButton fx:id="ochButton2" layoutY="101.0" mnemonicParsing="false" onAction="#onOch2" text="ToggleButton" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-0.3333333333333428" />
+                              <ToggleButton fx:id="ochButton3" layoutY="126.0" mnemonicParsing="false" onAction="#onOch3" text="ToggleButton" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-0.3333333333333428" />
+                              <ToggleButton fx:id="sareButton1" layoutY="151.0" mnemonicParsing="false" onAction="#onSare1" text="ToggleButton" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-0.3333333333333428" />
+                              <ToggleButton fx:id="sareButton2" layoutY="175.0" mnemonicParsing="false" onAction="#onSare2" text="ToggleButton" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-0.3333333333333428" />
+                              <ToggleButton fx:id="sareButton3" layoutY="200.0" mnemonicParsing="false" onAction="#onSare3" text="ToggleButton" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.6666666666666572" />
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane fx:id="secondPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="110.0" />
+                    </items>
+                  </SplitPane>
+                  <AnchorPane layoutX="-1.0" layoutY="1.0" prefHeight="25.0" prefWidth="205.0">
+                     <children>
+                        <Label layoutX="19.0" layoutY="4.0" text="Navigation" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children></VBox>
+   </left>
+   <right>
+      <AnchorPane fx:id="descriptionBox" minHeight="400.0" minWidth="100.0" prefHeight="439.0" prefWidth="103.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="3.0" layoutY="21.0" text="Phase: xy" />
+            <Label layoutX="6.0" layoutY="38.0" text="Step: xy" wrapText="true" />
+            <Text layoutX="12.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sample Description goes here" wrappingWidth="80.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="11.333333333333329" />
+         </children>
+      </AnchorPane>
+   </right>
+   <center>
+      <AnchorPane fx:id="centerPane" minHeight="200.0" minWidth="200.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

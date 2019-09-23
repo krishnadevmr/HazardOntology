@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" fx:id="pane" prefHeight="160.0" prefWidth="107.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <ToggleButton fx:id="step1" layoutY="1.0" mnemonicParsing="false" onAction="#onStep1" prefHeight="25.0" prefWidth="108.0" text="SDF Step 1 Kind" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <toggleGroup>
+                <ToggleGroup fx:id="toggleGroup" />
+            </toggleGroup>
+        </ToggleButton>
+        <ToggleButton fx:id="step2" layoutY="26.0" mnemonicParsing="false" onAction="#onStep2" prefHeight="25.0" prefWidth="108.0" text="SDF Step 2 Role" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+        <ToggleButton fx:id="step3" layoutY="51.0" mnemonicParsing="false" onAction="#onStep3" prefHeight="25.0" prefWidth="108.0" text="SDF Step 3" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+        <ToggleButton fx:id="step4" layoutY="76.0" mnemonicParsing="false" onAction="#onStep4" prefHeight="25.0" prefWidth="108.0" text="SDF Step 4" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+        <ToggleButton fx:id="step5" layoutY="101.0" mnemonicParsing="false" onAction="#onStep5" prefHeight="25.0" prefWidth="108.0" text="SDF Step 5" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+    </children>
+</AnchorPane>
