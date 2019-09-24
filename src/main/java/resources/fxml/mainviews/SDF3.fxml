@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxWidth="800.0" minHeight="400.0" minWidth="400.0" prefHeight="400.0" prefWidth="499.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxWidth="800.0" minHeight="400.0" minWidth="400.0" prefHeight="400.0" prefWidth="499.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hazard.Controllers.Views.SDF3Controller">
    <children>
       <GridPane maxHeight="-Infinity" maxWidth="800.0" minHeight="400.0" minWidth="400.0" prefHeight="400.0" prefWidth="400.0" stylesheets="@../styles/css.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="99.0">
          <columnConstraints>
@@ -30,29 +30,29 @@
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texts" text="Kind" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texts" text="Roles" GridPane.columnIndex="1" />
-            <TableView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" GridPane.rowSpan="5">
+            <TableView fx:id="kindTable" onMouseClicked="#onKindClicked" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" GridPane.rowSpan="5">
                <columns>
-                  <TableColumn fx:id="id" prefWidth="89.0" text="Id" />
-                  <TableColumn id="kind" fx:id="kind" prefWidth="122.0" text="Kind" />
+                  <TableColumn fx:id="kindId" prefWidth="89.0" text="Id" />
+                  <TableColumn id="kind" fx:id="kindDescription" prefWidth="122.0" text="Kind" />
                </columns>
             </TableView>
-            <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TableView fx:id="roleTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <columns>
-                  <TableColumn id="id" fx:id="id" prefWidth="99.0" text="Id" />
+                  <TableColumn id="id" fx:id="roleID" prefWidth="99.0" text="Id" />
                   <TableColumn id="role" fx:id="role" prefWidth="102.0" text="Role" />
                </columns>
             </TableView>
-            <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <TableView fx:id="linkTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <columns>
-                  <TableColumn id="id" fx:id="id" prefWidth="100.0" text="Id" />
-                  <TableColumn id="role" fx:id="role" prefWidth="126.0" text="Role" />
+                  <TableColumn id="id" fx:id="linkId" prefWidth="100.0" text="Id" />
+                  <TableColumn id="role" fx:id="linkRole" prefWidth="126.0" text="Role" />
                </columns>
             </TableView>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texts" text="Roles it can play" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <Button id="btnAddLink" fx:id="btnAddLink" mnemonicParsing="false" text="Add Link" />
-                  <Button id="btnRemoveLink" fx:id="btnRemoveLink" mnemonicParsing="false" text="Remove Link" />
+                  <Button id="btnAddLink" mnemonicParsing="false" onAction="#onRoleAdded" text="Add Link" />
+                  <Button id="btnRemoveLink" mnemonicParsing="false" onAction="#OnRoleRemoved" text="Remove Link" />
                </children>
             </FlowPane>
          </children>

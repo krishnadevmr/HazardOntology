@@ -115,4 +115,8 @@ public class Kind extends Play {
 	public void setStart(Boolean start) {
 		this.start = start;
 	}
+        
+        @Override
+        public String toString(){
+        return (id+" "+kind);}
 }

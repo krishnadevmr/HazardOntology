@@ -13,6 +13,7 @@ import hazard.Controllers.Navigation.CausesExplorationController;
 import hazard.Controllers.Navigation.HazardDescriptionCharacterizationController;
 import hazard.Controllers.Navigation.HazardDescriptionExpansionController;
 import hazard.Helpers.UIHelper;
+import hazard.Services.DatabaseManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,12 +21,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -42,6 +44,7 @@ public class MainPageController implements Initializable {
 
         SystemDescriptionFormalizationController controller = new SystemDescriptionFormalizationController(this);
         LoadPaneFromController("/fxml/navigation/SystemDescriptionFormalization.fxml", controller, secondPane);
+        //phaseID.setText(controller.phase);
     }
 
     @FXML
@@ -91,13 +94,19 @@ public class MainPageController implements Initializable {
 
     @FXML
     void loadSession(ActionEvent event) {
+        //navBox.setVisible(true);
+        //descriptionBox.setVisible(true);
+        //LoadDatabase((Stage)navBox.getScene().getWindow());
+        DatabaseManager.LoadDatabaseSession((Stage) navBox.getScene().getWindow());
         navBox.setVisible(true);
         descriptionBox.setVisible(true);
     }
 
     @FXML
     void newSession(ActionEvent event) {
-
+        DatabaseManager.NewDatabaseSession((Stage) navBox.getScene().getWindow());
+        navBox.setVisible(true);
+        descriptionBox.setVisible(true);
     }
 
     @FXML
@@ -142,13 +151,22 @@ public class MainPageController implements Initializable {
     @FXML
     private AnchorPane descriptionBox;
 
+    @FXML
+    public Label phaseID;
+
+    @FXML
+    public Label stepID;
+
+    @FXML
+    public Text stepDescription;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         setButtonTexts();
         UIHelper.getAllButtonsToggle(firstPane);
-        //descriptionBox.setVisible(false);
-        //navBox.setVisible(false);
+        descriptionBox.setVisible(false);
+        navBox.setVisible(false);
         //LoadCenterIntoMain(new SDF1Controller());
     }
 
@@ -164,33 +182,20 @@ public class MainPageController implements Initializable {
         sareButton3.setText(StringConstants.MAIN_HEADING_SARE_ACT_3);
     }
 
-    //Not used
-    /*private AnchorPane LoadPaneIntoMain(NavigationController controller) {
-        AnchorPane pane = controller.LoadPane(this, controller);
-        secondPane.getChildren().clear();
-        secondPane.getChildren().add(pane);
-        UIHelper.getAllButtonsToggle(secondPane);
-        return pane;
-    }*/
-    //Not used
-    /*public void LoadCenterIntoMain(NavigationController controller) {
-        AnchorPane pane = controller.LoadPane();;
-        centerPane.getChildren().clear();
-        centerPane.getChildren().add(pane);
-    }*/
     public void LoadPaneFromController(String url, Initializable controller, AnchorPane parent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(url));
             loader.setController(controller);
+            AnchorPane pane = loader.load();
             parent.getChildren().clear();
-            parent.getChildren().add(loader.load());
+            parent.getChildren().add(pane);
+            AnchorPane.setRightAnchor(pane, 0.0);
+            AnchorPane.setLeftAnchor(pane, 0.0);
             //UIHelper.getAllButtonsToggle(parent);
         } catch (IOException | NullPointerException ex) {
             System.err.println(ex);
         }
     }
-
-
 
     public void LoadPaneFromController(String url, AnchorPane parent) {
         try {
@@ -207,5 +212,5 @@ public class MainPageController implements Initializable {
             System.err.println(ex);
         }
     }
-    
+
 }

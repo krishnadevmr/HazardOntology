@@ -11,9 +11,9 @@
                 <ToggleGroup fx:id="toggleGroup" />
             </toggleGroup>
         </ToggleButton>
-        <ToggleButton fx:id="step2" layoutY="26.0" mnemonicParsing="false" onAction="#onStep2" prefHeight="25.0" prefWidth="108.0" text="SDF Step 2 Role" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-        <ToggleButton fx:id="step3" layoutY="51.0" mnemonicParsing="false" onAction="#onStep3" prefHeight="25.0" prefWidth="108.0" text="SDF Step 3" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-        <ToggleButton fx:id="step4" layoutY="76.0" mnemonicParsing="false" onAction="#onStep4" prefHeight="25.0" prefWidth="108.0" text="SDF Step 4" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-        <ToggleButton fx:id="step5" layoutY="101.0" mnemonicParsing="false" onAction="#onStep5" prefHeight="25.0" prefWidth="108.0" text="SDF Step 5" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+        <ToggleButton fx:id="step2" layoutY="26.0" mnemonicParsing="false" onAction="#onStep2" prefHeight="25.0" prefWidth="108.0" text="SDF Step 1 Role" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+        <ToggleButton fx:id="step3" layoutY="51.0" mnemonicParsing="false" onAction="#onStep3" prefHeight="25.0" prefWidth="108.0" text="SDF Step 2" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+        <ToggleButton fx:id="step4" layoutY="76.0" mnemonicParsing="false" onAction="#onStep4" prefHeight="25.0" prefWidth="108.0" text="SDF Step 3" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+        <ToggleButton fx:id="step5" layoutY="101.0" mnemonicParsing="false" onAction="#onStep5" prefHeight="25.0" prefWidth="108.0" text="SDF Step 4" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
     </children>
 </AnchorPane>

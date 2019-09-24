@@ -22,7 +22,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author kmoothandas
  */
-public class HazardPopulationController implements Initializable, NavigationController {
+public class HazardPopulationController implements Initializable {
 
     public HazardPopulationController(MainPageController mainPageController) {
         this.mainPageController = mainPageController;

@@ -5,46 +5,65 @@
  */
 package hazard.Controllers.Views;
 
-import hazard.Controllers.MainPageController;
-import hazard.Controllers.MainPageController;
-import hazard.Controllers.NavigationController;
-import hazard.Controllers.NavigationController;
-import java.io.IOException;
+import hazard.HazardAnalysis.DataBase.DataBaseConnection;
+import hazard.HazardClasses.Kind;
+import hazard.Services.DatabaseManager;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.fxml.FXMLLoader;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
  *
  * @author kmoothandas
  */
-public class SDF1Controller implements Initializable, NavigationController {
+public class SDF1Controller implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+    @FXML
+    private TableView<Kind> kindTable;
+
+    @FXML
+    private TableColumn<Kind, Integer> kindID;
+
+    @FXML
+    private TableColumn<Kind, String> kindDescription;
+
+    private ObservableList<Kind> kindList;
+
+    @FXML
+    void OnAddKind(ActionEvent event) {
+        DatabaseManager.AddKindorRole(kindTable, kindList, "Kind");
+    }
+
+    @FXML
+    void OnRemoveKind(ActionEvent event) {
+        DatabaseManager.RemoveKindOrRole(kindTable, "Kind");
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        PopulateTableFromDatabase();
     }
 
-    //@Override
-    public AnchorPane LoadPane() {
-        AnchorPane pane = new AnchorPane();
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SDF1.fxml"));
-            pane = loader.load();
-        } catch (IOException ex) {
-        }
-        return pane;
+    public void PopulateTableFromDatabase() {
+        kindList = FXCollections.observableArrayList();
+        DataBaseConnection.selectAll("kind", kindList);
+        kindID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        kindDescription.setCellValueFactory(new PropertyValueFactory<>("kind"));
+        kindTable.setItems(kindList);
     }
 
-    //@Override
-    public AnchorPane LoadPane(MainPageController controller, NavigationController secondaryController) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
+
+
+
 
 }

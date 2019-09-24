@@ -24,7 +24,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author kmoothandas
  */
-public class SystemDescriptionFormalizationController implements Initializable, NavigationController {
+public class SystemDescriptionFormalizationController implements Initializable {
 
     public SystemDescriptionFormalizationController() {
     }
@@ -34,6 +34,8 @@ public class SystemDescriptionFormalizationController implements Initializable, 
     }
 
     private MainPageController mainController;
+    
+    public String phase = "System Description Formalization";
 
     @FXML
     private ToggleGroup toggleGroup;
@@ -59,6 +61,7 @@ public class SystemDescriptionFormalizationController implements Initializable, 
     @FXML
     void onStep1(ActionEvent event) {
         mainController.LoadPaneFromController("/fxml/mainviews/SDF1.fxml", mainController.centerPane);
+        mainController.phaseID.setText(phase);
     }
 
     @FXML
@@ -86,34 +89,8 @@ public class SystemDescriptionFormalizationController implements Initializable, 
         UIHelper.getAllButtonsToggle(pane);
     }
 
-    //@Override
-    public AnchorPane LoadPane() {
-        AnchorPane pane = new AnchorPane();
-        try {
-            //FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SecondaryNavigationOHI1.fxml"));
-            pane = FXMLLoader.load(getClass().getResource("/fxml/SecondaryNavigationOHI1.fxml"));
-            //SecondaryNavigationController sc = new SystemDescriptionFormalizationController(mainController);
-            //loader.setController(sc);
-            //pane = loader.load();
-        } catch (IOException ex) {
-        }
 
-        return pane;
-    }
 
-    //@Override
-    public AnchorPane LoadPane(MainPageController controller, NavigationController secondaryController) {
-        AnchorPane pane = new AnchorPane();
-        //SecondaryNavigationController secondaryController = new SystemDescriptionFormalizationController(controller);
-        try {
-            pane = FXMLLoader.load(getClass().getResource("/fxml/SecondaryNavigationOHI1.fxml"));
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SecondaryNavigationOHI1.fxml"));
-            loader.setController(secondaryController);
-            pane = loader.load();
-        } catch (IOException ex) {
-        }
 
-        return pane;
-    }
 
 }

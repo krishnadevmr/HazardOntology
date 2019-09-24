@@ -5,8 +5,10 @@
  */
 package hazard.Helpers;
 
+import java.util.Optional;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 
@@ -36,5 +38,14 @@ public class UIHelper {
             }
         }));
 
+    }
+
+    public static Optional<String> CreateAddDialog(String type) {
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("Add");
+        dialog.setHeaderText("Enter a new " + type);
+        //dialog.setContentText("Please enter the role:");
+        Optional<String> result = dialog.showAndWait();
+        return result;
     }
 }

@@ -24,7 +24,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author kmoothandas
  */
-public class MishapVictimIdentificationController implements Initializable, NavigationController {
+public class MishapVictimIdentificationController implements Initializable {
 
     public MishapVictimIdentificationController(MainPageController mainPageController) {
         this.mainPageController = mainPageController;

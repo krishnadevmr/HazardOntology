@@ -55,7 +55,7 @@ public class ViewStep1 implements ViewInterface {
 					@Override
 					public void handle(DialogEvent event) {
 						if (!t.getText().isEmpty()) {
-							DataBaseConnection.insertRoloeOrKind(s.toLowerCase(), t.getText(), st.isSelected(),
+							DataBaseConnection.insertRoleOrKind(s.toLowerCase(), t.getText(), st.isSelected(),
 									rt.isSelected(), sd.isSelected());
 							list.clear();
 							DataBaseConnection.selectAll(s.toLowerCase(), list);
