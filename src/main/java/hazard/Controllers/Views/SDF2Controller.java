@@ -5,46 +5,62 @@
  */
 package hazard.Controllers.Views;
 
-import hazard.Controllers.MainPageController;
-import hazard.Controllers.MainPageController;
-import hazard.Controllers.NavigationController;
-import hazard.Controllers.NavigationController;
-import java.io.IOException;
+import hazard.HazardAnalysis.DataBase.DataBaseConnection;
+import hazard.HazardClasses.Role;
+import hazard.Services.DatabaseManager;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.fxml.FXMLLoader;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
  *
  * @author kmoothandas
  */
-public class SDF2Controller implements Initializable, NavigationController {
+public class SDF2Controller implements Initializable {
 
     /**
      * Initializes the controller class.
      */
+    @FXML
+    private TableView<Role> roleTable;
+
+    @FXML
+    private TableColumn<Role, Integer> roleID;
+
+    @FXML
+    private TableColumn<Role, String> roleDescription;
+
+    private ObservableList<Role> roleList;
+
+    @FXML
+    void onAddRole(ActionEvent event) {
+        DatabaseManager.AddKindorRole(roleTable, roleList, "Role");
+    }
+
+    @FXML
+    void onRemoveRole(ActionEvent event) {
+        DatabaseManager.RemoveKindOrRole(roleTable, "Role");
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        PopulateTableFromDatabase();
     }
 
-    //@Override
-    public AnchorPane LoadPane() {
-        AnchorPane pane = new AnchorPane();
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SDF2.fxml"));
-            pane = loader.load();
-        } catch (IOException ex) {
-        }
-        return pane;
-    }
-
-    //@Override
-    public AnchorPane LoadPane(MainPageController controller, NavigationController secondaryController) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void PopulateTableFromDatabase() {
+        roleList = FXCollections.observableArrayList();
+        DataBaseConnection.selectAll("role", roleList);
+        roleID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        roleDescription.setCellValueFactory(new PropertyValueFactory<>("role"));
+        roleTable.setItems(roleList);
     }
 
 }

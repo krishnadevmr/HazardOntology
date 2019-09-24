@@ -71,11 +71,11 @@
          </children></VBox>
    </left>
    <right>
-      <AnchorPane fx:id="descriptionBox" minHeight="400.0" minWidth="100.0" prefHeight="439.0" prefWidth="103.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="descriptionBox" minHeight="400.0" minWidth="100.0" prefHeight="439.0" prefWidth="131.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="3.0" layoutY="21.0" text="Phase: xy" />
-            <Label layoutX="6.0" layoutY="38.0" text="Step: xy" wrapText="true" />
-            <Text layoutX="12.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sample Description goes here" wrappingWidth="80.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="11.333333333333329" />
+            <Label fx:id="phaseID" layoutX="10.0" layoutY="68.0" text="Phase: xy" wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+            <Label fx:id="stepID" layoutX="10.0" layoutY="97.0" text="Step: xy" wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+            <Text fx:id="stepDescription" layoutX="12.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sample Description goes here" wrappingWidth="80.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="11.333333333333329" />
          </children>
       </AnchorPane>
    </right>

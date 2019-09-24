@@ -576,7 +576,7 @@ public class DataBaseConnection {
 		}
 	}
 
-	public static void insertRoloeOrKind(String table, String name, Boolean start, boolean runtime, boolean shutdown) {
+	public static void insertRoleOrKind(String table, String name, Boolean start, boolean runtime, boolean shutdown) {
 		String sql = "INSERT INTO " + table + "(" + table + ",start,runtime,shutdown) VALUES(?,?,?,?)";
 		try {
 			Connection conn = connect();
