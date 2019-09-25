@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hazard.Controllers.Views.SDF4Controller">
    <children>
-      <GridPane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="316.0" prefWidth="549.0" stylesheets="@../styles/css.css" AnchorPane.bottomAnchor="74.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="10.0">
+      <GridPane hgap="5.0" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="385.0" prefWidth="586.0" stylesheets="@../styles/css.css" vgap="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="10.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -29,35 +29,35 @@
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texts" text="Roles" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texts" text="Relators" GridPane.columnIndex="1" />
-            <TableView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" GridPane.rowSpan="5">
+            <TableView fx:id="roleTable" onMouseClicked="#OnRoleSelected" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" GridPane.rowSpan="5">
                <columns>
-                  <TableColumn fx:id="id" prefWidth="89.0" text="Id" />
-                  <TableColumn id="role" fx:id="role" maxWidth="10000.0" prefWidth="184.6666539510091" text="Role" />
+                  <TableColumn fx:id="roleId" prefWidth="89.0" text="Id" />
+                  <TableColumn id="role" fx:id="roleDescription" maxWidth="10000.0" prefWidth="184.6666539510091" text="Role" />
                </columns>
             </TableView>
-            <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TableView fx:id="relatorTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <columns>
-                  <TableColumn id="id" fx:id="id" prefWidth="99.0" text="Id" />
-                  <TableColumn id="relator" fx:id="relator" prefWidth="172.66658782958984" text="Relator" />
+                  <TableColumn id="id" fx:id="relatorId" prefWidth="99.0" text="Id" />
+                  <TableColumn id="relator" fx:id="relatorDescription" prefWidth="172.66658782958984" text="Relator" />
                </columns>
             </TableView>
-            <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <TableView fx:id="mappedRelatorTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <columns>
-                  <TableColumn id="id" fx:id="id" prefWidth="100.0" text="Id" />
-                  <TableColumn id="relator" fx:id="relator" prefWidth="96.0" text="Relator" />
+                  <TableColumn id="id" fx:id="linkRelatorId" prefWidth="100.0" text="Id" />
+                  <TableColumn id="relator" fx:id="linkRelator" prefWidth="96.0" text="Relator" />
                </columns>
             </TableView>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texts" text="Relator to Role" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <Button fx:id="btnAdd" mnemonicParsing="false" text="Add" />
-                  <Button fx:id="btnRemove" mnemonicParsing="false" text="Remove" />
+                  <Button mnemonicParsing="false" onAction="#OnRelatorAdded" text="Add" />
+                  <Button mnemonicParsing="false" onAction="#OnRelatorRemoved" text="Remove" />
                </children>
             </FlowPane>
             <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <children>
-                  <Button fx:id="btnAdd1" mnemonicParsing="false" text="+" />
-                  <Button fx:id="btnRemove1" mnemonicParsing="false" text="-" />
+                  <Button mnemonicParsing="false" onAction="#OnRelatorLinked" text="+" />
+                  <Button mnemonicParsing="false" onAction="#OnRelatorDelinked" text="-" />
                </children>
             </FlowPane>
          </children>
