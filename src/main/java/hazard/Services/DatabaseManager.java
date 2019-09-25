@@ -8,6 +8,7 @@ package hazard.Services;
 import hazard.HazardAnalysis.DataBase.CreateDataBase;
 import hazard.HazardAnalysis.DataBase.DataBaseConnection;
 import hazard.HazardClasses.Play;
+import hazard.HazardClasses.Relator;
 import hazard.Helpers.UIHelper;
 import java.io.File;
 import java.io.IOException;
@@ -78,6 +79,19 @@ public class DatabaseManager {
                 DataBaseConnection.delete(type, o.getId());
             }
         }
+    }
+    
+        public static void AddRelator(TableView<Relator> tb, ObservableList<Relator> list, String type) {
+        
+        Optional<String> newEntry = UIHelper.CreateAddDialog(type);
+        
+        if (newEntry.isPresent() && !newEntry.get().isEmpty() && newEntry.get().trim().length()>0) {
+            //DataBaseConnection.insertRoleOrKind(type.toLowerCase(), newEntry.get(), false, false, false);
+            DataBaseConnection.insertRelator(type.toLowerCase(), newEntry.get());
+            list.clear();
+            DataBaseConnection.selectAll(type.toLowerCase(), list);
+        }
+        //newRole.ifPresent(role -> System.out.println("Your name: " + role));
     }
 
 }
