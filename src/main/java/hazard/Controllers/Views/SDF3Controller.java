@@ -81,7 +81,6 @@ public class SDF3Controller implements Initializable {
 
     @FXML
     void onKindClicked(MouseEvent event) {
-        System.out.println("hazard.Controllers.Views.SDF3Controller.onKindClicked()");
         int index = kindTable.getSelectionModel().selectedIndexProperty().get();
         if (index != -1) {
             SetRoles(index);
