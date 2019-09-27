@@ -7,6 +7,7 @@ package hazard.Services;
 
 import hazard.HazardAnalysis.DataBase.CreateDataBase;
 import hazard.HazardAnalysis.DataBase.DataBaseConnection;
+import hazard.HazardAnalysis.DataBase.ExportDataToExcel;
 import hazard.HazardClasses.Play;
 import hazard.HazardClasses.Relator;
 import hazard.Helpers.UIHelper;
@@ -18,6 +19,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import java.time.LocalDate;
 import java.util.Optional;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -54,16 +56,16 @@ public class DatabaseManager {
                         Paths.get(file.getPath().replace(".db", "-" + LocalDate.now() + "-backup.db")),
                         REPLACE_EXISTING);
             } catch (IOException e1) {
-               System.err.println(e1);
+                System.err.println(e1);
             }
         }
     }
 
     public static <T> void AddKindorRole(TableView<T> tb, ObservableList<T> list, String type) {
-        
+
         Optional<String> newEntry = UIHelper.CreateAddDialog(type);
-        
-        if (newEntry.isPresent() && !newEntry.get().isEmpty() && newEntry.get().trim().length()>0) {
+
+        if (newEntry.isPresent() && !newEntry.get().isEmpty() && newEntry.get().trim().length() > 0) {
             DataBaseConnection.insertRoleOrKind(type.toLowerCase(), newEntry.get(), false, false, false);
             list.clear();
             DataBaseConnection.selectAll(type.toLowerCase(), list);
@@ -80,18 +82,29 @@ public class DatabaseManager {
             }
         }
     }
-    
-        public static void AddRelator(TableView<Relator> tb, ObservableList<Relator> list, String type) {
-        
+
+    public static void AddRelator(TableView<Relator> tb, ObservableList<Relator> list, String type) {
+
         Optional<String> newEntry = UIHelper.CreateAddDialog(type);
-        
-        if (newEntry.isPresent() && !newEntry.get().isEmpty() && newEntry.get().trim().length()>0) {
+
+        if (newEntry.isPresent() && !newEntry.get().isEmpty() && newEntry.get().trim().length() > 0) {
             //DataBaseConnection.insertRoleOrKind(type.toLowerCase(), newEntry.get(), false, false, false);
             DataBaseConnection.insertRelator(type.toLowerCase(), newEntry.get());
             list.clear();
             DataBaseConnection.selectAll(type.toLowerCase(), list);
         }
         //newRole.ifPresent(role -> System.out.println("Your name: " + role));
+    }
+
+    public static void ExportToExcel(Stage stage, ProgressIndicator p1) {
+        p1.setProgress(-1D);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("New Excel");
+        fileChooser.setInitialFileName(".xlsx");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("xlsx", "*.xlsx"));
+        File file = fileChooser.showSaveDialog(stage);
+        Thread t = new ExportDataToExcel(file, p1);
+        t.start();
     }
 
 }

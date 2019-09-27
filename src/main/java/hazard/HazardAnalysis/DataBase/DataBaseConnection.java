@@ -32,6 +32,7 @@ import hazard.HazardClasses.MishapVictim;
 import hazard.HazardClasses.PossibleVictim;
 import hazard.HazardClasses.Relator;
 import hazard.HazardClasses.Role;
+import java.io.IOException;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ProgressIndicator;
@@ -488,8 +489,8 @@ public class DataBaseConnection {
 			FileOutputStream outputStream = new FileOutputStream(fileLocation);
 			workbook.write(outputStream);
 			workbook.close();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (IOException | SQLException e) {
+                    System.out.println(e.getMessage());
 		}
 	}
 
