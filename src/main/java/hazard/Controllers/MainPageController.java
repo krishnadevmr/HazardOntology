@@ -17,11 +17,13 @@ import hazard.Services.DatabaseManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
@@ -110,6 +112,17 @@ public class MainPageController implements Initializable {
     }
 
     @FXML
+    void OnExit(ActionEvent event) {
+        Platform.exit();
+        System.exit(0);
+    }
+
+    @FXML
+    void OnExport(ActionEvent event) {
+        DatabaseManager.ExportToExcel((Stage) navBox.getScene().getWindow(), progressIndicator);
+    }
+
+    @FXML
     private AnchorPane firstPane;
 
     @FXML
@@ -159,6 +172,9 @@ public class MainPageController implements Initializable {
 
     @FXML
     public Text stepDescription;
+    
+    @FXML
+    private ProgressIndicator progressIndicator;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

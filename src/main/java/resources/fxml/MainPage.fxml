@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -21,9 +22,18 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#newSession" text="New" />
                   <MenuItem mnemonicParsing="false" onAction="#loadSession" text="Load" />
-                  <MenuItem mnemonicParsing="false" text="Exit" />
+                  <MenuItem mnemonicParsing="false" onAction="#OnExit" text="Exit" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Tools">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#OnExport" text="Export">
+                     <graphic>
+                        <ProgressIndicator fx:id="progressIndicator" progress="0.0" />
+                     </graphic>
+                  </MenuItem>
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />
