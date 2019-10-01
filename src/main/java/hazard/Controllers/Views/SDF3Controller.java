@@ -68,9 +68,8 @@ public class SDF3Controller implements Initializable {
     private void PopulateTablefromDatabase() {
         kindList = FXCollections.observableArrayList();
         DataBaseConnection.selectAll("kind", kindList);
-        //kindId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        //kindDescription.setCellValueFactory(new PropertyValueFactory<>("kind"));
         kindTable.setItems(kindList);
+        System.out.println("hazard.Controllers.Views.SDF3Controller.PopulateTablefromDatabase()");
     }
 
     @FXML
