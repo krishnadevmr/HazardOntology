@@ -25,4 +25,11 @@ public class Hazard extends Play {
 	public void setHazardDescription(String hazardDescription) {
 		this.hazardDescription = hazardDescription;
 	}
+       
+        @Override
+        public String toString()
+        {
+            return "Id: " + this.id + ", Hazard: " + this.hazard + ", HazardDescription: " + this.hazardDescription;
+        }
+        
 }
