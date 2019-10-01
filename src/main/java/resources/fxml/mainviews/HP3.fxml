@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hazard.Controllers.Views.HP3Controller">
    <children>
       <GridPane layoutX="10.0" layoutY="10.0" prefHeight="380.0" prefWidth="400.0" stylesheets="@../styles/css.css" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="190.0">
          <columnConstraints>
@@ -28,22 +28,22 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texts" text="Pre-initiating events that might lead to the hazard" GridPane.rowIndex="3" />
             <FlowPane prefHeight="30.0" prefWidth="610.0" GridPane.rowIndex="2">
                <children>
-                  <Button fx:id="btnAddSeverityAndProbability" mnemonicParsing="false" text="Add Severity And Probability" />
+                  <Button fx:id="btnAddSeverityAndProbability" mnemonicParsing="false" onAction="#onBtnAddSeverityAndProbability" text="Add Severity And Probability" />
                </children>
             </FlowPane>
-            <TableView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+            <TableView fx:id="hazardTableView" onMouseClicked="#onHazardClicked" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                <columns>
-                  <TableColumn id="id" fx:id="id" prefWidth="81.0" text="Id" />
+                  <TableColumn id="id" fx:id="hazardId" prefWidth="81.0" text="Id" />
                   <TableColumn id="hazard" fx:id="hazard" prefWidth="85.0" text="Hazard" />
                   <TableColumn id="hazardDescription" fx:id="hazardDescription" prefWidth="167.0" text="Hazard Description" />
                </columns>
             </TableView>
-            <TableView prefHeight="145.0" prefWidth="402.0" GridPane.rowIndex="4">
+            <TableView fx:id="causeTableView" prefHeight="145.0" prefWidth="402.0" GridPane.rowIndex="4">
                <columns>
-                  <TableColumn prefWidth="224.0" text="Pre-initiating event for hazard" />
-                  <TableColumn id="probability" fx:id="probability" prefWidth="99.0" text="Probability" />
-                  <TableColumn id="severity" fx:id="severity" prefWidth="87.0" text="Severity" />
-                  <TableColumn id="riskevaluation" fx:id="riskevaluation" prefWidth="122.0" text="Risk Evaluation" />
+                  <TableColumn fx:id="cause" prefWidth="178.0" text="Pre-initiating event for hazard" />
+                  <TableColumn id="probability" fx:id="probability" prefWidth="81.0" text="Probability" />
+                  <TableColumn id="severity" fx:id="severity" prefWidth="68.0" text="Severity" />
+                  <TableColumn id="riskevaluation" fx:id="riskevaluation" prefWidth="72.0" text="Risk Evaluation" />
                </columns>
             </TableView>
          </children>
