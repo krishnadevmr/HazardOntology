@@ -5,15 +5,13 @@
  */
 package hazard.Controllers.Navigation;
 
+import hazard.Constants.StepDescription;
 import hazard.Controllers.MainPageController;
-import hazard.Controllers.NavigationController;
 import hazard.Helpers.UIHelper;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -57,31 +55,39 @@ public class SystemDescriptionFormalizationController implements Initializable {
 
     @FXML
     private ToggleButton step5;
+    
+    //public String step1 =
 
     @FXML
     void onStep1(ActionEvent event) {
-        mainController.LoadPaneFromController("/fxml/mainviews/SDF1.fxml", mainController.centerPane);
-        mainController.phaseID.setText(phase);
+        mainController.LoadPaneFromController("/fxml/mainviews/SDF1.fxml", mainController.centerPane,
+                phase, "1", StepDescription.SDFSTEP1 );
     }
 
     @FXML
     void onStep2(ActionEvent event) {
-        mainController.LoadPaneFromController("/fxml/mainviews/SDF2.fxml", mainController.centerPane);
+        mainController.LoadPaneFromController("/fxml/mainviews/SDF2.fxml", mainController.centerPane,
+                phase, "2", StepDescription.SDFSTEP2);
+
     }
 
     @FXML
     void onStep3(ActionEvent event) {
-        mainController.LoadPaneFromController("/fxml/mainviews/SDF3.fxml", mainController.centerPane);
+        mainController.LoadPaneFromController("/fxml/mainviews/SDF3.fxml", mainController.centerPane,
+                phase, "3", StepDescription.SDFSTEP3);
+
     }
 
     @FXML
     void onStep4(ActionEvent event) {
-        mainController.LoadPaneFromController("/fxml/mainviews/SDF4.fxml", mainController.centerPane);
+        mainController.LoadPaneFromController("/fxml/mainviews/SDF4.fxml", mainController.centerPane,
+                phase, "4", StepDescription.SDFSTEP4);
     }
 
     @FXML
     void onStep5(ActionEvent event) {
-        mainController.LoadPaneFromController("/fxml/mainviews/SDF5.fxml", mainController.centerPane);
+        mainController.LoadPaneFromController("/fxml/mainviews/SDF5.fxml", mainController.centerPane,
+                phase, "5", StepDescription.SDFSTEP5);
     }
 
     @Override

@@ -5,6 +5,7 @@
  */
 package hazard.Controllers.Navigation;
 
+import hazard.Constants.StepDescription;
 import hazard.Controllers.MainPageController;
 import hazard.Controllers.NavigationController;
 import hazard.Helpers.UIHelper;
@@ -43,10 +44,13 @@ public class MishapVictimIdentificationController implements Initializable {
 
     @FXML
     private ToggleButton step2;
+    
+    private String phase = "Mishap Victim Identification";
 
     @FXML
     void onMishapVictimIdentification1(ActionEvent event) {
-        mainPageController.LoadPaneFromController("/fxml/mainviews/MVI1.fxml", mainPageController.centerPane);
+        mainPageController.LoadPaneFromController("/fxml/mainviews/MVI1.fxml", mainPageController.centerPane, 
+                phase, "1", StepDescription.MVISTEP1);
     }
 
     @Override

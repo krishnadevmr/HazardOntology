@@ -6,7 +6,6 @@
 package hazard.Controllers.Navigation;
 
 import hazard.Controllers.MainPageController;
-import hazard.Controllers.NavigationController;
 import hazard.Helpers.UIHelper;
 import java.net.URL;
 import java.util.ResourceBundle;

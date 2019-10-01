@@ -24,7 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
  *
  * @author kmoothandas
  */
-public class SDF1Controller implements Initializable {
+public class SDF1Controller implements Initializable, MainViewController {
 
     @FXML
     private TableView<Kind> kindTable;
@@ -36,6 +36,8 @@ public class SDF1Controller implements Initializable {
     private TableColumn<Kind, String> kindDescription;
 
     private ObservableList<Kind> kindList;
+    
+    
 
     @FXML
     void OnAddKind(ActionEvent event) {
@@ -61,9 +63,19 @@ public class SDF1Controller implements Initializable {
         kindTable.setItems(kindList);
     }
 
+    @Override
+    public String getStepNumber() {
+        return "1";
+    }
 
+    @Override
+    public String getStepDescription() {
+        return "Identify the kind and role objects explicitly presented in the system description";
+    }
 
-
-
+    @Override
+    public String getPhase() {
+        return "System Description Formalization";
+    }
 
 }
