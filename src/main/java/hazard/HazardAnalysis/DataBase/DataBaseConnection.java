@@ -29,6 +29,7 @@ import hazard.HazardClasses.Hazard;
 import hazard.HazardClasses.HazardElement;
 import hazard.HazardClasses.Kind;
 import hazard.HazardClasses.MishapVictim;
+import hazard.HazardClasses.MishapVictim2;
 import hazard.HazardClasses.PossibleVictim;
 import hazard.HazardClasses.Relator;
 import hazard.HazardClasses.Role;
@@ -75,6 +76,7 @@ public class DataBaseConnection {
 			System.out.println(e.getMessage());
 		}
 	}
+        
 
 	public static void deleteRelatorToRole(String table, String id1, String id2) {
 		String sql = "Delete FROM " + table + " WHERE roleid=? AND relatorid=?;";
@@ -551,6 +553,21 @@ public class DataBaseConnection {
 			System.out.println(e.getMessage());
 		}
 	}
+        
+        	public static void insertMishapVictim2(int roleID, String role, String harm) {
+		try {
+			String sql = "INSERT INTO mishapvictim2 (roleid,role,possibleharm) VALUES(?,?,?)";
+			Connection conn = connect();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, roleID);
+			pstmt.setString(2, role);
+			pstmt.setString(3, harm);
+
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
 
 	public static void insertMitigationToCause(String mitigation, int causeID) {
 		String sql = "UPDATE cause SET mitigation=? WHERE id = ?";
@@ -611,7 +628,10 @@ public class DataBaseConnection {
 					list.add((E) new Relator(rs.getInt("id"), rs.getString("relator")));
 				} else if (table.contentEquals("cause")) {
 					list.add((E) new Cause(rs.getInt("id"), rs.getString("cause"), rs.getInt("hazardid")));
-				}
+				} else if (table.contentEquals("mishapvictim2")){
+                                        list.add((E) new MishapVictim2(rs.getInt("id"), rs.getString("role"), rs.getInt("roleid"),
+                                            rs.getString("possibleharm")));
+                                }
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -662,7 +682,10 @@ public class DataBaseConnection {
 					list.add((E) new MishapVictim(rs.getInt("id"), rs.getInt("roleid"), rs.getString("role"),
 							rs.getInt("kindid"), rs.getString("kind"), rs.getInt("relatorid"),
 							rs.getString("relator")));
-				} else if (table.contentEquals("hazardelement")) {
+				} else if (table.contentEquals("mishapvictim2")) {
+					list.add((E) new MishapVictim2(rs.getInt("id"),rs.getString("role"),rs.getInt("roleid"), 
+							rs.getString("possibleharm")));
+                                } else if (table.contentEquals("hazardelement")) {
 					list.add((E) new HazardElement(rs.getString("kind"), rs.getString("role")));
 				} else if (table.contentEquals("hazard")) {
 					Hazard hz = new Hazard(rs.getInt("id"), rs.getString("hazard"), rs.getString("harm"));

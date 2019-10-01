@@ -49,7 +49,7 @@ public class MishapVictimIdentificationController implements Initializable {
 
     @FXML
     void onMishapVictimIdentification1(ActionEvent event) {
-        mainPageController.LoadPaneFromController("/fxml/mainviews/MVI1.fxml", mainPageController.centerPane, 
+        mainPageController.LoadPaneFromController("/fxml/mainviews/MVI.fxml", mainPageController.centerPane, 
                 phase, "1", StepDescription.MVISTEP1);
     }
 
