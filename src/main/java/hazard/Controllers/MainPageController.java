@@ -109,6 +109,7 @@ public class MainPageController implements Initializable {
         DatabaseManager.NewDatabaseSession((Stage) navBox.getScene().getWindow());
         navBox.setVisible(true);
         descriptionBox.setVisible(true);
+        onOhi1(null);
     }
 
     @FXML

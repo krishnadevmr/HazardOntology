@@ -32,7 +32,7 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texts" text="Roles" GridPane.columnIndex="1" />
             <TableView fx:id="kindTable" onMouseClicked="#onKindClicked" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" GridPane.rowSpan="5">
                <columns>
-                  <TableColumn fx:id="kindId" prefWidth="45.0" resizable="false" text="Id" />
+                  <TableColumn fx:id="kindId" prefWidth="45.0" text="Id" />
                   <TableColumn id="kind" fx:id="kindDescription" prefWidth="180.66665267944336" text="Kind" />
                </columns>
                <columnResizePolicy>
