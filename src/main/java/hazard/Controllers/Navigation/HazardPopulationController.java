@@ -52,7 +52,7 @@ public class HazardPopulationController implements Initializable {
 
     @FXML
     void onStep1(ActionEvent event) {
-        mainPageController.LoadPaneFromController("/fxml/mainviews/HP1.fxml", mainPageController.centerPane);
+        mainPageController.LoadPaneFromController("/fxml/mainviews/HP.fxml", mainPageController.centerPane);
     }
 
     @FXML

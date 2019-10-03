@@ -15,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
@@ -400,4 +401,51 @@ public class UIHelper {
 
         return returnValue;
     }
+    
+    
+    /**
+     * Method show at dialog where a user can add information about a harm
+     * @param titel Titel fo the dialog
+     * @return List with 2 strings. First is the harm and the second is a description of the harm
+     */
+    public static Optional<List<String>> AddHarmDialog(String titel) {
+        Dialog<List<String>> dialog = new Dialog<>();
+        dialog.setTitle(titel);
+
+        // Create buttontypes        
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        grid.setVgap(5);
+        grid.setHgap(5);
+        grid.setPadding(new Insets(10, 10, 10, 10));
+
+        TextArea txtAreaHarm = new TextArea();
+        Label txtHarmLabel = new Label("Harm truthmaker");
+        grid.add(txtHarmLabel, 0, 0);
+        grid.add(txtAreaHarm, 0, 1);
+
+        TextArea txtAreaHarmDescription = new TextArea();
+        Label txtHazardDescriptionLabel = new Label("Hazard description");
+        grid.add(txtHazardDescriptionLabel, 0, 2);
+        grid.add(txtAreaHarmDescription, 0, 3);
+
+        dialog.getDialogPane().setContent(grid);
+
+        Platform.runLater(() -> txtAreaHarm.requestFocus());
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == ButtonType.OK) {
+                List<String> lsResult = new ArrayList<String>(2);
+                lsResult.add(txtAreaHarm.getText());
+                lsResult.add(txtAreaHarmDescription.getText());
+                return lsResult;
+            }
+
+            return null;
+        });
+
+        Optional<List<String>> result = dialog.showAndWait();
+        return result;
+    }    
 }

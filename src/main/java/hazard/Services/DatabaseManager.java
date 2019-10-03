@@ -8,7 +8,9 @@ package hazard.Services;
 import hazard.HazardAnalysis.DataBase.CreateDataBase;
 import hazard.HazardAnalysis.DataBase.DataBaseConnection;
 import hazard.HazardAnalysis.DataBase.ExportDataToExcel;
+import hazard.HazardClasses.Hazard2;
 import hazard.HazardClasses.Play;
+import hazard.HazardClasses.PossibleHazardRelator;
 import hazard.HazardClasses.Relator;
 import hazard.Helpers.UIHelper;
 import java.io.File;
@@ -16,6 +18,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Optional;
 import javafx.collections.ObservableList;
@@ -105,6 +109,50 @@ public class DatabaseManager {
         File file = fileChooser.showSaveDialog(stage);
         Thread t = new ExportDataToExcel(file, p1);
         t.start();
+    }
+
+    public static ObservableList<PossibleHazardRelator> GetPossibleHazardRelators(String sql, ObservableList<PossibleHazardRelator> list) {
+        ResultSet rs = DataBaseConnection.sql(sql);
+        try {
+            while (rs.next()) {
+                list.add(new PossibleHazardRelator(rs.getInt("relatorid"), rs.getString("relator"),rs.getInt("roleid"), rs.getString("role")));
+            }
+        } catch (SQLException | NullPointerException e) {
+            System.err.println(e);
+        }
+        return list;
+    }
+    
+    /**
+     * Method insert a new hazard2 into the database
+     * @param hazard new Hazard2 that we want to add to database
+     */
+    public static void InsertHazard(Hazard2 hazard)
+    {
+        StringBuilder strBuild = new StringBuilder();
+        strBuild.append("INSERT INTO hazard2 ("); 
+        strBuild.append("mishapvictim, victimroleid, exposure, exposurerelatorid, hazardelement, hazardroleid, harmtruthmaker, hazarddescription) ");
+        strBuild.append("VALUES('");   
+        strBuild.append(hazard.getMishapVictim());
+        strBuild.append("',");
+        strBuild.append(hazard.getVictimId());
+        strBuild.append(",'");
+        strBuild.append(hazard.getExposure());
+        strBuild.append("',");
+        strBuild.append(hazard.getExposureId());
+        strBuild.append(",'");
+        strBuild.append(hazard.getHazardElement());
+        strBuild.append("',");
+        strBuild.append(hazard.getHazardElementId());
+        strBuild.append(",'");
+        strBuild.append(hazard.getTruthmaker());
+        strBuild.append("','");
+        strBuild.append(hazard.getHazardDescription());
+        strBuild.append("')");
+        
+        String sql = strBuild.toString();
+
+        DataBaseConnection.insert(sql);
     }
 
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hazard.Controllers.Views.HPController">
+   <children>
+      <GridPane hgap="5.0" prefHeight="400.0" prefWidth="586.0" vgap="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="303.33336385091144" minWidth="10.0" prefWidth="300.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="335.3333129882812" minWidth="10.0" prefWidth="300.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="172.0" minHeight="10.0" prefHeight="172.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="113.33331298828122" minHeight="10.0" prefHeight="26.666671752929688" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="113.33331298828122" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="155.3333282470703" minHeight="10.0" prefHeight="155.3333282470703" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TableView fx:id="victimTable" onMouseClicked="#onVictimSelected" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+              <columns>
+                <TableColumn fx:id="possibleVictim" prefWidth="86.66668951511383" text="Victim" />
+                <TableColumn fx:id="possibleHarm" prefWidth="115.33330535888672" text="Possible Harm" />
+              </columns>
+            </TableView>
+            <Label text="Mishap Victim" />
+            <Label text="Possible Hazard relator" GridPane.columnIndex="1" />
+            <TableView fx:id="possibleHazardRelatorTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+              <columns>
+                <TableColumn fx:id="possibleExposure" prefWidth="94.66668450832367" text="Exposure" />
+                <TableColumn fx:id="possibleHazard" prefWidth="120.00000762939453" text="Hazard Element" />
+              </columns>
+            </TableView>
+            <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onAddHazard" prefHeight="25.0" prefWidth="59.0" text="Add" />
+                  <Button mnemonicParsing="false" onAction="#onRemoveHazard" text="Remove" />
+               </children>
+            </FlowPane>
+            <TableView fx:id="hazardTable" prefHeight="133.0" prefWidth="575.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
+              <columns>
+                  <TableColumn fx:id="hazardId" prefWidth="35.33334255218506" text="ID" />
+                  <TableColumn fx:id="mishapVictim" prefWidth="103.99999618530273" text="Mishap Victim&#10;(Env obj)" />
+                  <TableColumn fx:id="exposure" minWidth="0.0" prefWidth="88.66668701171875" text="Exposure" />
+                <TableColumn fx:id="hazardElement" prefWidth="118.00007629394531" text="Hazard Element&#10;(Env Obj)" />
+                <TableColumn fx:id="truthmaker" prefWidth="96.6666259765625" text="Harm Truthmaker" />
+                  <TableColumn fx:id="hazardDescription" prefWidth="132.66659545898438" text="Hazard Description" />
+              </columns>
+            </TableView>
+            <Label text="Hazards" GridPane.rowIndex="3" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

@@ -26,6 +26,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import hazard.HazardClasses.Cause;
 import hazard.HazardClasses.CausesRiskAndMitigation;
 import hazard.HazardClasses.Hazard;
+import hazard.HazardClasses.Hazard2;
 import hazard.HazardClasses.HazardElement;
 import hazard.HazardClasses.Kind;
 import hazard.HazardClasses.MishapVictim;
@@ -690,7 +691,13 @@ public class DataBaseConnection {
 				} else if (table.contentEquals("hazard")) {
 					Hazard hz = new Hazard(rs.getInt("id"), rs.getString("hazard"), rs.getString("harm"));
 					list.add((E) hz);
-				} else if (table.contentEquals("cause")) {
+				} else if (table.contentEquals("hazard2"))
+                                {
+                                    Hazard2 hz2 = new Hazard2(rs.getString("mishapvictim"), rs.getInt("victimroleid"), rs.getString("exposure"), 
+                                            rs.getInt("exposurerelatorid"), rs.getString("hazardelement"), 
+                                            rs.getInt("hazardroleid"), rs.getString("harmtruthmaker"), rs.getString("hazarddescription"), rs.getInt("id"));
+                                    list.add((E) hz2);
+                                } else if (table.contentEquals("cause")) {
 					Cause c = new Cause(rs.getInt("id"), rs.getString("cause"), rs.getInt("hazardid"));
 					Double d = rs.getDouble("riskevaluation");
 					c.setSeverity(rs.getDouble("severity"));
