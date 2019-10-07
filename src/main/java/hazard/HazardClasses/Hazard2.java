@@ -23,6 +23,8 @@ public class Hazard2 extends Play {
     private int hazardElementId;
     private String truthmaker;
     private String hazardDescription;
+    private String victimKind;
+    private String hazardKind;
 
     public Hazard2(String mishapVictim, int victimId, String exposure, int exposureId, String hazardElement, int hazardElementId, String truthmaker, String hazardDescription) 
     {
@@ -35,6 +37,36 @@ public class Hazard2 extends Play {
         this.hazardElementId = hazardElementId;
         this.truthmaker = truthmaker;
         this.hazardDescription = hazardDescription;
+    }
+
+    public String getVictimKind() {
+        return victimKind;
+    }
+
+    public void setVictimKind(String victimKind) {
+        this.victimKind = victimKind;
+    }
+
+    public String getHazardKind() {
+        return hazardKind;
+    }
+
+    public void setHazardKind(String hazardKind) {
+        this.hazardKind = hazardKind;
+    }
+
+    public Hazard2(String mishapVictim, int victimId, String exposure, int exposureId, String hazardElement, int hazardElementId, String truthmaker, String hazardDescription, String victimKind, String hazardKind, int id) {
+        super(id);
+        this.mishapVictim = mishapVictim;
+        this.victimId = victimId;
+        this.exposure = exposure;
+        this.exposureId = exposureId;
+        this.hazardElement = hazardElement;
+        this.hazardElementId = hazardElementId;
+        this.truthmaker = truthmaker;
+        this.hazardDescription = hazardDescription;
+        this.victimKind = victimKind;
+        this.hazardKind = hazardKind;
     }
         
     public Hazard2(String mishapVictim, int victimId, String exposure, int exposureId, String hazardElement, int hazardElementId, String truthmaker, String hazardDescription, int id) {

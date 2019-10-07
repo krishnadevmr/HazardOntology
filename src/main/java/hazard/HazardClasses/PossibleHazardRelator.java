@@ -1,5 +1,7 @@
 package hazard.HazardClasses;
 
+import java.util.List;
+
 /**
  *
  * @author kmoothandas
@@ -40,6 +42,7 @@ public class PossibleHazardRelator {
     private String hazardElement;
     private int exposureId;
     private int hazardElementId;
+    private Kind relatedKind;
 
     public String getExposure() {
         return exposure;

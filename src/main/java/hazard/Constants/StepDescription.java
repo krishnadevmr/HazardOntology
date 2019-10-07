@@ -20,6 +20,10 @@ public final class StepDescription {
     public static final String SDFSTEP5 = "For each role object obtained in Step 1, Step 2 and"
                                             + "Step 3, identify all the kind objects that can play the role, considering"
                                             + "the system description.";
-    public static final String MVISTEP1 = "Continue with brainstorming possible harms that can threaten the victims, including but not limited to, physical damages, chemical injuries, fatal illness, "
+    public static final String MVISTEP = "Continue with brainstorming possible harms that can threaten the victims, including"
+                                            + "but not limited to, physical damages, chemical injuries, fatal illness, "
                                             + "explosion, etc.";
+    
+    public static final String HPSTEP = "For each mishap victim identified, a list of possible exposures and hazard elements are available. "
+                                            + "Explore possible dispositions for each victim and add them as hazards.";
 }

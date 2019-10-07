@@ -11,6 +11,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,6 +23,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -60,7 +63,7 @@ public class HPController implements Initializable {
     private TableView<Hazard2> hazardTable;
 
     @FXML
-    private TableColumn<Hazard2, Integer> hazardId;
+    private TableColumn<Hazard2, String> hazardId;
 
     @FXML
     private TableColumn<Hazard2, String> mishapVictim;
@@ -144,8 +147,14 @@ public class HPController implements Initializable {
         
         possibleHazardRelatorsList.clear();
         DatabaseManager.GetPossibleHazardRelators(sql, possibleHazardRelatorsList);
+        
+        //String sql2 = "select kind, kindid from roletoplay where roleid = "+roleId;
 
         possibleHazardRelatorTable.setItems(possibleHazardRelatorsList);
+    }
+    
+    private void GetKinds(){
+        String sql = "select kind, kindid from roletoplay where roleid = 3";
     }
 
     
@@ -179,12 +188,26 @@ public class HPController implements Initializable {
         this.possibleExposure.setCellValueFactory(new PropertyValueFactory<>("exposure"));
         this.possibleHazard.setCellValueFactory(new PropertyValueFactory<>("hazardElement"));
         
-        this.hazardId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        this.mishapVictim.setCellValueFactory(new PropertyValueFactory<>("mishapVictim"));
+        //this.hazardId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        this.hazardId.setCellValueFactory((TableColumn.CellDataFeatures<Hazard2, String> cellData) -> Bindings.concat("HD",cellData.getValue().getId()));
+        
+        //this.mishapVictim.setCellValueFactory(new PropertyValueFactory<>("mishapVictim"));
+        this.mishapVictim.setCellValueFactory(cellData -> Bindings.concat(
+                cellData.getValue().getMishapVictim(), System.lineSeparator() ,
+                "(", cellData.getValue().getVictimKind(), ")"));
+        
         this.exposure.setCellValueFactory(new PropertyValueFactory<>("exposure"));
-        this.hazardElement.setCellValueFactory(new PropertyValueFactory<>("hazardElement"));
+        //this.hazardElement.setCellValueFactory(new PropertyValueFactory<>("hazardElement"));
+        this.hazardElement.setCellValueFactory(cellData -> Bindings.concat(
+                cellData.getValue().getHazardElement(), System.lineSeparator() ,
+                "(", cellData.getValue().getHazardKind(), ")"));
         this.truthmaker.setCellValueFactory(new PropertyValueFactory<>("truthmaker"));
         this.hazardDescription.setCellValueFactory(new PropertyValueFactory<>("hazardDescription"));
+        
+        /*
+        this.hazardDescription.setCellValueFactory(cellData -> Bindings.concat(
+       cellData.getValue().getHazard(), System.lineSeparator() , "(", cellData.getValue().getHazardDescription(), ")"));
+        */
     }
     
     

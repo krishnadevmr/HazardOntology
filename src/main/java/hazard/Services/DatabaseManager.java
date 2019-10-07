@@ -22,6 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Optional;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableView;
@@ -115,24 +116,35 @@ public class DatabaseManager {
         ResultSet rs = DataBaseConnection.sql(sql);
         try {
             while (rs.next()) {
-                list.add(new PossibleHazardRelator(rs.getInt("relatorid"), rs.getString("relator"),rs.getInt("roleid"), rs.getString("role")));
+                list.add(new PossibleHazardRelator(rs.getInt("relatorid"), rs.getString("relator"), rs.getInt("roleid"), rs.getString("role")));
             }
         } catch (SQLException | NullPointerException e) {
             System.err.println(e);
         }
         return list;
     }
-    
+
     /**
      * Method insert a new hazard2 into the database
+     *
      * @param hazard new Hazard2 that we want to add to database
      */
-    public static void InsertHazard(Hazard2 hazard)
-    {
+    public static void InsertHazard(Hazard2 hazard) {
+
+        String victimKindSql = "select kind from roletoplay r where roleid =" + hazard.getVictimId();
+        String hazardElementKindSql = "select kind from roletoplay r where roleid =" + hazard.getHazardElementId();
+
+        ObservableList<String> allKinds = FXCollections.observableArrayList();
+        String victimKinds = getAllKindForRole(allKinds, victimKindSql);
+
+        allKinds.clear();
+        String hazardKinds = getAllKindForRole(allKinds, hazardElementKindSql);
+
         StringBuilder strBuild = new StringBuilder();
-        strBuild.append("INSERT INTO hazard2 ("); 
-        strBuild.append("mishapvictim, victimroleid, exposure, exposurerelatorid, hazardelement, hazardroleid, harmtruthmaker, hazarddescription) ");
-        strBuild.append("VALUES('");   
+        strBuild.append("INSERT INTO hazard2 (");
+        strBuild.append("mishapvictim, victimroleid, exposure, exposurerelatorid, hazardelement, "
+                + "hazardroleid, harmtruthmaker, hazarddescription, victimenvobject, hazardenvobject) ");
+        strBuild.append("VALUES('");
         strBuild.append(hazard.getMishapVictim());
         strBuild.append("',");
         strBuild.append(hazard.getVictimId());
@@ -148,11 +160,35 @@ public class DatabaseManager {
         strBuild.append(hazard.getTruthmaker());
         strBuild.append("','");
         strBuild.append(hazard.getHazardDescription());
+        strBuild.append("','");
+        strBuild.append(victimKinds);
+        strBuild.append("','");
+        strBuild.append(hazardKinds);
         strBuild.append("')");
-        
-        String sql = strBuild.toString();
 
+        String sql = strBuild.toString();
+        //System.out.println(sql);
         DataBaseConnection.insert(sql);
+    }
+
+    private static String getAllKindForRole(ObservableList<String> list, String sql) {
+        list = DataBaseConnection.getKindListFromRole(sql, list);
+
+        String kinds = "";
+
+        int count = 0;
+        for (String str : list) {
+            if (count != 0) {
+                kinds += ", ";
+            }
+            kinds = kinds + str;
+            count++;
+        }
+        return kinds;
+    }
+    
+    public void getEnvironmentObjects(){
+        
     }
 
 }
