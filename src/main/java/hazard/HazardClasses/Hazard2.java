@@ -5,6 +5,9 @@
  */
 package hazard.HazardClasses;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author kmoothandas
@@ -25,18 +28,24 @@ public class Hazard2 extends Play {
     private String hazardDescription;
     private String victimKind;
     private String hazardKind;
+    private int categoryId;
+    private String category;
+    private int isExpanded;
 
-    public Hazard2(String mishapVictim, int victimId, String exposure, int exposureId, String hazardElement, int hazardElementId, String truthmaker, String hazardDescription) 
+    public int getIsExpanded() {
+        return isExpanded;
+    }
+
+    public void setIsExpanded(int isExpanded) {
+        this.isExpanded = isExpanded;
+    }
+
+
+    public Hazard2( int id, String hazardDescription, String category) 
     {
-        super(-1);
-        this.mishapVictim = mishapVictim;
-        this.victimId = victimId;
-        this.exposure = exposure;
-        this.exposureId = exposureId;
-        this.hazardElement = hazardElement;
-        this.hazardElementId = hazardElementId;
-        this.truthmaker = truthmaker;
+        super(id);
         this.hazardDescription = hazardDescription;
+        this.category = category;
     }
 
     public String getVictimKind() {
@@ -55,7 +64,7 @@ public class Hazard2 extends Play {
         this.hazardKind = hazardKind;
     }
 
-    public Hazard2(String mishapVictim, int victimId, String exposure, int exposureId, String hazardElement, int hazardElementId, String truthmaker, String hazardDescription, String victimKind, String hazardKind, int id) {
+    public Hazard2(String mishapVictim, int victimId, String exposure, int exposureId, String hazardElement, int hazardElementId, String truthmaker, String hazardDescription, String victimKind, String hazardKind, int categoryid, String category, int isExpanded, int id) {
         super(id);
         this.mishapVictim = mishapVictim;
         this.victimId = victimId;
@@ -67,6 +76,18 @@ public class Hazard2 extends Play {
         this.hazardDescription = hazardDescription;
         this.victimKind = victimKind;
         this.hazardKind = hazardKind;
+        this.categoryId = categoryid;
+        this.category = category;
+        this.isExpanded = isExpanded;
+    }
+    
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
         
     public Hazard2(String mishapVictim, int victimId, String exposure, int exposureId, String hazardElement, int hazardElementId, String truthmaker, String hazardDescription, int id) {
@@ -79,6 +100,14 @@ public class Hazard2 extends Play {
         this.hazardElementId = hazardElementId;
         this.truthmaker = truthmaker;
         this.hazardDescription = hazardDescription;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getMishapVictim() {

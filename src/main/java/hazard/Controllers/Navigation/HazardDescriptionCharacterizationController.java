@@ -5,10 +5,12 @@
  */
 package hazard.Controllers.Navigation;
 
+import hazard.Constants.StepDescription;
 import hazard.Controllers.MainPageController;
 import hazard.Helpers.UIHelper;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ToggleButton;
@@ -36,10 +38,18 @@ public class HazardDescriptionCharacterizationController implements Initializabl
 
     @FXML
     private ToggleGroup toggleGroup;
+    
+    private final String phase = "Hazard Description Categorization";
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         UIHelper.getAllButtonsToggle(pane);
+    }
+    
+    @FXML
+    void onStep1(ActionEvent event) {
+        mainPageController.LoadPaneFromController("/fxml/mainviews/CHD.fxml", mainPageController.centerPane,
+                phase, "1", StepDescription.CHDSTEP);
     }
 
 }

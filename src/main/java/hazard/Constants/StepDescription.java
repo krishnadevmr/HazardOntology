@@ -26,4 +26,8 @@ public final class StepDescription {
     
     public static final String HPSTEP = "For each mishap victim identified, a list of possible exposures and hazard elements are available. "
                                             + "Explore possible dispositions for each victim and add them as hazards.";
+    
+    public static final String CHDSTEP = "For each hazard, categorize into 'Hazard', 'Initiating Condition', 'Initiaiting Event' or 'Mishap'";
+    
+    public static final String DEICHASTEP1 = "TO-DO";
 }

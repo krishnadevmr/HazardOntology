@@ -9,9 +9,13 @@ import hazard.HazardAnalysis.DataBase.CreateDataBase;
 import hazard.HazardAnalysis.DataBase.DataBaseConnection;
 import hazard.HazardAnalysis.DataBase.ExportDataToExcel;
 import hazard.HazardClasses.Hazard2;
+import hazard.HazardClasses.HazardCategory;
+import hazard.HazardClasses.HazardExpansion;
+import hazard.HazardClasses.Kind;
 import hazard.HazardClasses.Play;
 import hazard.HazardClasses.PossibleHazardRelator;
 import hazard.HazardClasses.Relator;
+import hazard.HazardClasses.Role;
 import hazard.Helpers.UIHelper;
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +24,7 @@ import java.nio.file.Paths;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.Optional;
 import javafx.collections.FXCollections;
@@ -46,6 +51,7 @@ public class DatabaseManager {
             CreateDataBase.setDatabase(file.getPath());
             CreateDataBase.createNewDatabase();
             CreateDataBase.createNewTable();
+            InsertReferenceTables();
         }
     }
 
@@ -131,14 +137,19 @@ public class DatabaseManager {
      */
     public static void InsertHazard(Hazard2 hazard) {
 
-        String victimKindSql = "select kind from roletoplay r where roleid =" + hazard.getVictimId();
-        String hazardElementKindSql = "select kind from roletoplay r where roleid =" + hazard.getHazardElementId();
+        String victimKindSql = "select kind, kindid from roletoplay r where roleid =" + hazard.getVictimId();
+        String hazardElementKindSql = "select kind, kindid from roletoplay r where roleid =" + hazard.getHazardElementId();
 
-        ObservableList<String> allKinds = FXCollections.observableArrayList();
-        String victimKinds = getAllKindForRole(allKinds, victimKindSql);
+        //ObservableList<String> allKinds = FXCollections.observableArrayList();
+        //ObservableList<Kind> victimKinds = getAllKindForRole(victimKindSql);
+        //String victimKindString = ConcatenateStrings(victimKinds);
+        //ObservableList<Kind> hazardKinds = getAllKindForRole(victimKindSql);
+        //String hazardKindString = ConcatenateStrings(hazardKinds);
+        ObservableList<ObservableList<Kind>> kindList = FXCollections.observableArrayList();
 
-        allKinds.clear();
-        String hazardKinds = getAllKindForRole(allKinds, hazardElementKindSql);
+        kindList = GetHazardKinds(hazard, kindList);
+        String victimKindString = ConcatenateStrings(kindList.get(0));
+        String hazardKindString = ConcatenateStrings(kindList.get(1));
 
         StringBuilder strBuild = new StringBuilder();
         strBuild.append("INSERT INTO hazard2 (");
@@ -161,9 +172,9 @@ public class DatabaseManager {
         strBuild.append("','");
         strBuild.append(hazard.getHazardDescription());
         strBuild.append("','");
-        strBuild.append(victimKinds);
+        strBuild.append(victimKindString);
         strBuild.append("','");
-        strBuild.append(hazardKinds);
+        strBuild.append(hazardKindString);
         strBuild.append("')");
 
         String sql = strBuild.toString();
@@ -171,8 +182,18 @@ public class DatabaseManager {
         DataBaseConnection.insert(sql);
     }
 
-    private static String getAllKindForRole(ObservableList<String> list, String sql) {
-        list = DataBaseConnection.getKindListFromRole(sql, list);
+    public static ObservableList<Kind> getAllKindForRole(String sql) {
+        //list = DataBaseConnection.getKindListFromRole(sql, list);
+        ObservableList<Kind> Kindlist = FXCollections.observableArrayList();
+        Kindlist = DataBaseConnection.getKindListFromRole(sql, Kindlist);
+
+        return Kindlist;
+    }
+
+    public static String ConcatenateStrings(ObservableList<Kind> Kindlist) {
+        ObservableList<String> list = FXCollections.observableArrayList();
+
+        Kindlist.forEach((kind) -> list.add(kind.getKind()));
 
         String kinds = "";
 
@@ -186,9 +207,80 @@ public class DatabaseManager {
         }
         return kinds;
     }
-    
-    public void getEnvironmentObjects(){
-        
+
+    public static ObservableList<ObservableList<Kind>> GetHazardKinds(Hazard2 hazard, ObservableList<ObservableList<Kind>> kindList) {
+        String victimKindSql = "select kind, kindid from roletoplay r where roleid =" + hazard.getVictimId();
+        String hazardElementKindSql = "select kind, kindid from roletoplay r where roleid =" + hazard.getHazardElementId();
+
+        ObservableList<Kind> victimKinds = getAllKindForRole(victimKindSql);
+        ObservableList<Kind> hazardKinds = getAllKindForRole(hazardElementKindSql);
+
+        kindList.add(victimKinds);
+        kindList.add(hazardKinds);
+
+        return kindList;
     }
 
+    public static ObservableList<HazardCategory> GetHazardCategories(ObservableList<HazardCategory> list) {
+        String sql = "select categoryid, category from hazardcategory ";
+        ResultSet rs = DataBaseConnection.sql(sql);
+        try {
+            while (rs.next()) {
+                list.add(new HazardCategory(rs.getInt("categoryid"), rs.getString("category")));
+            }
+        } catch (SQLException | NullPointerException e) {
+            System.err.println(e);
+        }
+        return list;
+    }
+
+    public static void UpdateHazardCategory(int categoryId, int hazardId) {
+        String sql = MessageFormat.format("Update hazard2 set categoryid = {0}, category = "
+                + "(select category from hazardcategory where categoryid = {0}) where id = {1}", categoryId, hazardId);
+        DataBaseConnection.sqlUpdate(sql);
+    }
+
+    public static void InsertReferenceTables() {
+        String sql = "insert into hazardcategory values (1,'Hazard'),(2,'Initiating Condition'),(3,'Initiating Event'),(4,'Mishap')";
+        DataBaseConnection.insert(sql);
+    }
+
+    public static ObservableList<Hazard2> GetHazardByCategory(Boolean isHazardorIc, ObservableList<Hazard2> list) {
+        String categoryIds;
+        categoryIds = isHazardorIc ? "1, 2" : "3, 4";
+
+        String sql = MessageFormat.format("Select * from hazard2 where categoryid in( {0})", categoryIds);
+
+        DataBaseConnection.sql(sql, "hazard2", list);
+
+        return list;
+    }
+
+    public static ObservableList<Relator> GetRelatorsFromRole(Integer roleId, ObservableList<Relator> list) {
+        String sql = "select * from relatortorole where roleid = " + roleId;
+        DataBaseConnection.sql(sql, "relatortorole", list);
+        return list;
+    }
+
+    public static ObservableList<Role> GetRoleFromRelator(Integer relatorId, ObservableList<Role> list) {
+        String sql = "select * from relatortorole where relatorid = " + relatorId;
+        DataBaseConnection.sql(sql, "relatortorole", list);
+        return list;
+    }
+
+    public static <T> ObservableList<T> GetRelatorsOrRole(Integer Id, String source, String tableString, ObservableList<T> list) {
+        //String sql = "select * from relatortorole where roleid = " + roleId;
+        String sql = MessageFormat.format("select * from relatortorole where {0} = {1}", source, Id);
+        DataBaseConnection.sql(sql, tableString, list);
+        return list;
+    }
+    
+    public static void InsertIntoHazardExpansion(HazardExpansion expansion){
+        DataBaseConnection.insertHazardExpansion(expansion.getHazardId(),
+                expansion.getRootKind().getId(), expansion.getRootKind().getKind(),
+                expansion.getRootRole().getId(), expansion.getRootRole().getRole(),
+                expansion.getRelator().getId(), expansion.getRelator().getRelator(),
+                expansion.getLinkedRole().getId(), expansion.getLinkedRole().getRole(),
+                expansion.getLinkedKind().getId(), expansion.getLinkedKind().getKind());
+    }
 }

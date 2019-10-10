@@ -28,6 +28,7 @@ import hazard.HazardClasses.CausesRiskAndMitigation;
 import hazard.HazardClasses.Hazard;
 import hazard.HazardClasses.Hazard2;
 import hazard.HazardClasses.HazardElement;
+import hazard.HazardClasses.HazardExpansion;
 import hazard.HazardClasses.Kind;
 import hazard.HazardClasses.MishapVictim;
 import hazard.HazardClasses.MishapVictim2;
@@ -610,6 +611,31 @@ public class DataBaseConnection {
         }
     }
 
+    public static void insertHazardExpansion(int hazardID, int rootKindId, String rootKind, int rootRoleId, String rootRole,
+            int relatorId, String relator, int linkedRoleId, String linkedRole, int linkedKindId, String linkedKind) {
+        try {
+            String sql = "INSERT INTO hazardexpansion (hazardid, rootkindid, rootkind, rootroleid, rootrole, relatorid, relator, "
+                    + "linkedroleid, linkedrole, linkedkindid, linkedkind) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+            Connection conn = connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, hazardID);
+            pstmt.setInt(2, rootKindId);
+            pstmt.setString(3, rootKind);
+            pstmt.setInt(4, rootRoleId);
+            pstmt.setString(5, rootRole);
+            pstmt.setInt(6, relatorId);
+            pstmt.setString(7, relator);
+            pstmt.setInt(8, linkedRoleId);
+            pstmt.setString(9, linkedRole);
+            pstmt.setInt(10, linkedKindId);
+            pstmt.setString(11, linkedKind);
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public static <E> void selectAll(String table, ObservableList<E> list) {
         String sql = "SELECT * FROM " + table;
@@ -632,6 +658,45 @@ public class DataBaseConnection {
                 } else if (table.contentEquals("mishapvictim2")) {
                     list.add((E) new MishapVictim2(rs.getInt("id"), rs.getString("role"), rs.getInt("roleid"),
                             rs.getString("possibleharm")));
+                } else if (table.contentEquals("hazard2")) {
+                    list.add((E) new Hazard2(rs.getString("mishapvictim"), rs.getInt("victimroleid"), rs.getString("exposure"),
+                            rs.getInt("exposurerelatorid"), rs.getString("hazardelement"),
+                            rs.getInt("hazardroleid"), rs.getString("harmtruthmaker"), rs.getString("hazarddescription"),
+                            rs.getString("victimenvobject"), rs.getString("hazardenvobject"),
+                            rs.getInt("categoryid"), rs.getString("category"),
+                            rs.getInt("isExpanded"), rs.getInt("id")));
+                } else if (table.contentEquals("hazardexpansion")) {
+                    list.add((E) new HazardExpansion(new Kind(rs.getInt("rootkindid"), rs.getString("rootkind")),
+                            new Role(rs.getInt("rootroleid"), rs.getString("rootrole")),
+                            new Relator(rs.getInt("relatorid"), rs.getString("relator")),
+                            new Role(rs.getInt("linkedroleid"), rs.getString("linkedrole")),
+                            new Kind(rs.getInt("linkedkindid"), rs.getString("linkedkind")),
+                            rs.getInt("hazardid"), rs.getInt("id")
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <E> void selectHazardExpansionByRole(Integer roleId, Integer hazardId, ObservableList<E> list) {
+        String sql = "SELECT * FROM hazardexpansion WHERE rootroleid =" + roleId + " and hazardid = " +hazardId;
+        try {
+            Connection conn = connect();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            list.clear();
+            while (rs.next()) {
+                {
+                    list.add((E) new HazardExpansion(new Kind(rs.getInt("rootkindid"), rs.getString("rootkind")),
+                            new Role(rs.getInt("rootroleid"), rs.getString("rootrole")),
+                            new Relator(rs.getInt("relatorid"), rs.getString("relator")),
+                            new Role(rs.getInt("linkedroleid"), rs.getString("linkedrole")),
+                            new Kind(rs.getInt("linkedkindid"), rs.getString("linkedkind")),
+                            rs.getInt("hazardid"), rs.getInt("id")
+                    ));
                 }
             }
         } catch (SQLException e) {
@@ -654,14 +719,14 @@ public class DataBaseConnection {
         return null;
     }
 
-    public static ObservableList<String>  getKindListFromRole(String sql, ObservableList<String> list ) {
+    public static ObservableList<Kind> getKindListFromRole(String sql, ObservableList<Kind> list) {
         try {
             Connection conn = connect();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            
-            while (rs.next()){
-                list.add(rs.getString("kind"));
+
+            while (rs.next()) {
+                list.add(new Kind(rs.getInt("kindid"), rs.getString("kind")));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -691,6 +756,8 @@ public class DataBaseConnection {
                     list.add((E) new Relator(rs.getInt("id"), rs.getString("relator")));
                 } else if (table.contentEquals("relatortorole")) {
                     list.add((E) new Relator(rs.getInt("relatorid"), rs.getString("relator")));
+                } else if (table.contentEquals("rolefromrelatortorole")) {
+                    list.add((E) new Role(rs.getInt("roleid"), rs.getString("role")));
                 } else if (table.contentEquals("possiblevictim")) {
                     list.add((E) new PossibleVictim(rs.getInt("roleid"), rs.getString("role"), rs.getInt("kindid"),
                             rs.getString("kind"), rs.getInt("relatorid"), rs.getString("relator")));
@@ -709,7 +776,10 @@ public class DataBaseConnection {
                 } else if (table.contentEquals("hazard2")) {
                     Hazard2 hz2 = new Hazard2(rs.getString("mishapvictim"), rs.getInt("victimroleid"), rs.getString("exposure"),
                             rs.getInt("exposurerelatorid"), rs.getString("hazardelement"),
-                            rs.getInt("hazardroleid"), rs.getString("harmtruthmaker"), rs.getString("hazarddescription"),rs.getString("victimenvobject"),rs.getString("hazardenvobject"), rs.getInt("id"));
+                            rs.getInt("hazardroleid"), rs.getString("harmtruthmaker"), rs.getString("hazarddescription"),
+                            rs.getString("victimenvobject"), rs.getString("hazardenvobject"),
+                            rs.getInt("categoryid"), rs.getString("category"),
+                            rs.getInt("isExpanded"), rs.getInt("id"));
                     list.add((E) hz2);
                 } else if (table.contentEquals("cause")) {
                     Cause c = new Cause(rs.getInt("id"), rs.getString("cause"), rs.getInt("hazardid"));
@@ -745,7 +815,7 @@ public class DataBaseConnection {
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
-            System.out.println(e.getMessage() + "??");
+            System.out.println("Yup"+e.getMessage() + "??");
         }
     }
 
@@ -771,6 +841,25 @@ public class DataBaseConnection {
             pstmt.setString(2, harm);
             pstmt.setInt(3, id);
             pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <E> void selectHazardsWithCategory(String table, ObservableList<E> list) {
+        String sql = "SELECT * FROM " + table;
+        try {
+            Connection conn = connect();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            list.clear();
+            while (rs.next()) {
+                {
+                    list.add((E) new Hazard2(rs.getInt("id"), rs.getString("hazarddescription"),
+                            rs.getString("category")));
+                }
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

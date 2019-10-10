@@ -10,6 +10,6 @@
          <toggleGroup>
             <ToggleGroup fx:id="toggleGroup" />
          </toggleGroup></ToggleButton>
-      <ToggleButton fx:id="step2" layoutY="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="MVI Step 2" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <ToggleButton fx:id="step2" layoutY="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="*Ignore*" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    </children>
 </AnchorPane>

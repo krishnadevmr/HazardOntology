@@ -2,7 +2,11 @@ package hazard.Helpers;
 
 import hazard.HazardClasses.Cause;
 import hazard.HazardClasses.Hazard;
+import hazard.HazardClasses.Hazard2;
+import hazard.HazardClasses.HazardCategory;
+import hazard.Services.DatabaseManager;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import javafx.application.Platform;
@@ -10,9 +14,11 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -366,8 +372,8 @@ public class UIHelper {
         Optional<String> result = dialog.showAndWait();
         return result;
     }
-    
-        public static Optional<String> UpdateVictimDialog(String title, String type, String oldHarmValue) {
+
+    public static Optional<String> UpdateVictimDialog(String title, String type, String oldHarmValue) {
         TextInputDialog dialog = new TextInputDialog(oldHarmValue);
         dialog.setTitle(title);
         dialog.setHeaderText("Update " + type);
@@ -401,12 +407,13 @@ public class UIHelper {
 
         return returnValue;
     }
-    
-    
+
     /**
      * Method show at dialog where a user can add information about a harm
-     * @param titel Titel fo the dialog
-     * @return List with 2 strings. First is the harm and the second is a description of the harm
+     *
+     * @param titel Title fo the dialog
+     * @return List with 2 strings. First is the harm and the second is a
+     * description of the harm
      */
     public static Optional<List<String>> AddHarmDialog(String titel) {
         Dialog<List<String>> dialog = new Dialog<>();
@@ -447,5 +454,137 @@ public class UIHelper {
 
         Optional<List<String>> result = dialog.showAndWait();
         return result;
-    }    
+    }
+
+    /**
+     * Method show at dialog where a user can add information about a harm
+     *
+     * @param title Title fo the dialog
+     * @param hazardDescription
+     * @return List with 2 strings. First is the harm and the second is a
+     * description of the harm
+     */
+    public static Optional<Integer> AddHazardCategoryDialog(String title, String hazardDescription) {
+        Dialog<Integer> dialog = new Dialog<>();
+        dialog.setTitle(title);
+
+        // Create buttontypes        
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        grid.setVgap(5);
+        grid.setHgap(5);
+        grid.setPadding(new Insets(10, 10, 10, 10));
+
+        TextArea txtAreaHD = new TextArea(hazardDescription);
+        Label txtHDLabel = new Label("Hazard Description");
+        txtAreaHD.setEditable(false);
+        grid.add(txtHDLabel, 0, 0);
+        grid.add(txtAreaHD, 0, 1);
+
+        //TextArea txtAreaHarmDescription = new TextArea();
+        ObservableList<HazardCategory> categories = FXCollections.observableArrayList();
+
+        categories = DatabaseManager.GetHazardCategories(categories);
+
+        ComboBox categoryCombo = new ComboBox();
+        HashMap<String, Integer> categoryMap = new HashMap<>();
+        categories.forEach(cat -> {
+            categoryCombo.getItems().add(cat.getCategory());
+            categoryMap.put(cat.getCategory(), cat.getCategoryid());
+        });
+
+        Label categoryLabel = new Label("Hazard description");
+        grid.add(categoryLabel, 0, 2);
+        grid.add(categoryCombo, 0, 3);
+
+        dialog.getDialogPane().setContent(grid);
+
+        Platform.runLater(() -> categoryCombo.requestFocus());
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == ButtonType.OK) {
+                String lsResult = categoryCombo.getValue().toString();
+                int categoryId = categoryMap.get(lsResult);
+                return categoryId;
+            }
+
+            return null;
+        });
+
+        Optional<Integer> result = dialog.showAndWait();
+        return result;
+    }
+
+    public static Optional<Boolean> ShowHazardDescription(String title, Hazard2 hazard) {
+        Dialog<Boolean> dialog = new Dialog<>();
+        dialog.setTitle(title);
+
+        // Create buttontypes        
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        grid.setVgap(10);
+        //grid.setHgap(5);
+        grid.setPadding(new Insets(10, 10, 10, 10));
+
+        Label txtHDLabel = new Label("Hazard Description for HD" + hazard.getId());
+        grid.add(txtHDLabel, 0, 0);
+
+        Label mishapLabel = new Label("Mishap Victim");
+        grid.add(mishapLabel, 0, 1);
+        Text victims = new Text(hazard.getMishapVictim());
+        GridPane.setHalignment(victims, HPos.LEFT);
+        grid.add(victims, 1, 1);
+
+        Label exposureLabel = new Label("Exposure");
+        grid.add(exposureLabel, 0, 2);
+        Text exposure = new Text(hazard.getExposure());
+        grid.add(exposure, 1, 2);
+
+        Label hazaedElementLabel = new Label("Hazard Element");
+        grid.add(hazaedElementLabel, 0, 3);
+        Text hazaedElement = new Text(hazard.getHazardElement());
+        grid.add(hazaedElement, 1, 3);
+
+        Label dispositionLabel = new Label("Disposition");
+        grid.add(dispositionLabel, 0, 4);
+        Text disposition = new Text(hazard.getTruthmaker());
+        grid.add(disposition, 1, 4);
+
+        Label descriptionLabel = new Label("Description");
+        grid.add(descriptionLabel, 0, 5);
+        Text description = new Text(hazard.getHazardDescription());
+        grid.add(description, 1, 5);
+
+        CheckBox cb = new CheckBox("Has been expanded?");
+        grid.add(cb, 0, 6, 2, 1);
+
+        if (hazard.getIsExpanded() == 1) {
+            cb.setSelected(true);
+        } else {
+            cb.setSelected(false);
+        }
+
+        //TextArea txtAreaHarmDescription = new TextArea();
+        //Label categoryLabel = new Label("Hazard description");
+        //grid.add(categoryLabel, 0, 2);
+        //grid.add(categoryCombo, 0, 3);
+        dialog.getDialogPane().setContent(grid);
+
+        Platform.runLater(() -> txtHDLabel.requestFocus());
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == ButtonType.OK) {
+                Boolean lsResult = cb.isSelected();
+                //int categoryId = 1;
+                return lsResult;
+            }
+
+            return null;
+        });
+
+        Optional<Boolean> result = dialog.showAndWait();
+        return result;
+    }
 }

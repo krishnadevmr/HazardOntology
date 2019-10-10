@@ -5,6 +5,7 @@
  */
 package hazard.Controllers.Navigation;
 
+import hazard.Constants.StepDescription;
 import hazard.Controllers.MainPageController;
 import hazard.Helpers.UIHelper;
 import java.net.URL;
@@ -55,10 +56,13 @@ public class HazardDescriptionExpansionController implements Initializable {
 
     @FXML
     private ToggleButton step7;
+    
+    private final String phase = "Hazard Description Expansion";
 
     @FXML
     void onStep1(ActionEvent event) {
-
+        mainPageController.LoadPaneFromController("/fxml/mainviews/DE_ICHA1.fxml", mainPageController.centerPane,
+                phase, "1", StepDescription.DEICHASTEP1);
     }
 
     @FXML

@@ -119,4 +119,9 @@ public class Kind extends Play {
         @Override
         public String toString(){
         return (id+" "+kind);}
+        
+        
+        public boolean equals(Kind o){
+            return o.getId() == this.id;
+        }
 }

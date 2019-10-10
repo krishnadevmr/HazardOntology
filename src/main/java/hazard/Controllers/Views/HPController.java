@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,7 +22,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -173,7 +171,8 @@ public class HPController implements Initializable {
     private void PopulateHazardTable() 
     {
         hazardList = FXCollections.observableArrayList();
-        DataBaseConnection.sql("select * from hazard2", "hazard2", hazardList);
+        //DataBaseConnection.sql("select * from hazard2", "hazard2", hazardList);
+        DataBaseConnection.selectAll("hazard2", hazardList);
         hazardTable.setItems(hazardList);
     }
 
@@ -204,10 +203,6 @@ public class HPController implements Initializable {
         this.truthmaker.setCellValueFactory(new PropertyValueFactory<>("truthmaker"));
         this.hazardDescription.setCellValueFactory(new PropertyValueFactory<>("hazardDescription"));
         
-        /*
-        this.hazardDescription.setCellValueFactory(cellData -> Bindings.concat(
-       cellData.getValue().getHazard(), System.lineSeparator() , "(", cellData.getValue().getHazardDescription(), ")"));
-        */
     }
     
     
@@ -233,7 +228,7 @@ public class HPController implements Initializable {
                 Hazard2 hazard = new Hazard2(mishapVictim2.getRole(), mishapVictim2.getRoleId(),
                         possibleHazardRelator.getExposure(), possibleHazardRelator.getExposureId(), 
                         possibleHazardRelator.getHazardElement(), possibleHazardRelator.getHazardElementId(), 
-                        result.get().get(0), result.get().get(1));
+                        result.get().get(0), result.get().get(1),0);
 
                 DatabaseManager.InsertHazard(hazard);
 

@@ -4,9 +4,9 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" fx:id="pane" prefHeight="400.0" prefWidth="107.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
+<AnchorPane id="AnchorPane" fx:id="pane" prefHeight="400.0" prefWidth="107.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ToggleButton fx:id="step1" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="CHD Step 1" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <ToggleButton fx:id="step1" mnemonicParsing="false" onAction="#onStep1" prefHeight="25.0" prefWidth="99.0" text="CHD Step 1" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <toggleGroup>
             <ToggleGroup fx:id="toggleGroup" />
          </toggleGroup></ToggleButton>
