@@ -3,8 +3,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -15,10 +17,11 @@
       <GridPane hgap="5.0" layoutY="6.0" prefHeight="385.0" prefWidth="590.0" vgap="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints maxHeight="12.0" minHeight="12.0" prefHeight="12.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="12.0" minHeight="20.0" prefHeight="12.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="218.00000190734863" minHeight="10.0" prefHeight="106.66666666666666" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="194.33329772949222" minHeight="10.0" prefHeight="119.33332316080731" vgrow="SOMETIMES" />
@@ -29,7 +32,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
          <children>
-            <TableView fx:id="hazardTable" onMouseClicked="#onHazardClicked" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+            <TableView fx:id="hazardTable" onMouseClicked="#onHazardClicked" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="1">
               <columns>
                 <TableColumn fx:id="hazardId" prefWidth="75.0" text="ID" />
                 <TableColumn fx:id="mishapVictim" prefWidth="75.0" text="Mishap Victims" />
@@ -58,7 +61,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <TableView fx:id="roleTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.rowSpan="2">
+            <TableView fx:id="roleTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.rowSpan="2">
               <columns>
                 <TableColumn fx:id="roles" prefWidth="75.0" text="Roles" />
               </columns>
@@ -66,8 +69,18 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Label text="All roles that can be played by the selected kind" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button mnemonicParsing="false" onAction="#onIdentifyRelators" text="Identify Relators" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label text="All roles that can be played by the selected kind" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Button mnemonicParsing="false" onAction="#onIdentifyRelators" text="Identify Relators" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2">
+               <children>
+                  <RadioButton fx:id="hazardRadio" layoutY="1.0" mnemonicParsing="false" onAction="#onCategoryClicked" text="Hazard">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="hazardCategoryRadio" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="initCRadio" layoutX="69.0" layoutY="1.0" mnemonicParsing="false" onAction="#onCategoryClicked" text="Initiating Condition" toggleGroup="$hazardCategoryRadio" />
+               </children>
+            </AnchorPane>
          </children>
       </GridPane>
    </children>

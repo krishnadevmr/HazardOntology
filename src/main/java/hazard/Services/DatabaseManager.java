@@ -245,11 +245,11 @@ public class DatabaseManager {
         DataBaseConnection.insert(sql);
     }
 
-    public static ObservableList<Hazard2> GetHazardByCategory(Boolean isHazardorIc, ObservableList<Hazard2> list) {
-        String categoryIds;
-        categoryIds = isHazardorIc ? "1, 2" : "3, 4";
+    public static ObservableList<Hazard2> GetHazardByCategory(int hazardCategory, ObservableList<Hazard2> list) {
+        //String categoryIds;
+        //categoryIds = isHazardorIc ? "1, 2" : "3, 4";
 
-        String sql = MessageFormat.format("Select * from hazard2 where categoryid in( {0})", categoryIds);
+        String sql = MessageFormat.format("Select * from hazard2 where categoryid in( {0})", hazardCategory);
 
         DataBaseConnection.sql(sql, "hazard2", list);
 

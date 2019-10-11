@@ -1,5 +1,6 @@
 package hazard.Helpers;
 
+import hazard.Constants.StepDescription;
 import hazard.HazardClasses.Cause;
 import hazard.HazardClasses.Hazard;
 import hazard.HazardClasses.Hazard2;
@@ -30,6 +31,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 /**
  *
@@ -477,10 +479,42 @@ public class UIHelper {
         grid.setPadding(new Insets(10, 10, 10, 10));
 
         TextArea txtAreaHD = new TextArea(hazardDescription);
+
+        Text text = new Text(hazardDescription);
+        double width = text.getLayoutBounds().getWidth() + txtAreaHD.getPadding().getLeft() + txtAreaHD.getPadding().getRight() + 2d;
+        double height = text.getLayoutBounds().getHeight() + txtAreaHD.getPadding().getTop() + txtAreaHD.getPadding().getBottom() + 2d;
+        txtAreaHD.setPrefWidth(width);
+        txtAreaHD.setPrefHeight(height);
+        txtAreaHD.positionCaret(txtAreaHD.getCaretPosition());
+
         Label txtHDLabel = new Label("Hazard Description");
         txtAreaHD.setEditable(false);
         grid.add(txtHDLabel, 0, 0);
         grid.add(txtAreaHD, 0, 1);
+        
+        Label instructionLabel = new Label("Use the following questions to determine the hazard category!");
+        grid.add(instructionLabel, 1, 0);
+
+        TextFlow flow = new TextFlow();
+
+        Text instruction1 = new Text(StepDescription.HAZARD_CLASSIFICATION_HELP_Q1_HEADING);
+        instruction1.setStyle("-fx-font-weight: bold");
+
+        Text instructionBody1 = new Text(StepDescription.HAZARD_CLASSIFICATION_HELP_Q1_BODY);
+        //instruction1.setStyle("-fx-font-weight: bold");
+
+        Text instruction2 = new Text(StepDescription.HAZARD_CLASSIFICATION_HELP_Q2_HEADING);
+        instruction2.setStyle("-fx-font-weight: bold");
+        Text instructionBody2 = new Text(StepDescription.HAZARD_CLASSIFICATION_HELP_Q2_BODY);
+
+        Text instruction3 = new Text(StepDescription.HAZARD_CLASSIFICATION_HELP_Q3_HEADING);
+        instruction3.setStyle("-fx-font-weight: bold");
+        Text instructionBody3 = new Text(StepDescription.HAZARD_CLASSIFICATION_HELP_Q3_BODY);
+
+        flow.getChildren().addAll(instruction1, instructionBody1, instruction2, instructionBody2, instruction3, instructionBody3);
+        flow.setMaxSize(600, 600);
+        flow.setStyle("-fx-font: 14px Tahoma");
+        grid.add(flow, 1, 1);
 
         //TextArea txtAreaHarmDescription = new TextArea();
         ObservableList<HazardCategory> categories = FXCollections.observableArrayList();

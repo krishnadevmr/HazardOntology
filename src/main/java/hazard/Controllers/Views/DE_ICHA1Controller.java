@@ -16,6 +16,7 @@ import hazard.Services.DatabaseManager;
 import java.io.IOException;
 import java.net.URL;
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
@@ -27,8 +28,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -101,10 +104,31 @@ public class DE_ICHA1Controller implements Initializable {
     /*Current selection property*/
     private Kind currentKind;
 
+    /*Radio Buttons*/
+    @FXML
+    private RadioButton hazardRadio;
+
+    @FXML
+    private RadioButton initCRadio;
+
+    @FXML
+    private ToggleGroup hazardCategoryRadio;
+
+    HashMap<RadioButton, Integer> categoryMap;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         SetCellfactories();
-        PopulateHazardTable();
+        hazardCategoryRadio.selectToggle(hazardRadio);
+        categoryMap = new HashMap<>();
+        categoryMap.put(hazardRadio, 1);
+        categoryMap.put(initCRadio, 2);
+        PopulateHazardTable(categoryMap.get(hazardCategoryRadio.getSelectedToggle()));
+    }
+
+    @FXML
+    void onCategoryClicked(ActionEvent event) {
+        PopulateHazardTable(categoryMap.get(hazardCategoryRadio.getSelectedToggle()));
     }
 
     @FXML
@@ -155,10 +179,10 @@ public class DE_ICHA1Controller implements Initializable {
 
     }
 
-    private void PopulateHazardTable() {
+    private void PopulateHazardTable(int category) {
         hazardList = FXCollections.observableArrayList();
-        //DatabaseManager.GetHazardByCategory(Boolean.TRUE, hazardList);
-        DataBaseConnection.selectAll("hazard2", hazardList);
+        DatabaseManager.GetHazardByCategory(category, hazardList);
+        //DataBaseConnection.selectAll("hazard2", hazardList);
         hazardTable.setItems(hazardList);
     }
 
@@ -236,7 +260,7 @@ public class DE_ICHA1Controller implements Initializable {
 
             if (hasCHanged != 0) {
                 UpdateExpansionStatus(hazard, isExpandedAfter.get());
-                PopulateHazardTable();
+                PopulateHazardTable(categoryMap.get(hazardCategoryRadio.getSelectedToggle()));
             }
         }
     }
