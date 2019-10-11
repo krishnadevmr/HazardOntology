@@ -4,7 +4,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" fx:id="pane" prefHeight="400.0" prefWidth="107.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
+<AnchorPane id="AnchorPane" fx:id="pane" prefHeight="400.0" prefWidth="107.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <ToggleButton fx:id="step1" layoutY="1.0" mnemonicParsing="false" onAction="#onStep1" prefHeight="25.0" prefWidth="108.0" text="IC/HA-DE-Step 1" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <toggleGroup>
@@ -16,6 +16,10 @@
         <ToggleButton fx:id="step4" layoutY="76.0" mnemonicParsing="false" onAction="#onStep4" prefHeight="25.0" prefWidth="108.0" text="IC/HA-DE-Step 4" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
         <ToggleButton fx:id="step5" layoutY="101.0" mnemonicParsing="false" onAction="#onStep5" prefHeight="25.0" prefWidth="108.0" text="IC/HA-DE-Step 5" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
         <ToggleButton fx:id="step6" layoutY="101.0" mnemonicParsing="false" onAction="#onStep6" prefHeight="25.0" prefWidth="108.0" text="IE/MS-DE-Step 1" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-        <ToggleButton fx:id="step7" layoutY="101.0" mnemonicParsing="false" onAction="#onStep7" prefHeight="25.0" prefWidth="108.0" text="IE/MS-DE-Step 2" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+        <ToggleButton fx:id="step7" layoutY="101.0" mnemonicParsing="false" onAction="#onStep7" prefHeight="25.0" prefWidth="108.0" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <ToggleButton fx:id="SecondStep1" layoutY="126.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="IE/MS-DE-Step1" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <ToggleButton fx:id="SecondStep2" layoutY="151.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="IE/MS-DE-Step2" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <ToggleButton fx:id="SecondStep3" layoutY="176.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="IE/MS-DE-Step3" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <ToggleButton fx:id="SecondStep4" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="IE/MS-DE-Step4" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
     </children>   
 </AnchorPane>

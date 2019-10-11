@@ -5,6 +5,7 @@
  */
 package hazard.Controllers.Views;
 
+import hazard.Controllers.Navigation.HazardDescriptionExpansionController;
 import hazard.Controllers.Subviews.DE_ICHA3Controller;
 import hazard.HazardAnalysis.DataBase.DataBaseConnection;
 import hazard.HazardClasses.Hazard2;
@@ -31,6 +32,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -43,6 +45,15 @@ import javafx.stage.Stage;
  * @author kmoothandas
  */
 public class DE_ICHA1Controller implements Initializable {
+
+    public HazardDescriptionExpansionController buttonController;
+
+    public DE_ICHA1Controller(HazardDescriptionExpansionController buttonController) {
+        this.buttonController = buttonController;
+    }
+
+    public DE_ICHA1Controller() {
+    }
 
     /*Hazard Table*/
     @FXML
@@ -116,6 +127,9 @@ public class DE_ICHA1Controller implements Initializable {
 
     HashMap<RadioButton, Integer> categoryMap;
 
+    /*Track Button*/
+    public int currentStep;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         SetCellfactories();
@@ -124,6 +138,7 @@ public class DE_ICHA1Controller implements Initializable {
         categoryMap.put(hazardRadio, 1);
         categoryMap.put(initCRadio, 2);
         PopulateHazardTable(categoryMap.get(hazardCategoryRadio.getSelectedToggle()));
+        currentStep = 1;
     }
 
     @FXML
@@ -150,6 +165,7 @@ public class DE_ICHA1Controller implements Initializable {
             Kind kind = hazardKindTable.getItems().get(index);
             currentKind = kind;
             PopulateRoleTable(kind);
+            HighlightStep(2, buttonController.step2);
         }
     }
 
@@ -160,6 +176,7 @@ public class DE_ICHA1Controller implements Initializable {
             Kind kind = victimKindTable.getItems().get(index);
             currentKind = kind;
             PopulateRoleTable(kind);
+            HighlightStep(2, buttonController.step2);
         }
     }
 
@@ -175,6 +192,9 @@ public class DE_ICHA1Controller implements Initializable {
 
             DE_ICHA3Controller controller = new DE_ICHA3Controller(hazardExpansion, this);
             LoadController(controller, "/fxml/subviews/DE_ICHA3.fxml");
+
+            HighlightStep(3, buttonController.step3);
+
         }
 
     }
@@ -246,6 +266,8 @@ public class DE_ICHA1Controller implements Initializable {
             stage.setTitle("Identify Relators");
             stage.setScene(new Scene(pane));
             stage.show();
+            stage.setOnCloseRequest(() -> {HighlightStep(3, buttonController.step3);
+            });
         } catch (IOException | NullPointerException ex) {
             System.err.println(ex);
         }
@@ -275,7 +297,13 @@ public class DE_ICHA1Controller implements Initializable {
 
         String sql = MessageFormat.format("UPDATE hazard2 SET isExpanded ={0} WHERE id={1}", expanded, hazard.getId());
         DataBaseConnection.sqlUpdate(sql);
+    }
 
+    public void HighlightStep(Integer stepNumber, ToggleButton button) {
+        if (currentStep != stepNumber) {
+            button.fire();
+            currentStep = stepNumber;
+        }
     }
 
 }

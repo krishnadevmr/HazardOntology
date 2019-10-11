@@ -220,7 +220,7 @@ public class MainPageController implements Initializable {
         }
     }
 
-    public void LoadPaneFromController(String url, AnchorPane parent, String phaseDescription,String Step, String stepText ) {
+    public void LoadPaneFromController(String url, AnchorPane parent, String phaseDescription, String Step, String stepText) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(url));
             AnchorPane pane = loader.load();
@@ -231,18 +231,39 @@ public class MainPageController implements Initializable {
             AnchorPane.setLeftAnchor(pane, 5.0);
             AnchorPane.setTopAnchor(pane, 0.0);
             AnchorPane.setBottomAnchor(pane, 15.0);
-            
+
             this.phase.setText(phaseDescription);
             this.stepDescription.setText(stepText);
             this.stepNumber.setText(Step);
-            
+
         } catch (IOException | NullPointerException ex) {
             System.err.println(ex);
         }
     }
 
-    
-    public void LoadPaneFromController(String url, AnchorPane parent ) {
+    public void LoadPaneFromController(String url, Initializable controller, AnchorPane parent, String phaseDescription, String Step, String stepText) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(url));
+            loader.setController(controller);
+            AnchorPane pane = loader.load();
+            //pane.set
+            parent.getChildren().clear();
+            parent.getChildren().add(pane);
+            AnchorPane.setRightAnchor(pane, 5.0);
+            AnchorPane.setLeftAnchor(pane, 5.0);
+            AnchorPane.setTopAnchor(pane, 0.0);
+            AnchorPane.setBottomAnchor(pane, 15.0);
+
+            this.phase.setText(phaseDescription);
+            this.stepDescription.setText(stepText);
+            this.stepNumber.setText(Step);
+
+        } catch (IOException | NullPointerException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    public void LoadPaneFromController(String url, AnchorPane parent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(url));
             AnchorPane pane = loader.load();
@@ -253,7 +274,7 @@ public class MainPageController implements Initializable {
             AnchorPane.setLeftAnchor(pane, 5.0);
             AnchorPane.setTopAnchor(pane, 0.0);
             AnchorPane.setBottomAnchor(pane, 15.0);
-            
+
         } catch (IOException | NullPointerException ex) {
             System.err.println(ex);
         }

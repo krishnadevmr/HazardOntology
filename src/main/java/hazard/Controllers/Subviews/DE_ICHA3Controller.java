@@ -103,6 +103,11 @@ public class DE_ICHA3Controller implements Initializable {
     private ObservableList<Kind> allLinkedKindsList;
 
     @FXML
+    public void exitApplication(ActionEvent event) {
+        System.out.println("hazard.Controllers.Subviews.DE_ICHA3Controller.exitApplication()");
+    }
+
+    @FXML
     void onAddExpansion(ActionEvent event) {
         int index = allRoleTable.getSelectionModel().selectedIndexProperty().get();
         if (index != -1) {
@@ -110,6 +115,7 @@ public class DE_ICHA3Controller implements Initializable {
             hazardExpansion.setLinkedRole(role);
             InsertIntoExpansionTable();
             PopulateExpansionTable();
+            DEController.HighlightStep(4, DEController.buttonController.step4);
         }
     }
 
@@ -120,6 +126,7 @@ public class DE_ICHA3Controller implements Initializable {
             Relator relator = relatorTable.getItems().get(index);
             PopulateRoleTable(relator);
             hazardExpansion.setRelator(relator);
+            DEController.HighlightStep(3, DEController.buttonController.step3);
         }
     }
 
@@ -130,6 +137,7 @@ public class DE_ICHA3Controller implements Initializable {
         relatorLabel.setText(relatorLabelTemplate + hazardExpansion.getRootRole().getRole());
         roleLabel.setText("No relator selected");
         PopulateExpansionTable();
+
     }
 
     private void SetCellfactories() {
@@ -182,7 +190,7 @@ public class DE_ICHA3Controller implements Initializable {
     private void PopulateExpansionTable() {
         expansionList = FXCollections.observableArrayList();
         //DataBaseConnection.selectAll("hazardexpansion", expansionList);
-        DataBaseConnection.selectHazardExpansionByRole(hazardExpansion.getRootRole().getId(), hazardExpansion.getHazardId(), expansionList );
+        DataBaseConnection.selectHazardExpansionByRole(hazardExpansion.getRootRole().getId(), hazardExpansion.getHazardId(), expansionList);
         expansionTable.setItems(expansionList);
 
     }

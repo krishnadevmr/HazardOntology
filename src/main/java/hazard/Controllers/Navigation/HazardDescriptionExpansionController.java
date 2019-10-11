@@ -7,6 +7,7 @@ package hazard.Controllers.Navigation;
 
 import hazard.Constants.StepDescription;
 import hazard.Controllers.MainPageController;
+import hazard.Controllers.Views.DE_ICHA1Controller;
 import hazard.Helpers.UIHelper;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -40,16 +41,16 @@ public class HazardDescriptionExpansionController implements Initializable {
     private ToggleGroup toggleGroup;
 
     @FXML
-    private ToggleButton step2;
+    public ToggleButton step2;
 
     @FXML
-    private ToggleButton step3;
+    public ToggleButton step3;
 
     @FXML
-    private ToggleButton step4;
+    public ToggleButton step4;
 
     @FXML
-    private ToggleButton step5;
+    public ToggleButton step5;
 
     @FXML
     private ToggleButton step6;
@@ -61,7 +62,8 @@ public class HazardDescriptionExpansionController implements Initializable {
 
     @FXML
     void onStep1(ActionEvent event) {
-        mainPageController.LoadPaneFromController("/fxml/mainviews/DE_ICHA1.fxml", mainPageController.centerPane,
+        DE_ICHA1Controller controller = new DE_ICHA1Controller(this);
+        mainPageController.LoadPaneFromController("/fxml/mainviews/DE_ICHA1.fxml", controller, mainPageController.centerPane,
                 phase, "1", StepDescription.DEICHASTEP1);
     }
 
