@@ -32,6 +32,13 @@ public class App extends Application {
         primaryStage.setScene(scene);
         //primaryStage.setResizable(false);
         primaryStage.show();
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent e) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
         /*
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
         primaryStage.setX(primaryScreenBounds.getMinX());

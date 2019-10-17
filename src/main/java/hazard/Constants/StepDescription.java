@@ -31,6 +31,8 @@ public final class StepDescription {
     public static final String CHDSTEP = "For each hazard, categorize into 'Hazard', 'Initiating Condition', 'Initiaiting Event' or 'Mishap'";
 
     public static final String DEICHASTEP1 = "TO-DO";
+    
+    public static final String CEICHASTEP1 = "TO-DO";
 
     public static final String HAZARD_CLASSIFICATION_HELP_Q1_HEADING = "Q1: Is the hazard description describing a situation (state of affairs) or an event? \n";
     public static final String HAZARD_CLASSIFICATION_HELP_Q2_HEADING = "\nQ2: If the hazard description is describing a situation, can the situation trigger mishaps when "

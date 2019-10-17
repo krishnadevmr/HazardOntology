@@ -611,7 +611,6 @@ public class UIHelper {
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == ButtonType.OK) {
                 Boolean lsResult = cb.isSelected();
-                //int categoryId = 1;
                 return lsResult;
             }
 

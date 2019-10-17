@@ -190,7 +190,7 @@ public class DE_ICHA3Controller implements Initializable {
     private void PopulateExpansionTable() {
         expansionList = FXCollections.observableArrayList();
         //DataBaseConnection.selectAll("hazardexpansion", expansionList);
-        DataBaseConnection.selectHazardExpansionByRole(hazardExpansion.getRootRole().getId(), hazardExpansion.getHazardId(), expansionList);
+        DataBaseConnection.selectHazardExpansionByRoleOrID(hazardExpansion.getRootRole().getId(), hazardExpansion.getHazardId(), expansionList);
         expansionTable.setItems(expansionList);
 
     }

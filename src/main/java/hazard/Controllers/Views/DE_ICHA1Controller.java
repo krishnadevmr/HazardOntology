@@ -7,6 +7,7 @@ package hazard.Controllers.Views;
 
 import hazard.Controllers.Navigation.HazardDescriptionExpansionController;
 import hazard.Controllers.Subviews.DE_ICHA3Controller;
+import hazard.Controllers.Subviews.SingleHazardExpansionController;
 import hazard.HazardAnalysis.DataBase.DataBaseConnection;
 import hazard.HazardClasses.Hazard2;
 import hazard.HazardClasses.HazardExpansion;
@@ -38,6 +39,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * FXML Controller class
@@ -123,6 +125,12 @@ public class DE_ICHA1Controller implements Initializable {
     private RadioButton initCRadio;
 
     @FXML
+    private RadioButton mishapRadio;
+
+    @FXML
+    private RadioButton initERadio;
+
+    @FXML
     private ToggleGroup hazardCategoryRadio;
 
     HashMap<RadioButton, Integer> categoryMap;
@@ -134,9 +142,7 @@ public class DE_ICHA1Controller implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         SetCellfactories();
         hazardCategoryRadio.selectToggle(hazardRadio);
-        categoryMap = new HashMap<>();
-        categoryMap.put(hazardRadio, 1);
-        categoryMap.put(initCRadio, 2);
+        UpdateCategoryMap();
         PopulateHazardTable(categoryMap.get(hazardCategoryRadio.getSelectedToggle()));
         currentStep = 1;
     }
@@ -144,6 +150,15 @@ public class DE_ICHA1Controller implements Initializable {
     @FXML
     void onCategoryClicked(ActionEvent event) {
         PopulateHazardTable(categoryMap.get(hazardCategoryRadio.getSelectedToggle()));
+    }
+
+    @FXML
+    void onShowExpansion(ActionEvent event) {
+        int index = hazardTable.getSelectionModel().selectedIndexProperty().get();
+        if (index != -1) {
+            SingleHazardExpansionController controller = new SingleHazardExpansionController(hazardTable.getItems().get(index));
+            LoadController(controller, "/fxml/subviews/SingleHazardExpansion.fxml", "Hazard Expansion");
+        }
     }
 
     @FXML
@@ -155,6 +170,7 @@ public class DE_ICHA1Controller implements Initializable {
             if (event.getClickCount() == 2) {
                 ShowHazard(hazard);
             }
+            roleTable.setItems(null);
         }
     }
 
@@ -191,12 +207,19 @@ public class DE_ICHA1Controller implements Initializable {
             hazardExpansion.setHazardId(hazardTable.getItems().get(hazardTable.getSelectionModel().selectedIndexProperty().get()).getId());
 
             DE_ICHA3Controller controller = new DE_ICHA3Controller(hazardExpansion, this);
-            LoadController(controller, "/fxml/subviews/DE_ICHA3.fxml");
+            LoadController(controller, "/fxml/subviews/DE_ICHA3.fxml", "Identify Relators");
 
             HighlightStep(3, buttonController.step3);
-
         }
 
+    }
+
+    private void UpdateCategoryMap() {
+        categoryMap = new HashMap<>();
+        categoryMap.put(hazardRadio, 1);
+        categoryMap.put(initCRadio, 2);
+        categoryMap.put(initERadio, 3);
+        categoryMap.put(mishapRadio, 4);
     }
 
     private void PopulateHazardTable(int category) {
@@ -204,6 +227,7 @@ public class DE_ICHA1Controller implements Initializable {
         DatabaseManager.GetHazardByCategory(category, hazardList);
         //DataBaseConnection.selectAll("hazard2", hazardList);
         hazardTable.setItems(hazardList);
+        UpdateHazardTableHeaders(category);
     }
 
     private void SetCellfactories() {
@@ -225,14 +249,9 @@ public class DE_ICHA1Controller implements Initializable {
         this.roles.setCellValueFactory(new PropertyValueFactory<>("role"));
 
         this.isExpanded.setCellValueFactory((TableColumn.CellDataFeatures<Hazard2, String> cellData) -> Bindings.concat(cellData.getValue().getIsExpanded() == 1 ? "Yes" : "No"));
-        //this.isExpanded.setCellValueFactory((TableColumn.CellDataFeatures<Hazard2, String> cellData) -> Bindings.concat(cellData.getValue().getIsExpanded()));
-
     }
 
     private void PopulateKindTable(Hazard2 hazard) {
-        //int hazardTableIndex = hazardTable.getSelectionModel().selectedIndexProperty().get();
-
-        //Hazard2 hazard = hazardTable.getItems().get(hazardTableIndex);
         victimKindList = FXCollections.observableArrayList();
         ObservableList<ObservableList<Kind>> hazardKindsList = FXCollections.observableArrayList();
         hazardKindsList = DatabaseManager.GetHazardKinds(hazard, hazardKindsList);
@@ -244,7 +263,6 @@ public class DE_ICHA1Controller implements Initializable {
         hazardKindTable.setItems(hazardsKinds);
 
         kindTableLabel.setText("All kinds for Hazard HD" + hazard.getId());
-
     }
 
     private void PopulateRoleTable(Kind kind) {
@@ -254,7 +272,7 @@ public class DE_ICHA1Controller implements Initializable {
         roleTable.setItems(roleList);
     }
 
-    private void LoadController(Initializable controller, String url) {
+    private void LoadController(Initializable controller, String url, String title) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(url));
             loader.setController(controller);
@@ -263,10 +281,11 @@ public class DE_ICHA1Controller implements Initializable {
             Stage stage = new Stage();
             //stage.initModality(Modality.APPLICATION_MODAL);
             //stage.initStyle(StageStyle.UNDECORATED);
-            stage.setTitle("Identify Relators");
+            stage.setTitle(title);
             stage.setScene(new Scene(pane));
             stage.show();
-            stage.setOnCloseRequest(() -> {HighlightStep(3, buttonController.step3);
+            stage.setOnCloseRequest((WindowEvent event) -> {
+                HighlightStep(3, buttonController.step3);
             });
         } catch (IOException | NullPointerException ex) {
             System.err.println(ex);
@@ -303,6 +322,23 @@ public class DE_ICHA1Controller implements Initializable {
         if (currentStep != stepNumber) {
             button.fire();
             currentStep = stepNumber;
+        }
+    }
+
+    private void UpdateHazardTableHeaders(int category) {
+        switch (category) {
+            case 1:
+            case 4:
+                hazardElement.setText("Hazard Element");
+                exposure.setText("Exposure");
+                truthmaker.setText("Harm Truthmaker");
+                break;
+            case 2:
+            case 3:
+                hazardElement.setText("Initiating Role");
+                exposure.setText("Relator");
+                truthmaker.setText("Initiating factor");
+                break;
         }
     }
 

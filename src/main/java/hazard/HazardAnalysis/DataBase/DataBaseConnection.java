@@ -24,6 +24,7 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import hazard.HazardClasses.Cause;
+import hazard.HazardClasses.Cause2;
 import hazard.HazardClasses.CausesRiskAndMitigation;
 import hazard.HazardClasses.Hazard;
 import hazard.HazardClasses.Hazard2;
@@ -681,8 +682,13 @@ public class DataBaseConnection {
     }
 
     @SuppressWarnings("unchecked")
-    public static <E> void selectHazardExpansionByRole(Integer roleId, Integer hazardId, ObservableList<E> list) {
-        String sql = "SELECT * FROM hazardexpansion WHERE rootroleid =" + roleId + " and hazardid = " +hazardId;
+    public static <E> void selectHazardExpansionByRoleOrID(Integer roleId, Integer hazardId, ObservableList<E> list) {
+        String sql;
+        if (roleId != 0) {
+            sql = "SELECT * FROM hazardexpansion WHERE rootroleid =" + roleId + " and hazardid = " + hazardId;
+        } else {
+            sql = "SELECT * FROM hazardexpansion WHERE hazardid = " + hazardId;
+        }
         try {
             Connection conn = connect();
             Statement stmt = conn.createStatement();
@@ -781,6 +787,10 @@ public class DataBaseConnection {
                             rs.getInt("categoryid"), rs.getString("category"),
                             rs.getInt("isExpanded"), rs.getInt("id"));
                     list.add((E) hz2);
+                } else if (table.contentEquals("cause2")) {
+                    Cause2 cause = new Cause2(new Role(rs.getInt("roleid"), rs.getString("role")),
+                            rs.getString("disposition"), rs.getInt("id"));
+                    list.add((E) cause);
                 } else if (table.contentEquals("cause")) {
                     Cause c = new Cause(rs.getInt("id"), rs.getString("cause"), rs.getInt("hazardid"));
                     Double d = rs.getDouble("riskevaluation");
@@ -815,7 +825,7 @@ public class DataBaseConnection {
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
-            System.out.println("Yup"+e.getMessage() + "??");
+            System.out.println("Yup" + e.getMessage() + "??");
         }
     }
 

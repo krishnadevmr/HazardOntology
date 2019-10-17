@@ -5,7 +5,9 @@
  */
 package hazard.Controllers.Navigation;
 
+import hazard.Constants.StepDescription;
 import hazard.Controllers.MainPageController;
+import hazard.Helpers.UIHelper;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -27,7 +29,7 @@ public class CausesExplorationController implements Initializable {
     }
 
     private MainPageController mainPageController;
-    
+
     @FXML
     private AnchorPane pane;
 
@@ -52,24 +54,30 @@ public class CausesExplorationController implements Initializable {
     @FXML
     private ToggleButton step7;
 
+    private final String phase = "Causes Exploration";
+
     @FXML
     void onStep1(ActionEvent event) {
-
+        mainPageController.LoadPaneFromController("/fxml/mainviews/CauseExploration.fxml", mainPageController.centerPane,
+                phase, "1", StepDescription.CEICHASTEP1);
     }
 
     @FXML
     void onStep2(ActionEvent event) {
-
+        mainPageController.LoadPaneFromController("/fxml/mainviews/CE_ICHA2.fxml", mainPageController.centerPane,
+                phase, "2", StepDescription.CEICHASTEP1);
     }
 
     @FXML
     void onStep3(ActionEvent event) {
-
+        mainPageController.LoadPaneFromController("/fxml/mainviews/CE_ICHA3.fxml", mainPageController.centerPane,
+                phase, "3", StepDescription.CEICHASTEP1);
     }
 
     @FXML
     void onStep4(ActionEvent event) {
-
+        mainPageController.LoadPaneFromController("/fxml/mainviews/CE_ICHA4.fxml", mainPageController.centerPane,
+                phase, "4", StepDescription.CEICHASTEP1);
     }
 
     @FXML
@@ -81,9 +89,10 @@ public class CausesExplorationController implements Initializable {
     void onStep7(ActionEvent event) {
 
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+        UIHelper.getAllButtonsToggle(pane);
+    }
+
 }

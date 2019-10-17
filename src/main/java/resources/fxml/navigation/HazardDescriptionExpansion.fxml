@@ -11,13 +11,10 @@
                 <ToggleGroup fx:id="toggleGroup" />
             </toggleGroup>
         </ToggleButton>
-        <ToggleButton fx:id="step2" layoutY="26.0" mnemonicParsing="false" onAction="#onStep2" prefHeight="25.0" prefWidth="108.0" text="IC/HA-DE-Step 2" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-        <ToggleButton fx:id="step3" layoutY="51.0" mnemonicParsing="false" onAction="#onStep3" prefHeight="25.0" prefWidth="108.0" text="IC/HA-DE-Step 3" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-        <ToggleButton fx:id="step4" layoutY="76.0" mnemonicParsing="false" onAction="#onStep4" prefHeight="25.0" prefWidth="108.0" text="IC/HA-DE-Step 4" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-        <ToggleButton fx:id="step5" layoutY="101.0" mnemonicParsing="false" onAction="#onStep5" prefHeight="25.0" prefWidth="108.0" text="IC/HA-DE-Step 5" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-        <ToggleButton fx:id="step6" layoutY="101.0" mnemonicParsing="false" onAction="#onStep6" prefHeight="25.0" prefWidth="108.0" text="IE/MS-DE-Step 1" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-        <ToggleButton fx:id="step7" layoutY="101.0" mnemonicParsing="false" onAction="#onStep7" prefHeight="25.0" prefWidth="108.0" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-      <ToggleButton fx:id="SecondStep1" layoutY="126.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="IE/MS-DE-Step1" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+        <ToggleButton fx:id="step2" layoutY="26.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="IC/HA-DE-Step 2" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+        <ToggleButton fx:id="step3" layoutY="51.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="IC/HA-DE-Step 3" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+        <ToggleButton fx:id="step4" layoutY="76.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="IC/HA-DE-Step 4" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <ToggleButton fx:id="SecondStep1" layoutY="126.0" mnemonicParsing="false" onAction="#onMishapOrIE" prefHeight="25.0" prefWidth="107.0" text="IE/MS-DE-Step1" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <ToggleButton fx:id="SecondStep2" layoutY="151.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="IE/MS-DE-Step2" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <ToggleButton fx:id="SecondStep3" layoutY="176.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="IE/MS-DE-Step3" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <ToggleButton fx:id="SecondStep4" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="IE/MS-DE-Step4" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />

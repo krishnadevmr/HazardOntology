@@ -30,11 +30,12 @@ public class HazardDescriptionExpansionController implements Initializable {
     }
 
     private MainPageController mainPageController;
-    
+
     @FXML
     private AnchorPane pane;
-    
-     @FXML
+
+    /*Hazard and IC*/
+    @FXML
     private ToggleButton step1;
 
     @FXML
@@ -49,15 +50,19 @@ public class HazardDescriptionExpansionController implements Initializable {
     @FXML
     public ToggleButton step4;
 
+    /*Mishap and IE*/
     @FXML
-    public ToggleButton step5;
+    private ToggleButton SecondStep1;
 
     @FXML
-    private ToggleButton step6;
+    private ToggleButton SecondStep2;
 
     @FXML
-    private ToggleButton step7;
-    
+    private ToggleButton SecondStep3;
+
+    @FXML
+    private ToggleButton SecondStep4;
+
     private final String phase = "Hazard Description Expansion";
 
     @FXML
@@ -68,38 +73,13 @@ public class HazardDescriptionExpansionController implements Initializable {
     }
 
     @FXML
-    void onStep2(ActionEvent event) {
+    void onMishapOrIE(ActionEvent event) {
 
     }
 
-    @FXML
-    void onStep3(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onStep4(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onStep5(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onStep6(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onStep7(ActionEvent event) {
-
-    }
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         UIHelper.getAllButtonsToggle(pane);
-    }    
-    
+    }
+
 }
