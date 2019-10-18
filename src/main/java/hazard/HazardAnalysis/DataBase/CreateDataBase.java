@@ -70,6 +70,12 @@ public class CreateDataBase {
                 + "CONSTRAINT uq_edelements\n"
                 + "	UNIQUE (hazardid, rootkindid, rootroleid, relatorid, linkedroleid, linkedkindid)\n"
                 + ")";
+        String sql13 = "CREATE TABLE cause2 (id INTEGER PRIMARY KEY, hazardid INTEGER NOT NULL, roleid INTEGER, role TEXT,"
+                + "disposition TEXT, environmentobjectid INTEGER, environmentobject TEXT, relatorid INTEGER , relator TEXT,"
+                + "preinitevent TEXT, isComplete INTEGER, CONSTRAINT fk_hazard FOREIGN KEY (hazardid REFERENCES hazard2(id),"
+                + "CONSTRAINT fk_kind FOREIGN KEY (environmentobjectid) REFERENCES kind(id),"
+                + "CONSTRAINT fk_role FOREIGN KEY (roleid) REFERENCES role(id),"
+                + "CONSTRAINT fk_relator FOREIGN KEY (relatorid) REFERENCES relator(id) )";
         try (Connection conn = DriverManager.getConnection(url); Statement stmt = conn.createStatement()) {
             // create a new table
             stmt.execute(sql1);
@@ -84,6 +90,7 @@ public class CreateDataBase {
             stmt.execute(sql10);
             stmt.execute(sql11);
             stmt.execute(sql12);
+            stmt.execute(sql13);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

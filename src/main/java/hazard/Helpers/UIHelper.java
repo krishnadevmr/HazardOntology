@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -18,6 +20,9 @@ import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -30,6 +35,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
@@ -66,7 +72,25 @@ public class UIHelper {
         dialog.setTitle("Add");
         dialog.setHeaderText("Enter a new " + type);
         //dialog.setContentText("Please enter the role:");
+        Button okButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+        TextField inputField = dialog.getEditor();
+        //inputField.setMinHeight(Region.USE_PREF_SIZE);
+
+        inputField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                inputField.setPrefWidth(inputField.getText().length() * 7); // why 7? Totally trial number.
+            }
+        });
+
+        BooleanBinding isInvalid = Bindings.createBooleanBinding(()
+                -> inputField.getText().trim().length() == 0, inputField.textProperty()
+        );
+
+        okButton.disableProperty().bind(isInvalid);
+
         Optional<String> result = dialog.showAndWait();
+
         return result;
     }
 
@@ -491,7 +515,7 @@ public class UIHelper {
         txtAreaHD.setEditable(false);
         grid.add(txtHDLabel, 0, 0);
         grid.add(txtAreaHD, 0, 1);
-        
+
         Label instructionLabel = new Label("Use the following questions to determine the hazard category!");
         grid.add(instructionLabel, 1, 0);
 
@@ -619,5 +643,14 @@ public class UIHelper {
 
         Optional<Boolean> result = dialog.showAndWait();
         return result;
+    }
+
+    public static void Warn(String title, String warningBody) {
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.setTitle(title);
+        //alert.setHeaderText("Look, a Warning Dialog");
+        alert.setContentText(warningBody);
+
+        alert.showAndWait();
     }
 }

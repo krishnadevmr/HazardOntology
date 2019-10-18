@@ -9,13 +9,17 @@ import hazard.Controllers.Subviews.SingleHazardExpansionController;
 import hazard.HazardAnalysis.DataBase.DataBaseConnection;
 import hazard.HazardClasses.Cause2;
 import hazard.HazardClasses.Hazard2;
+import hazard.HazardClasses.Kind;
 import hazard.HazardClasses.Role;
+import hazard.Helpers.Helper;
 import hazard.Helpers.UIHelper;
+import hazard.Services.DatabaseManager;
 import java.io.IOException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,8 +28,10 @@ import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -53,6 +59,23 @@ public class CauseExplorationController implements Initializable {
     private TableColumn<Hazard2, String> hazardCategory;
 
     private ObservableList<Hazard2> hazardList;
+    private ObservableList<Hazard2> subHazardList;
+
+    /*Radio Controllers for Hazard table*/
+    @FXML
+    private RadioButton hazardRadio;
+
+    @FXML
+    private ToggleGroup radioCategory;
+
+    @FXML
+    private RadioButton iCRadio;
+
+    @FXML
+    private RadioButton iERadio;
+
+    @FXML
+    private RadioButton mishapRadio;
 
     /* Role Table*/
     @FXML
@@ -81,7 +104,35 @@ public class CauseExplorationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         SetCellfactories();
-        PopulateHazardTable();
+        InitializeDataLists();
+        Helper.PopulateHazardTable(hazardList, hazardTable);
+        //PopulateHazardTable();
+        onHazardCategory(null);
+        hazardRadio.setSelected(true);
+    }
+
+    @FXML
+    void onHazardCategory(ActionEvent event) {
+        Helper.FilterHazardByCategory(hazardList, subHazardList, 1);
+        hazardTable.setItems(subHazardList);
+    }
+
+    @FXML
+    void onICCategory(ActionEvent event) {
+        Helper.FilterHazardByCategory(hazardList, subHazardList, 2);
+        hazardTable.setItems(subHazardList);
+    }
+
+    @FXML
+    void onIECategory(ActionEvent event) {
+        Helper.FilterHazardByCategory(hazardList, subHazardList, 3);
+        hazardTable.setItems(subHazardList);
+    }
+
+    @FXML
+    void onMishapCategory(ActionEvent event) {
+        Helper.FilterHazardByCategory(hazardList, subHazardList, 4);
+        hazardTable.setItems(subHazardList);
     }
 
     @FXML
@@ -99,7 +150,6 @@ public class CauseExplorationController implements Initializable {
     @FXML
     void onRoleSelected(MouseEvent event) {
         int index = roleTable.getSelectionModel().selectedIndexProperty().get();
-        System.out.println("hazard.Controllers.Views.CE_ICHA1Controller.onRoleSelected(): " + index);
         if (index != -1) {
             Role role = roleTable.getItems().get(index);
             PopulateCauseTable(role);
@@ -137,10 +187,16 @@ public class CauseExplorationController implements Initializable {
         this.causeDisposition.setCellValueFactory(new PropertyValueFactory<>("disposition"));
     }
 
+    /*
     private void PopulateHazardTable() {
         hazardList = FXCollections.observableArrayList();
+        subHazardList = FXCollections.observableArrayList();
         DataBaseConnection.selectAll("hazard2", hazardList);
         hazardTable.setItems(hazardList);
+    }*/
+    private void InitializeDataLists() {
+        hazardList = FXCollections.observableArrayList();
+        subHazardList = FXCollections.observableArrayList();
     }
 
     private void PopulateRoleTable(Hazard2 hazard) {
@@ -156,8 +212,7 @@ public class CauseExplorationController implements Initializable {
     private void PopulateCauseTable(Role role) {
         causeList = FXCollections.observableArrayList();
         //String sql = MessageFormat.format("select * from hazard2 where hazardroleid = {0} and id = {1}", role.getId(), currentHazard.getId());
-        String sql = MessageFormat.format("select * from cause2 where roleid = {0} and hazardid = {1}", role.getId(), currentHazard.getId());
-        System.out.println("hazard.Controllers.Views.CE_ICHA1Controller.PopulateCauseTable(): " + sql);
+        String sql = MessageFormat.format("select * from cause2 where roleid = {0} and hazardid = {1} group by role, disposition", role.getId(), currentHazard.getId());
         DataBaseConnection.sql(sql, "cause2", causeList);
         causeTable.setItems(causeList);
     }
@@ -198,9 +253,21 @@ public class CauseExplorationController implements Initializable {
 
         if (disposition.isPresent() && disposition.get().trim().length() > 0) {
             //Insert into cause2
+            String kindSql = "select * from roletoplay where roleid =" + role.getId();
+            ObservableList<Kind> kindList = DatabaseManager.getAllKindForRole(kindSql);
+
+            kindList.forEach(k -> {
+                String sql = MessageFormat.format("Insert into cause2 (hazardid, roleid, role, disposition,"
+                        + "environmentobjectid, environmentobject, isComplete) "
+                        + "values ({0}, {1}, ''{2}'', ''{3}'', {4} , ''{5}'', 0)", currentHazard.getId(), role.getId(), role.getRole(),
+                        disposition.get(), k.getId(), k.getKind());
+                System.out.println("hazard.Controllers.Views.CauseExplorationController.AddCause(): "+sql);
+                DataBaseConnection.insert(sql);
+            });
+            /*
             String sql = MessageFormat.format("Insert into cause2 (hazardid, roleid, role, disposition, isComplete) "
                     + "values ({0}, {1}, ''{2}'', ''{3}'', 0)", currentHazard.getId(), role.getId(), role.getRole(), disposition.get());
-            DataBaseConnection.insert(sql);
+            DataBaseConnection.insert(sql);*/
         }
     }
 

@@ -789,8 +789,20 @@ public class DataBaseConnection {
                     list.add((E) hz2);
                 } else if (table.contentEquals("cause2")) {
                     Cause2 cause = new Cause2(new Role(rs.getInt("roleid"), rs.getString("role")),
-                            rs.getString("disposition"), rs.getInt("id"));
+                            rs.getString("disposition"),
+                            new Kind(rs.getInt("environmentobjectid"), rs.getString("environmentobject")),
+                            rs.getString("preinitevent"), rs.getInt("isComplete"),
+                            new Relator(rs.getInt("relatorid"), rs.getString("relator")),
+                            rs.getInt("id"));
                     list.add((E) cause);
+                } else if (table.contentEquals("hazardexpansion")) {
+                    list.add((E) new HazardExpansion(new Kind(rs.getInt("rootkindid"), rs.getString("rootkind")),
+                            new Role(rs.getInt("rootroleid"), rs.getString("rootrole")),
+                            new Relator(rs.getInt("relatorid"), rs.getString("relator")),
+                            new Role(rs.getInt("linkedroleid"), rs.getString("linkedrole")),
+                            new Kind(rs.getInt("linkedkindid"), rs.getString("linkedkind")),
+                            rs.getInt("hazardid"), rs.getInt("id")
+                    ));
                 } else if (table.contentEquals("cause")) {
                     Cause c = new Cause(rs.getInt("id"), rs.getString("cause"), rs.getInt("hazardid"));
                     Double d = rs.getDouble("riskevaluation");
@@ -825,7 +837,7 @@ public class DataBaseConnection {
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
-            System.out.println("Yup" + e.getMessage() + "??");
+            System.out.println(e.getMessage());
         }
     }
 

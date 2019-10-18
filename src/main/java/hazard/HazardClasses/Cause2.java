@@ -19,10 +19,14 @@ public class Cause2 extends Play{
     private Integer isComplete;
     private Hazard2 hazard;
 
-    public Cause2(Role role, String disposition, int id) {
+    public Cause2(Role role, String disposition, Kind envObject, String event, int isComplete, Relator relator, int id) {
         super(id);
         this.role = role;
         this.disposition = disposition;
+        this.environmentObject = envObject;
+        this.preInitiationEvent = event;
+        this.isComplete = isComplete;
+        this.relator = relator;
     }
 
     public Hazard2 getHazard() {
