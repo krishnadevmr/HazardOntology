@@ -11,10 +11,8 @@ import hazard.HazardAnalysis.DataBase.DataBaseConnection;
 import hazard.HazardClasses.Cause2;
 import hazard.HazardClasses.Hazard2;
 import hazard.Helpers.Helper;
-import hazard.Helpers.UIHelper;
 import java.net.URL;
 import java.text.MessageFormat;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -33,7 +31,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author kmoothandas
  */
-public class CE_ICHA2Controller extends InitializableWithLoad {
+public class CE_IEMS2Controller extends InitializableWithLoad {
 
     /*Hazard Table*/
     @FXML
@@ -51,15 +49,15 @@ public class CE_ICHA2Controller extends InitializableWithLoad {
     private ObservableList<Hazard2> hazardList;
     private ObservableList<Hazard2> subHazardList;
 
-    /*Radio Buttons*/
+    /*Hazard Table Radios*/
     @FXML
-    private RadioButton hazardRadio;
+    private RadioButton iERadio;
 
     @FXML
     private ToggleGroup categoryRadio;
 
     @FXML
-    private RadioButton iCRadio;
+    private RadioButton mishapRadio;
 
     /*Possible Cause Table*/
     @FXML
@@ -74,32 +72,20 @@ public class CE_ICHA2Controller extends InitializableWithLoad {
     @FXML
     private TableColumn<Cause2, String> possibleCauseKind;
 
-    @FXML
-    private TableColumn<Cause2, String> causeEvent;
-
-    @FXML
-    private TableColumn<Cause2, String> causeComplete;
-
     private ObservableList<Cause2> possibleCauseList;
 
     /*Tracking Members*/
     private Hazard2 currentHazard;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        SetCellfactories();
-        InitializeDataLists();
-        Helper.PopulateHazardTable(hazardList, hazardTable);
-        onHazardCategory(null);
-        hazardRadio.setSelected(true);
-    }
-
     @FXML
-    void onShowExpansion(ActionEvent event) {
-        int index = hazardTable.getSelectionModel().selectedIndexProperty().get();
+    void onAddCause(ActionEvent event) {
+        int index = possibleCauseTable.getSelectionModel().selectedIndexProperty().get();
         if (index != -1) {
-            SingleHazardExpansionController controller = new SingleHazardExpansionController(hazardTable.getItems().get(index));
-            LoadController(controller, "/fxml/subviews/SingleHazardExpansion.fxml", "Hazard Expansion");
+            Cause2 possibleCause = possibleCauseTable.getItems().get(index);
+
+            String sql = MessageFormat.format("Update cause2 set isComplete = 1 "
+                    + "where id = {0}", possibleCause.getId());
+            DataBaseConnection.sqlUpdate(sql);
         }
     }
 
@@ -114,33 +100,37 @@ public class CE_ICHA2Controller extends InitializableWithLoad {
     }
 
     @FXML
-    void onAddEvent(ActionEvent event) {
-        int index = possibleCauseTable.getSelectionModel().selectedIndexProperty().get();
+    void onIECategory(ActionEvent event) {
+        Helper.FilterHazardByCategory(hazardList, subHazardList, 3);
+        hazardTable.setItems(subHazardList);
+        possibleCauseTable.setItems(null);
+        SetCauseTableHeaders(3);
+    }
+
+    @FXML
+    void onMishapCategory(ActionEvent event) {
+        Helper.FilterHazardByCategory(hazardList, subHazardList, 4);
+        hazardTable.setItems(subHazardList);
+        possibleCauseTable.setItems(null);
+        SetCauseTableHeaders(4);
+    }
+
+    @FXML
+    void onShowExpansion(ActionEvent event) {
+        int index = hazardTable.getSelectionModel().selectedIndexProperty().get();
         if (index != -1) {
-            Cause2 possibleCause = possibleCauseTable.getItems().get(index);
-            Optional<String> result = UIHelper.CreateAddDialog("Pre Initiating Event");
-            if (result.isPresent()) {
-                String sql = MessageFormat.format("Update cause2 set preinitevent = ''{0}'' , isComplete = 1 "
-                        + "where id = {1}", result.get(), possibleCause.getId());
-                DataBaseConnection.sqlUpdate(sql);
-            }
+            SingleHazardExpansionController controller = new SingleHazardExpansionController(hazardTable.getItems().get(index));
+            LoadController(controller, "/fxml/subviews/SingleHazardExpansion.fxml", "Hazard Expansion");
         }
     }
 
-    @FXML
-    void onHazardCategory(ActionEvent event) {
-        Helper.FilterHazardByCategory(hazardList, subHazardList, 1);
-        hazardTable.setItems(subHazardList);
-        possibleCauseTable.setItems(null);
-        SetCauseTableHeaders(1);
-    }
-
-    @FXML
-    void onICCategory(ActionEvent event) {
-        Helper.FilterHazardByCategory(hazardList, subHazardList, 2);
-        hazardTable.setItems(subHazardList);
-        possibleCauseTable.setItems(null);
-        SetCauseTableHeaders(2);
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        SetCellfactories();
+        InitializeDataLists();
+        Helper.PopulateHazardTable(hazardList, hazardTable);
+        onIECategory(null);
+        iERadio.setSelected(true);
     }
 
     private void SetCellfactories() {
@@ -153,9 +143,6 @@ public class CE_ICHA2Controller extends InitializableWithLoad {
         this.possibleCauseDisposition.setCellValueFactory(new PropertyValueFactory<>("disposition"));
         this.possibleCauseKind.setCellValueFactory((TableColumn.CellDataFeatures<Cause2, String> cellData)
                 -> Bindings.concat(cellData.getValue().getEnvironmentObject().getKind()));
-        this.causeEvent.setCellValueFactory(new PropertyValueFactory<>("preInitiationEvent"));
-        //causeComplete
-        this.causeComplete.setCellValueFactory((TableColumn.CellDataFeatures<Cause2, String> cellData) -> Bindings.concat(cellData.getValue().getIsComplete() == 1 ? "Yes" : "No"));
     }
 
     private void InitializeDataLists() {
@@ -164,7 +151,6 @@ public class CE_ICHA2Controller extends InitializableWithLoad {
     }
 
     private void PopulateHazardTable() {
-        hazardList = FXCollections.observableArrayList();
         DataBaseConnection.selectAll("hazard2", hazardList);
         hazardTable.setItems(hazardList);
     }
@@ -177,7 +163,7 @@ public class CE_ICHA2Controller extends InitializableWithLoad {
     }
 
     private void SetCauseTableHeaders(Integer category) {
-        if (category == 1) {
+        if (category == 4) {
             possibleCauseRole.setText("Hazard Element");
             possibleCauseDisposition.setText("Harm TruthMaker");
         } else {

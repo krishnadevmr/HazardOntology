@@ -22,13 +22,28 @@ public class InitializableWithLoad implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void LoadController(Initializable controller, String url, String title) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(url));
             loader.setController(controller);
+            AnchorPane pane = loader.load();
+
+            Stage stage = new Stage();
+            //stage.initModality(Modality.APPLICATION_MODAL);
+            //stage.initStyle(StageStyle.UNDECORATED);
+            stage.setTitle(title);
+            stage.setScene(new Scene(pane));
+            stage.show();
+        } catch (IOException | NullPointerException ex) {
+            System.err.println(ex);
+        }
+    }
+    
+        public void LoadController(String url, String title) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(url));
             AnchorPane pane = loader.load();
 
             Stage stage = new Stage();

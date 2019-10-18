@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hazard.Controllers.Views.AllCausesController">
+   <children>
+      <GridPane AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+          <RowConstraints vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="All Identified Hazards (Double click to see expansion)" />
+            <Label fx:id="causeLabel" text="Label" GridPane.rowIndex="2" />
+            <TableView fx:id="hazardTable" onMouseClicked="#onHazardClicked" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+              <columns>
+                <TableColumn fx:id="hazardId" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="hazardDescription" prefWidth="75.0" text="Description" />
+              </columns>
+            </TableView>
+            <TableView fx:id="causeTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
+              <columns>
+                <TableColumn fx:id="causeId" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="causeRole" prefWidth="75.0" text="Role" />
+                  <TableColumn fx:id="causeDisposition" prefWidth="75.0" text="Disposition" />
+                  <TableColumn fx:id="causeKind" prefWidth="75.0" text="Environment Object" />
+                  <TableColumn fx:id="causeRelator" prefWidth="75.0" text="Relator" />
+                  <TableColumn fx:id="causeEvent" prefWidth="75.0" text="Pre-Initiating Event" />
+              </columns>
+            </TableView>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

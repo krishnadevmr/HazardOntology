@@ -36,7 +36,7 @@ import javafx.stage.Stage;
  *
  * @author kmoothandas
  */
-public class MainPageController implements Initializable {
+public class MainPageController extends InitializableWithLoad {
 
     @FXML
     private VBox navBox;
@@ -121,6 +121,11 @@ public class MainPageController implements Initializable {
     @FXML
     void OnExport(ActionEvent event) {
         DatabaseManager.ExportToExcel((Stage) navBox.getScene().getWindow(), progressIndicator);
+    }
+
+    @FXML
+    void onShowCauses(ActionEvent event) {
+        LoadController( "/fxml/mainviews/AllCauses.fxml", "All Hazards and Causes");
     }
 
     @FXML

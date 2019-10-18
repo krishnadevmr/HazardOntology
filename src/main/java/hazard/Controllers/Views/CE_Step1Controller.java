@@ -5,6 +5,7 @@
  */
 package hazard.Controllers.Views;
 
+import hazard.Controllers.InitializableWithLoad;
 import hazard.Controllers.Subviews.SingleHazardExpansionController;
 import hazard.HazardAnalysis.DataBase.DataBaseConnection;
 import hazard.HazardClasses.Cause2;
@@ -14,125 +15,72 @@ import hazard.HazardClasses.Role;
 import hazard.Helpers.Helper;
 import hazard.Helpers.UIHelper;
 import hazard.Services.DatabaseManager;
-import java.io.IOException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.function.Consumer;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 /**
- * FXML Controller class
  *
  * @author kmoothandas
  */
-public class CauseExplorationController implements Initializable {
+public class CE_Step1Controller extends InitializableWithLoad {
 
     /*Hazard Table*/
     @FXML
-    private TableView<Hazard2> hazardTable;
+    TableView<Hazard2> hazardTable;
 
     @FXML
-    private TableColumn<Hazard2, String> hazardId;
+    TableColumn<Hazard2, String> hazardId;
 
     @FXML
-    private TableColumn<Hazard2, String> hazardDescription;
+    TableColumn<Hazard2, String> hazardDescription;
 
     @FXML
-    private TableColumn<Hazard2, String> hazardCategory;
+    TableColumn<Hazard2, String> hazardCategory;
 
-    private ObservableList<Hazard2> hazardList;
-    private ObservableList<Hazard2> subHazardList;
-
-    /*Radio Controllers for Hazard table*/
-    @FXML
-    private RadioButton hazardRadio;
-
-    @FXML
-    private ToggleGroup radioCategory;
-
-    @FXML
-    private RadioButton iCRadio;
-
-    @FXML
-    private RadioButton iERadio;
-
-    @FXML
-    private RadioButton mishapRadio;
+    ObservableList<Hazard2> hazardList;
+    ObservableList<Hazard2> subHazardList;
 
     /* Role Table*/
     @FXML
-    private TableView<Role> roleTable;
+    TableView<Role> roleTable;
 
     @FXML
-    private TableColumn<Role, String> roles;
+    TableColumn<Role, String> roles;
 
-    private ObservableList<Role> roleList;
+    ObservableList<Role> roleList;
 
     /*Cause Table*/
     @FXML
-    private TableView<Cause2> causeTable;
+    TableView<Cause2> causeTable;
 
     @FXML
-    private TableColumn<Cause2, String> causeRole;
+    TableColumn<Cause2, String> causeRole;
 
     @FXML
-    private TableColumn<Cause2, String> causeDisposition;
+    TableColumn<Cause2, String> causeDisposition;
 
-    private ObservableList<Cause2> causeList;
+    ObservableList<Cause2> causeList;
 
     /*Trackers*/
-    private Hazard2 currentHazard;
+    Hazard2 currentHazard;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         SetCellfactories();
         InitializeDataLists();
         Helper.PopulateHazardTable(hazardList, hazardTable);
-        //PopulateHazardTable();
-        onHazardCategory(null);
-        hazardRadio.setSelected(true);
-    }
-
-    @FXML
-    void onHazardCategory(ActionEvent event) {
-        Helper.FilterHazardByCategory(hazardList, subHazardList, 1);
-        hazardTable.setItems(subHazardList);
-    }
-
-    @FXML
-    void onICCategory(ActionEvent event) {
-        Helper.FilterHazardByCategory(hazardList, subHazardList, 2);
-        hazardTable.setItems(subHazardList);
-    }
-
-    @FXML
-    void onIECategory(ActionEvent event) {
-        Helper.FilterHazardByCategory(hazardList, subHazardList, 3);
-        hazardTable.setItems(subHazardList);
-    }
-
-    @FXML
-    void onMishapCategory(ActionEvent event) {
-        Helper.FilterHazardByCategory(hazardList, subHazardList, 4);
-        hazardTable.setItems(subHazardList);
+        SetCategory();
     }
 
     @FXML
@@ -175,7 +123,7 @@ public class CauseExplorationController implements Initializable {
         }
     }
 
-    private void SetCellfactories() {
+    void SetCellfactories() {
         this.hazardId.setCellValueFactory((TableColumn.CellDataFeatures<Hazard2, String> cellData) -> Bindings.concat("HD", cellData.getValue().getId()));
         this.hazardDescription.setCellValueFactory(new PropertyValueFactory<>("hazardDescription"));
         this.hazardCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
@@ -187,19 +135,12 @@ public class CauseExplorationController implements Initializable {
         this.causeDisposition.setCellValueFactory(new PropertyValueFactory<>("disposition"));
     }
 
-    /*
-    private void PopulateHazardTable() {
-        hazardList = FXCollections.observableArrayList();
-        subHazardList = FXCollections.observableArrayList();
-        DataBaseConnection.selectAll("hazard2", hazardList);
-        hazardTable.setItems(hazardList);
-    }*/
-    private void InitializeDataLists() {
+    void InitializeDataLists() {
         hazardList = FXCollections.observableArrayList();
         subHazardList = FXCollections.observableArrayList();
     }
 
-    private void PopulateRoleTable(Hazard2 hazard) {
+    void PopulateRoleTable(Hazard2 hazard) {
         roleList = FXCollections.observableArrayList();
         String sql = MessageFormat.format("select * from role where id in "
                 + "(SELECT rootroleid FROM hazardexpansion where hazardid = {0} "
@@ -209,15 +150,14 @@ public class CauseExplorationController implements Initializable {
         UpdateTableHeaders(hazard);
     }
 
-    private void PopulateCauseTable(Role role) {
+    void PopulateCauseTable(Role role) {
         causeList = FXCollections.observableArrayList();
-        //String sql = MessageFormat.format("select * from hazard2 where hazardroleid = {0} and id = {1}", role.getId(), currentHazard.getId());
         String sql = MessageFormat.format("select * from cause2 where roleid = {0} and hazardid = {1} group by role, disposition", role.getId(), currentHazard.getId());
         DataBaseConnection.sql(sql, "cause2", causeList);
         causeTable.setItems(causeList);
     }
 
-    private void UpdateTableHeaders(Hazard2 hazard) {
+    void UpdateTableHeaders(Hazard2 hazard) {
         switch (hazard.getCategoryId()) {
             case 1:
             case 4:
@@ -230,24 +170,7 @@ public class CauseExplorationController implements Initializable {
         }
     }
 
-    private void LoadController(Initializable controller, String url, String title) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(url));
-            loader.setController(controller);
-            AnchorPane pane = loader.load();
-
-            Stage stage = new Stage();
-            //stage.initModality(Modality.APPLICATION_MODAL);
-            //stage.initStyle(StageStyle.UNDECORATED);
-            stage.setTitle(title);
-            stage.setScene(new Scene(pane));
-            stage.show();
-        } catch (IOException | NullPointerException ex) {
-            System.err.println(ex);
-        }
-    }
-
-    private void AddCause(Role role) {
+    void AddCause(Role role) {
 
         Optional<String> disposition = UIHelper.CreateAddDialog("Disposition");
 
@@ -261,18 +184,13 @@ public class CauseExplorationController implements Initializable {
                         + "environmentobjectid, environmentobject, isComplete) "
                         + "values ({0}, {1}, ''{2}'', ''{3}'', {4} , ''{5}'', 0)", currentHazard.getId(), role.getId(), role.getRole(),
                         disposition.get(), k.getId(), k.getKind());
-                System.out.println("hazard.Controllers.Views.CauseExplorationController.AddCause(): "+sql);
                 DataBaseConnection.insert(sql);
             });
-            /*
-            String sql = MessageFormat.format("Insert into cause2 (hazardid, roleid, role, disposition, isComplete) "
-                    + "values ({0}, {1}, ''{2}'', ''{3}'', 0)", currentHazard.getId(), role.getId(), role.getRole(), disposition.get());
-            DataBaseConnection.insert(sql);*/
         }
     }
 
-    private void SetCauseTableHeaders() {
-        if (currentHazard.getCategoryId() == 1) {
+    void SetCauseTableHeaders() {
+        if (currentHazard.getCategoryId() == 1 || currentHazard.getCategoryId() == 4) {
             causeRole.setText("Hazard Element");
             causeDisposition.setText("Harm TruthMaker");
         } else {
@@ -280,5 +198,7 @@ public class CauseExplorationController implements Initializable {
             causeDisposition.setText("Initiating Factor");
         }
     }
-
+    
+    void SetCategory(){
+    }
 }
