@@ -50,9 +50,9 @@
          <children>
             <AnchorPane prefHeight="400.0" prefWidth="204.0" style="-fx-border-width: 0;" VBox.vgrow="ALWAYS">
                <children>
-                  <SplitPane dividerPositions="0.52" layoutY="27.0" prefHeight="413.0" prefWidth="204.0" style="-fx-border-color: transparent;" AnchorPane.bottomAnchor="-1.0" AnchorPane.topAnchor="27.0">
+                  <SplitPane dividerPositions="0.40202702702702703" layoutY="27.0" prefHeight="413.0" prefWidth="225.0" style="-fx-border-color: transparent;" AnchorPane.bottomAnchor="-1.0" AnchorPane.topAnchor="27.0">
                     <items>
-                      <AnchorPane fx:id="firstPane" minHeight="0.0" minWidth="0.0" prefHeight="375.0" prefWidth="99.0">
+                      <AnchorPane fx:id="firstPane" minHeight="0.0" minWidth="0.0" prefHeight="375.0" prefWidth="75.0">
                            <children>
                               <ToggleButton fx:id="ohiButton1" layoutY="1.0" mnemonicParsing="false" onAction="#onOhi1" text="ToggleButton" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.6666666666666572">
                                  <opaqueInsets>
