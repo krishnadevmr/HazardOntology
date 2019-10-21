@@ -81,8 +81,6 @@
                      </toggleGroup>
                   </RadioButton>
                   <RadioButton fx:id="initCRadio" layoutX="69.0" layoutY="1.0" mnemonicParsing="false" onAction="#onCategoryClicked" text="Initiating Condition" toggleGroup="$hazardCategoryRadio" />
-                  <RadioButton fx:id="initERadio" layoutX="202.0" layoutY="1.0" mnemonicParsing="false" onAction="#onCategoryClicked" text="Initiating Event" toggleGroup="$hazardCategoryRadio" />
-                  <RadioButton fx:id="mishapRadio" layoutX="314.0" layoutY="1.0" mnemonicParsing="false" onAction="#onCategoryClicked" text="Mishap" toggleGroup="$hazardCategoryRadio" />
                </children>
             </AnchorPane>
             <Button mnemonicParsing="false" onAction="#onShowExpansion" text="Show Expansion" GridPane.rowIndex="2" />

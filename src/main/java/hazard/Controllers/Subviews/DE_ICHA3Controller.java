@@ -5,6 +5,7 @@
  */
 package hazard.Controllers.Subviews;
 
+import hazard.Controllers.Views.CHDController;
 import hazard.Controllers.Views.DE_ICHA1Controller;
 import hazard.HazardAnalysis.DataBase.DataBaseConnection;
 import hazard.HazardClasses.HazardExpansion;
@@ -15,7 +16,6 @@ import hazard.Services.DatabaseManager;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -38,13 +38,15 @@ public class DE_ICHA3Controller implements Initializable {
     //private Role primaryRole;
     private HazardExpansion hazardExpansion;
 
-    private DE_ICHA1Controller DEController;
-
+    //private DE_ICHA1Controller DEController;
+    
+    private DE_Step1 DEController;
+    
     private final String relatorLabelTemplate = "Relators for Role: ";
 
     private final String roleLabelTemplate = "Roles for relator: ";
 
-    public DE_ICHA3Controller(HazardExpansion hazardExpansion, DE_ICHA1Controller DEController) {
+    public DE_ICHA3Controller(HazardExpansion hazardExpansion, DE_Step1 DEController) {
         this.hazardExpansion = hazardExpansion;
         this.DEController = DEController;
     }
@@ -115,7 +117,7 @@ public class DE_ICHA3Controller implements Initializable {
             hazardExpansion.setLinkedRole(role);
             InsertIntoExpansionTable();
             PopulateExpansionTable();
-            DEController.HighlightStep(4, DEController.buttonController.step4);
+            DEController.HighlightStep(4);
         }
     }
 
@@ -126,7 +128,7 @@ public class DE_ICHA3Controller implements Initializable {
             Relator relator = relatorTable.getItems().get(index);
             PopulateRoleTable(relator);
             hazardExpansion.setRelator(relator);
-            DEController.HighlightStep(3, DEController.buttonController.step3);
+            DEController.HighlightStep(3);
         }
     }
 

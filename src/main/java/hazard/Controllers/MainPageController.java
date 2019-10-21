@@ -22,6 +22,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ToggleButton;
@@ -81,27 +83,41 @@ public class MainPageController extends InitializableWithLoad {
 
     @FXML
     void onSare1(ActionEvent event) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Not Implemented");
+        alert.setContentText("This is not implemented yet");
 
+        alert.showAndWait();
+        ResetUI();
     }
 
     @FXML
     void onSare2(ActionEvent event) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Not Implemented");
+        alert.setContentText("This is not implemented yet");
 
+        alert.showAndWait();
+        ResetUI();
     }
 
     @FXML
     void onSare3(ActionEvent event) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Not Implemented");
+        alert.setContentText("This is not implemented yet");
 
+        alert.showAndWait();
+        ResetUI();
     }
 
     @FXML
     void loadSession(ActionEvent event) {
-        //navBox.setVisible(true);
-        //descriptionBox.setVisible(true);
-        //LoadDatabase((Stage)navBox.getScene().getWindow());
         DatabaseManager.LoadDatabaseSession((Stage) navBox.getScene().getWindow());
         navBox.setVisible(true);
         descriptionBox.setVisible(true);
+        ResetUI();
+        ohiButton1.fire();
     }
 
     @FXML
@@ -125,7 +141,7 @@ public class MainPageController extends InitializableWithLoad {
 
     @FXML
     void onShowCauses(ActionEvent event) {
-        LoadController( "/fxml/mainviews/AllCauses.fxml", "All Hazards and Causes");
+        LoadController("/fxml/mainviews/AllCauses.fxml", "All Hazards and Causes");
     }
 
     @FXML
@@ -168,7 +184,7 @@ public class MainPageController extends InitializableWithLoad {
     public AnchorPane centerPane;
 
     @FXML
-    private AnchorPane descriptionBox;
+    public AnchorPane descriptionBox;
 
     @FXML
     public Label phaseID;
@@ -283,5 +299,13 @@ public class MainPageController extends InitializableWithLoad {
         } catch (IOException | NullPointerException ex) {
             System.err.println(ex);
         }
+    }
+
+    void ResetUI() {
+        stepDescription.setText("");
+        phase.setText("");
+        stepNumber.setText("");
+        secondPane.getChildren().clear();
+        centerPane.getChildren().clear();
     }
 }

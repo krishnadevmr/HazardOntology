@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" >
+       <children>
+      <GridPane hgap="5.0" layoutY="6.0" prefHeight="385.0" prefWidth="590.0" vgap="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="12.0" minHeight="20.0" prefHeight="12.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="218.00000190734863" minHeight="10.0" prefHeight="106.66666666666666" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="194.33329772949222" minHeight="10.0" prefHeight="119.33332316080731" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="177.99999999999997" minHeight="10.0" prefHeight="99.00000000000003" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TableView fx:id="hazardTable" onMouseClicked="#onHazardClicked" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="1">
+              <columns>
+                <TableColumn fx:id="hazardId" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="mishapVictim" prefWidth="75.0" text="Mishap Victims" />
+                  <TableColumn fx:id="exposure" prefWidth="75.0" text="Exposure" />
+                  <TableColumn fx:id="hazardElement" prefWidth="75.0" text="Haard Element" />
+                  <TableColumn fx:id="truthmaker" prefWidth="75.0" text="Disposition" />
+                  <TableColumn fx:id="hazardDescription" prefWidth="75.0" text="Description" />
+                  <TableColumn fx:id="isExpanded" prefWidth="75.0" text="IsExpanded" />
+              </columns>
+            </TableView>
+            <Label text="Hazard Descriptions" />
+            <Label fx:id="kindTableLabel" text="All kinds for Hazard HD" GridPane.rowIndex="3" />
+            <TableView fx:id="victimKindTable" onMouseClicked="#onVictimKindSelected" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
+              <columns>
+                <TableColumn fx:id="victimKinds" prefWidth="75.0" text="Kinds that play Victim" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <TableView fx:id="hazardKindTable" onMouseClicked="#onHazardKindSelected" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
+              <columns>
+                <TableColumn fx:id="hazardKinds" prefWidth="75.0" text="Kinds that play Hazard Elements" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <TableView fx:id="roleTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="4" GridPane.rowSpan="2">
+              <columns>
+                <TableColumn fx:id="roles" prefWidth="75.0" text="Roles" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <Label text="All roles that can be played by the selected kind" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
+            <Button mnemonicParsing="false" onAction="#onIdentifyRelators" text="Identify Relators" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3">
+               <children>
+                  <RadioButton fx:id="initERadio" layoutX="41.0" layoutY="1.0" mnemonicParsing="false" onAction="#onCategoryClicked" text="Initiating Event">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="hazardCategoryRadio" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton fx:id="mishapRadio" layoutX="172.0" layoutY="1.0" mnemonicParsing="false" onAction="#onCategoryClicked" text="Mishap" toggleGroup="$hazardCategoryRadio" />
+               </children>
+            </AnchorPane>
+            <Button mnemonicParsing="false" onAction="#onShowExpansion" text="Show Expansion" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

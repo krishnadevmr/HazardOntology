@@ -5,6 +5,8 @@
  */
 package hazard.Controllers.Views;
 
+import hazard.Controllers.InitializableWithLoad;
+import hazard.Controllers.Subviews.SingleHazardExpansionController;
 import hazard.HazardAnalysis.DataBase.DataBaseConnection;
 import hazard.HazardClasses.Hazard2;
 import java.net.URL;
@@ -14,7 +16,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -24,7 +25,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
  *
  * @author kmoothandas
  */
-public class CE_ICHA3Controller implements Initializable {
+public class CE_ICHA3Controller extends InitializableWithLoad {
 
 
     /*Hazard Table*/
@@ -39,12 +40,16 @@ public class CE_ICHA3Controller implements Initializable {
 
     @FXML
     private TableColumn<Hazard2, String> hazardCategory;
-    
+
     private ObservableList<Hazard2> hazardList;
 
     @FXML
     void onShowExpansion(ActionEvent event) {
-
+        int index = hazardTable.getSelectionModel().selectedIndexProperty().get();
+        if (index != -1) {
+            SingleHazardExpansionController controller = new SingleHazardExpansionController(hazardTable.getItems().get(index));
+            LoadController(controller, "/fxml/subviews/SingleHazardExpansion.fxml", "Hazard Expansion");
+        }
     }
 
     @Override
@@ -64,6 +69,5 @@ public class CE_ICHA3Controller implements Initializable {
         DataBaseConnection.selectAll("hazard2", hazardList);
         hazardTable.setItems(hazardList);
     }
-     
-    
+
 }

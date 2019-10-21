@@ -12,7 +12,7 @@
             </toggleGroup>
         </ToggleButton>
         <ToggleButton layoutY="26.0" mnemonicParsing="false" onAction="#onICHAStep2" prefHeight="25.0" prefWidth="108.0" text="IC/HA-CE-Step 2" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-        <ToggleButton layoutY="51.0" mnemonicParsing="false" onAction="#onICHAStep3" prefHeight="25.0" prefWidth="108.0" text="IC/HA-CE-Step 3" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+        <ToggleButton disable="true" layoutY="51.0" mnemonicParsing="false" onAction="#onICHAStep3" prefHeight="25.0" prefWidth="108.0" text="IC/HA-CE-Step 3" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
         <ToggleButton layoutY="76.0" mnemonicParsing="false" onAction="#onICHAStep4" prefHeight="25.0" prefWidth="108.0" text="IC/HA-CE-Step 4" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
         
         <ToggleButton layoutY="125.0" mnemonicParsing="false" onAction="#onIEMSStep1" prefHeight="25.0" prefWidth="108.0" text="IE/MS-CE-Step 1" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />

@@ -67,9 +67,9 @@
                               <ToggleButton fx:id="ochButton1" layoutX="1.0" layoutY="76.0" mnemonicParsing="false" onAction="#onOch1" text="ToggleButton" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-0.3333333333333428" />
                               <ToggleButton fx:id="ochButton2" layoutY="101.0" mnemonicParsing="false" onAction="#onOch2" text="ToggleButton" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-0.3333333333333428" />
                               <ToggleButton fx:id="ochButton3" layoutY="126.0" mnemonicParsing="false" onAction="#onOch3" text="ToggleButton" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-0.3333333333333428" />
-                              <ToggleButton fx:id="sareButton1" layoutY="151.0" mnemonicParsing="false" onAction="#onSare1" text="ToggleButton" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-0.3333333333333428" />
-                              <ToggleButton fx:id="sareButton2" layoutY="175.0" mnemonicParsing="false" onAction="#onSare2" text="ToggleButton" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-0.3333333333333428" />
-                              <ToggleButton fx:id="sareButton3" layoutY="200.0" mnemonicParsing="false" onAction="#onSare3" text="ToggleButton" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.6666666666666572" />
+                              <ToggleButton fx:id="sareButton1" disable="true" layoutY="151.0" mnemonicParsing="false" onAction="#onSare1" text="ToggleButton" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-0.3333333333333428" />
+                              <ToggleButton fx:id="sareButton2" disable="true" layoutY="175.0" mnemonicParsing="false" onAction="#onSare2" text="ToggleButton" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-0.3333333333333428" />
+                              <ToggleButton fx:id="sareButton3" disable="true" layoutY="200.0" mnemonicParsing="false" onAction="#onSare3" text="ToggleButton" toggleGroup="$toggleGroup" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.6666666666666572" />
                            </children>
                         </AnchorPane>
                       <AnchorPane fx:id="secondPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="110.0" />

@@ -8,6 +8,7 @@ package hazard.Controllers.Navigation;
 import hazard.Constants.StepDescription;
 import hazard.Controllers.MainPageController;
 import hazard.Controllers.Views.DE_ICHA1Controller;
+import hazard.Controllers.Views.DE_IEMSController;
 import hazard.Helpers.UIHelper;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -36,7 +37,7 @@ public class HazardDescriptionExpansionController implements Initializable {
 
     /*Hazard and IC*/
     @FXML
-    private ToggleButton step1;
+    public ToggleButton step1;
 
     @FXML
     private ToggleGroup toggleGroup;
@@ -52,16 +53,16 @@ public class HazardDescriptionExpansionController implements Initializable {
 
     /*Mishap and IE*/
     @FXML
-    private ToggleButton SecondStep1;
+    public ToggleButton SecondStep1;
 
     @FXML
-    private ToggleButton SecondStep2;
+    public ToggleButton SecondStep2;
 
     @FXML
-    private ToggleButton SecondStep3;
+    public ToggleButton SecondStep3;
 
     @FXML
-    private ToggleButton SecondStep4;
+    public ToggleButton SecondStep4;
 
     private final String phase = "Hazard Description Expansion";
 
@@ -69,12 +70,14 @@ public class HazardDescriptionExpansionController implements Initializable {
     void onStep1(ActionEvent event) {
         DE_ICHA1Controller controller = new DE_ICHA1Controller(this);
         mainPageController.LoadPaneFromController("/fxml/mainviews/DE_ICHA1.fxml", controller, mainPageController.centerPane,
-                phase, "1", StepDescription.DEICHASTEP1);
+                phase, "1-4", StepDescription.DEICHASTEP1);
     }
 
     @FXML
     void onMishapOrIE(ActionEvent event) {
-
+        DE_IEMSController controller = new DE_IEMSController(this);
+        mainPageController.LoadPaneFromController("/fxml/mainviews/DE_IEMS.fxml", controller, mainPageController.centerPane,
+                phase, "1-4", StepDescription.DEICHASTEP1);
     }
 
     @Override

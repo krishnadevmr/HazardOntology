@@ -36,37 +36,37 @@ public class CausesExplorationController implements Initializable {
     @FXML
     void onICHAStep1(ActionEvent event) {
         mainPageController.LoadPaneFromController("/fxml/mainviews/CE_ICHA1.fxml", mainPageController.centerPane,
-                phase, "1", StepDescription.CEICHASTEP1);
+                phase, "1", StepDescription.CESTEP1);
     }
 
     @FXML
     void onICHAStep2(ActionEvent event) {
         mainPageController.LoadPaneFromController("/fxml/mainviews/CE_ICHA2.fxml", mainPageController.centerPane,
-                phase, "2", StepDescription.CEICHASTEP1);
+                phase, "2", StepDescription.CEICHASTEP2);
     }
 
     @FXML
     void onICHAStep3(ActionEvent event) {
         mainPageController.LoadPaneFromController("/fxml/mainviews/CE_ICHA3.fxml", mainPageController.centerPane,
-                phase, "3", StepDescription.CEICHASTEP1);
+                phase, "3", StepDescription.CEICHASTEP3);
     }
 
     @FXML
     void onICHAStep4(ActionEvent event) {
         mainPageController.LoadPaneFromController("/fxml/mainviews/CE_ICHA4.fxml", mainPageController.centerPane,
-                phase, "4", StepDescription.CEICHASTEP1);
+                phase, "4", StepDescription.CEICHASTEP4);
     }
 
     @FXML
     void onIEMSStep1(ActionEvent event) {
         mainPageController.LoadPaneFromController("/fxml/mainviews/CE_IEMS1.fxml", mainPageController.centerPane,
-                phase, "1", StepDescription.CEICHASTEP1);
+                phase, "1", StepDescription.CESTEP1);
     }
 
     @FXML
     void onIEMSStep2(ActionEvent event) {
         mainPageController.LoadPaneFromController("/fxml/mainviews/CE_IEMS2.fxml", mainPageController.centerPane,
-                phase, "2", StepDescription.CEICHASTEP1);
+                phase, "2", StepDescription.CEIEMSSTEP2);
     }
 
     @Override
