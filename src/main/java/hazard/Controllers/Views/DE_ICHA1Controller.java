@@ -5,36 +5,19 @@
  */
 package hazard.Controllers.Views;
 
-import hazard.Controllers.InitializableWithLoad;
 import hazard.Controllers.Navigation.HazardDescriptionExpansionController;
-import hazard.Controllers.Subviews.DE_ICHA3Controller;
 import hazard.Controllers.Subviews.DE_Step1;
-import hazard.Controllers.Subviews.SingleHazardExpansionController;
-import hazard.HazardAnalysis.DataBase.DataBaseConnection;
 import hazard.HazardClasses.Hazard2;
-import hazard.HazardClasses.HazardExpansion;
-import hazard.HazardClasses.Kind;
-import hazard.HazardClasses.Role;
 import hazard.Helpers.UIHelper;
-import hazard.Services.DatabaseManager;
 import java.net.URL;
-import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javafx.beans.binding.Bindings;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -69,7 +52,6 @@ public class DE_ICHA1Controller extends DE_Step1 {
         hazardCategoryRadio.selectToggle(hazardRadio);
         UpdateCategoryMap();
         PopulateHazardTable(categoryMap.get(hazardCategoryRadio.getSelectedToggle()));
-        System.out.println("hazard.Controllers.Views.DE_ICHA1Controller.initialize()" + hazardCategoryRadio.getSelectedToggle().toString());
         currentStep = 1;
         buttonMap = new HashMap<>();
         buttonMap.put(1, buttonController.step1);

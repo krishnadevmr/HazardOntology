@@ -173,6 +173,12 @@ public class DE_ICHA3Controller implements Initializable {
     private void PopulateRoleTable(Relator relator) {
         roleList = FXCollections.observableArrayList();
         DatabaseManager.GetRelatorsOrRole(relator.getId(), "relatorid", "rolefromrelatortorole", roleList);
+        roleList.forEach(r -> {
+            if(r.getRole().equals(hazardExpansion.getRootRole().getRole())){
+            roleList.remove(r);
+            }
+        });
+        
         allRoleTable.setItems(roleList);
         roleLabel.setText(roleLabelTemplate + relator.getRelator());
     }
