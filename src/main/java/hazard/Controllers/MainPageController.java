@@ -12,10 +12,13 @@ import hazard.Constants.StringConstants;
 import hazard.Controllers.Navigation.CausesExplorationController;
 import hazard.Controllers.Navigation.HazardDescriptionCharacterizationController;
 import hazard.Controllers.Navigation.HazardDescriptionExpansionController;
+import hazard.Controllers.Navigation.NavigationInterface;
 import hazard.Helpers.UIHelper;
 import hazard.Services.DatabaseManager;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -48,6 +51,8 @@ public class MainPageController extends InitializableWithLoad {
 
         SystemDescriptionFormalizationController controller = new SystemDescriptionFormalizationController(this);
         LoadPaneFromController("/fxml/navigation/SystemDescriptionFormalization.fxml", controller, secondPane);
+        currentPhase = 1;
+        navigationController = controller;
         //phaseID.setText(controller.phase);
     }
 
@@ -55,30 +60,40 @@ public class MainPageController extends InitializableWithLoad {
     void onOhi2(ActionEvent event) {
         MishapVictimIdentificationController controller = new MishapVictimIdentificationController(this);
         LoadPaneFromController("/fxml/navigation/MishapVictimIdentification.fxml", controller, secondPane);
+        navigationController = controller;
+        currentPhase = 2;
     }
 
     @FXML
     void onOhi3(ActionEvent event) {
         HazardPopulationController controller = new HazardPopulationController(this);
         LoadPaneFromController("/fxml/navigation/HazardPopulation.fxml", controller, secondPane);
+        currentPhase = 3;
+        navigationController = controller;
     }
 
     @FXML
     void onOch1(ActionEvent event) {
         HazardDescriptionCharacterizationController controller = new HazardDescriptionCharacterizationController(this);
         LoadPaneFromController("/fxml/navigation/HazardDescriptionCharacterization.fxml", controller, secondPane);
+        currentPhase = 4;
+        navigationController = controller;
     }
 
     @FXML
     void onOch2(ActionEvent event) {
         HazardDescriptionExpansionController controller = new HazardDescriptionExpansionController(this);
         LoadPaneFromController("/fxml/navigation/HazardDescriptionExpansion.fxml", controller, secondPane);
+        currentPhase = 5;
+        navigationController = controller;
     }
 
     @FXML
     void onOch3(ActionEvent event) {
         CausesExplorationController controller = new CausesExplorationController(this);
         LoadPaneFromController("/fxml/navigation/CausesExploration.fxml", controller, secondPane);
+        navigationController = controller;
+        currentPhase = 6;
     }
 
     @FXML
@@ -143,6 +158,37 @@ public class MainPageController extends InitializableWithLoad {
     void onShowCauses(ActionEvent event) {
         LoadController("/fxml/mainviews/AllCauses.fxml", "All Hazards and Causes");
     }
+
+    @FXML
+    void onNextStep(ActionEvent event) {
+        if (!navigationController.NextStep()) {
+            if (currentPhase < totalPhases) {
+                currentPhase += 1;
+                isBackwardsNavigation = false;
+                phaseMap.get(currentPhase).fire();
+            }
+        }
+    }
+
+    @FXML
+    void onPrevStep(ActionEvent event) {
+        if (!navigationController.PreviousStep()) {
+            System.out.println("Changing Phase Down");
+            if (currentPhase > 1) {
+                currentPhase -= 1;
+                isBackwardsNavigation = true;
+                phaseMap.get(currentPhase).fire();
+            }
+        }
+    }
+
+    /*Tracking*/
+    public Integer currentPhase;
+    public Integer currentStep;
+    NavigationInterface navigationController;
+    Map<Integer, ToggleButton> phaseMap;
+    public Integer totalPhases;
+    public Boolean isBackwardsNavigation;
 
     @FXML
     private AnchorPane firstPane;
@@ -212,6 +258,11 @@ public class MainPageController extends InitializableWithLoad {
         descriptionBox.setVisible(false);
         navBox.setVisible(false);
         //LoadCenterIntoMain(new SDF1Controller());
+        currentPhase = 0;
+        currentStep = 0;
+        phaseMap = CreateMap();
+        totalPhases = 6;
+        isBackwardsNavigation = false;
     }
 
     private void setButtonTexts() {
@@ -224,6 +275,17 @@ public class MainPageController extends InitializableWithLoad {
         sareButton1.setText(StringConstants.MAIN_HEADING_SARE_ACT_1);
         sareButton2.setText(StringConstants.MAIN_HEADING_SARE_ACT_2);
         sareButton3.setText(StringConstants.MAIN_HEADING_SARE_ACT_3);
+    }
+
+    public Map<Integer, ToggleButton> CreateMap() {
+        Map<Integer, ToggleButton> commands = new HashMap<>();
+        commands.put(1, ohiButton1);
+        commands.put(2, ohiButton2);
+        commands.put(3, ohiButton3);
+        commands.put(4, ochButton1);
+        commands.put(5, ochButton2);
+        commands.put(6, ochButton3);
+        return commands;
     }
 
     public void LoadPaneFromController(String url, Initializable controller, AnchorPane parent) {

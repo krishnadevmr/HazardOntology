@@ -9,10 +9,11 @@ import hazard.Constants.StepDescription;
 import hazard.Controllers.MainPageController;
 import hazard.Helpers.UIHelper;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
@@ -22,7 +23,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author kmoothandas
  */
-public class HazardPopulationController implements Initializable {
+public class HazardPopulationController extends NavigationInterface {
 
     public HazardPopulationController(MainPageController mainPageController) {
         this.mainPageController = mainPageController;
@@ -50,13 +51,14 @@ public class HazardPopulationController implements Initializable {
 
     @FXML
     private ToggleButton step5;
-    
+
     private final String phase = "Hazard Population";
 
     @FXML
     void onStep1(ActionEvent event) {
         mainPageController.LoadPaneFromController("/fxml/mainviews/HP.fxml", mainPageController.centerPane,
                 phase, "1", StepDescription.HPSTEP);
+        SetCurrentStep(1);
     }
 
     @FXML
@@ -82,6 +84,19 @@ public class HazardPopulationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         UIHelper.getAllButtonsToggle(pane);
+
+        //step1.fire();
+        //SetCurrentStep(1);
+        stepMap = CreateMap();
+        setStepMap(stepMap);
+        setTotalSteps(stepMap.size());
+        SetInitialStep(mainPageController.isBackwardsNavigation);
+    }
+
+    public Map<Integer, ToggleButton> CreateMap() {
+        Map<Integer, ToggleButton> commands = new HashMap<>();
+        commands.put(1, step1);
+        return commands;
     }
 
 }

@@ -69,7 +69,6 @@ public class SDF3Controller implements Initializable {
         kindList = FXCollections.observableArrayList();
         DataBaseConnection.selectAll("kind", kindList);
         kindTable.setItems(kindList);
-        System.out.println("hazard.Controllers.Views.SDF3Controller.PopulateTablefromDatabase()");
     }
 
     @FXML
