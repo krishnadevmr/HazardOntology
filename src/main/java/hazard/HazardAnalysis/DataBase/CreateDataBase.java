@@ -72,7 +72,7 @@ public class CreateDataBase {
                 + ")";
         String sql13 = "CREATE TABLE cause2 (id INTEGER PRIMARY KEY, hazardid INTEGER NOT NULL, roleid INTEGER, role TEXT,"
                 + "disposition TEXT, environmentobjectid INTEGER, environmentobject TEXT, relatorid INTEGER , relator TEXT,"
-                + "preinitevent TEXT, isComplete INTEGER, CONSTRAINT fk_hazard FOREIGN KEY (hazardid REFERENCES hazard2(id),"
+                + "preinitevent TEXT, isComplete INTEGER, CONSTRAINT fk_hazard FOREIGN KEY (hazardid) REFERENCES hazard2(id),"
                 + "CONSTRAINT fk_kind FOREIGN KEY (environmentobjectid) REFERENCES kind(id),"
                 + "CONSTRAINT fk_role FOREIGN KEY (roleid) REFERENCES role(id),"
                 + "CONSTRAINT fk_relator FOREIGN KEY (relatorid) REFERENCES relator(id) )";

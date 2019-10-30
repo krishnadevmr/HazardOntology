@@ -175,7 +175,6 @@ public class CE_Step1Controller extends InitializableWithLoad {
         Optional<String> disposition = UIHelper.CreateAddDialog("Disposition");
 
         if (disposition.isPresent() && disposition.get().trim().length() > 0) {
-            //Insert into cause2
             String kindSql = "select * from roletoplay where roleid =" + role.getId();
             ObservableList<Kind> kindList = DatabaseManager.getAllKindForRole(kindSql);
 

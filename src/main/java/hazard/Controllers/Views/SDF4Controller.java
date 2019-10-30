@@ -16,7 +16,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -116,13 +115,10 @@ public class SDF4Controller implements Initializable {
     private void PopulateTablefromDatabase() {
         roleList = FXCollections.observableArrayList();
         DataBaseConnection.selectAll("role", roleList);
-        //kindId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        //kindDescription.setCellValueFactory(new PropertyValueFactory<>("kind"));
         roleTable.setItems(roleList);
     }
 
     private void SetRelators(int index) {
-        //int index = tbRole.getSelectionModel().selectedIndexProperty().get();
         int id = roleTable.getItems().get(index).getId();
         DataBaseConnection.sql(
                 "SELECT * FROM relator WHERE NOT EXISTS(SELECT * FROM relatortorole WHERE relator.id=relatortorole.relatorid AND "

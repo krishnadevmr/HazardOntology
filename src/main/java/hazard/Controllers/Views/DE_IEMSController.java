@@ -48,7 +48,6 @@ public class DE_IEMSController extends DE_Step1 {
         hazardCategoryRadio.selectToggle(initERadio);
         UpdateCategoryMap();
         PopulateHazardTable(categoryMap.get(hazardCategoryRadio.getSelectedToggle()));
-        //System.out.println("hazard.Controllers.Views.DE_ICHA1Controller.initialize()"+hazardCategoryRadio.getSelectedToggle().toString());
         currentStep = 1;
         buttonMap = new HashMap<>();
         buttonMap.put(1, buttonController.SecondStep1);
@@ -56,15 +55,6 @@ public class DE_IEMSController extends DE_Step1 {
         buttonMap.put(3, buttonController.SecondStep3);
         buttonMap.put(4, buttonController.SecondStep4);
     }
-/*
-    @Override
-    public void HighlightStep(Integer stepNumber) {
-        if (currentStep != stepNumber) {
-            buttonMap.get(stepNumber).setDisable(false);
-            buttonMap.get(stepNumber).fire();
-            currentStep = stepNumber;
-        }
-    }*/
 
     @Override
     public HashMap<Integer, ToggleButton> GetCurrentButtonMap() {

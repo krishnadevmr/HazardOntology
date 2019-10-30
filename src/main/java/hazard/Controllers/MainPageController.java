@@ -27,6 +27,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ToggleButton;
@@ -53,7 +54,6 @@ public class MainPageController extends InitializableWithLoad {
         LoadPaneFromController("/fxml/navigation/SystemDescriptionFormalization.fxml", controller, secondPane);
         currentPhase = 1;
         navigationController = controller;
-        //phaseID.setText(controller.phase);
     }
 
     @FXML
@@ -140,7 +140,8 @@ public class MainPageController extends InitializableWithLoad {
         DatabaseManager.NewDatabaseSession((Stage) navBox.getScene().getWindow());
         navBox.setVisible(true);
         descriptionBox.setVisible(true);
-        onOhi1(null);
+        ohiButton1.fire();
+        //onOhi1(null);
     }
 
     @FXML
@@ -173,7 +174,6 @@ public class MainPageController extends InitializableWithLoad {
     @FXML
     void onPrevStep(ActionEvent event) {
         if (!navigationController.PreviousStep()) {
-            System.out.println("Changing Phase Down");
             if (currentPhase > 1) {
                 currentPhase -= 1;
                 isBackwardsNavigation = true;
@@ -182,12 +182,11 @@ public class MainPageController extends InitializableWithLoad {
         }
     }
 
-    /*Tracking*/
-    public Integer currentPhase;
-    public Integer currentStep;
-    NavigationInterface navigationController;
-    Map<Integer, ToggleButton> phaseMap;
-    public Integer totalPhases;
+    /*Step Tracking*/
+    private Integer currentPhase;
+    private NavigationInterface navigationController;
+    private Map<Integer, ToggleButton> phaseMap;
+    private Integer totalPhases;
     public Boolean isBackwardsNavigation;
 
     @FXML
@@ -250,16 +249,20 @@ public class MainPageController extends InitializableWithLoad {
     @FXML
     private ProgressIndicator progressIndicator;
 
+    @FXML
+    public Button previousButton;
+
+    @FXML
+    public Button nextButton;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         setButtonTexts();
         UIHelper.getAllButtonsToggle(firstPane);
         descriptionBox.setVisible(false);
         navBox.setVisible(false);
-        //LoadCenterIntoMain(new SDF1Controller());
+        
         currentPhase = 0;
-        currentStep = 0;
         phaseMap = CreateMap();
         totalPhases = 6;
         isBackwardsNavigation = false;
@@ -293,11 +296,11 @@ public class MainPageController extends InitializableWithLoad {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(url));
             loader.setController(controller);
             AnchorPane pane = loader.load();
+            
             parent.getChildren().clear();
             parent.getChildren().add(pane);
             AnchorPane.setRightAnchor(pane, 0.0);
             AnchorPane.setLeftAnchor(pane, 0.0);
-            //UIHelper.getAllButtonsToggle(parent);
         } catch (IOException | NullPointerException ex) {
             System.err.println(ex);
         }
@@ -307,7 +310,7 @@ public class MainPageController extends InitializableWithLoad {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(url));
             AnchorPane pane = loader.load();
-            //pane.set
+            
             parent.getChildren().clear();
             parent.getChildren().add(pane);
             AnchorPane.setRightAnchor(pane, 5.0);
@@ -329,7 +332,7 @@ public class MainPageController extends InitializableWithLoad {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(url));
             loader.setController(controller);
             AnchorPane pane = loader.load();
-            //pane.set
+            
             parent.getChildren().clear();
             parent.getChildren().add(pane);
             AnchorPane.setRightAnchor(pane, 5.0);
@@ -345,7 +348,7 @@ public class MainPageController extends InitializableWithLoad {
             System.err.println(ex);
         }
     }
-
+/*
     public void LoadPaneFromController(String url, AnchorPane parent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(url));
@@ -361,7 +364,7 @@ public class MainPageController extends InitializableWithLoad {
         } catch (IOException | NullPointerException ex) {
             System.err.println(ex);
         }
-    }
+    }*/
 
     void ResetUI() {
         stepDescription.setText("");
@@ -369,5 +372,10 @@ public class MainPageController extends InitializableWithLoad {
         stepNumber.setText("");
         secondPane.getChildren().clear();
         centerPane.getChildren().clear();
+    }
+    
+    public void SetNavigationButton(Boolean isFirst, Boolean isLast){
+            previousButton.setVisible(!isFirst);
+            nextButton.setVisible(!isLast);
     }
 }

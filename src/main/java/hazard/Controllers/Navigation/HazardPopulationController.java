@@ -59,7 +59,11 @@ public class HazardPopulationController extends NavigationInterface {
         mainPageController.LoadPaneFromController("/fxml/mainviews/HP.fxml", mainPageController.centerPane,
                 phase, "1", StepDescription.HPSTEP);
         SetCurrentStep(1);
+        mainPageController.SetNavigationButton(false, false);
     }
+    /**
+     * Steps 2-5 are currently disabled as Step1 performs all the actions
+     */
 
     @FXML
     void onStep2(ActionEvent event) {
@@ -85,8 +89,6 @@ public class HazardPopulationController extends NavigationInterface {
     public void initialize(URL url, ResourceBundle rb) {
         UIHelper.getAllButtonsToggle(pane);
 
-        //step1.fire();
-        //SetCurrentStep(1);
         stepMap = CreateMap();
         setStepMap(stepMap);
         setTotalSteps(stepMap.size());

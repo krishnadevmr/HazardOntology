@@ -26,7 +26,6 @@ import javafx.scene.control.ToggleGroup;
  */
 public class DE_ICHA1Controller extends DE_Step1 {
 
-    //public HazardDescriptionExpansionController buttonController;
     public DE_ICHA1Controller(HazardDescriptionExpansionController buttonController) {
         this.buttonController = buttonController;
     }

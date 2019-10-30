@@ -73,7 +73,6 @@ public class KindsThatPlayCauseRoleController extends InitializableWithLoad {
                         + "preinitevent = ''{2}'' , isComplete = 1"
                         + "where id = {3}", selectedKind.getId(), selectedKind.getKind(), preInitiatingText.getText(), possibleCause.getId());
                 DataBaseConnection.sqlUpdate(sql);
-                //updateKindCount = 1;
             } else {
                 String sql = MessageFormat.format("Insert into cause2 (hazardid, roleid, role, disposition,"
                         + "environmentobjectid, environmentobject, preinitevent, isComplete) "
@@ -81,7 +80,6 @@ public class KindsThatPlayCauseRoleController extends InitializableWithLoad {
                         possibleCause.getRole().getId(), possibleCause.getRole().getRole(), possibleCause.getDisposition(),
                         selectedKind.getId(), selectedKind.getKind(), preInitiatingText.getText());
                 DataBaseConnection.insert(sql);
-
             }
         }
 

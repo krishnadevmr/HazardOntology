@@ -29,7 +29,7 @@ public class HazardDescriptionCharacterizationController extends NavigationInter
         this.mainPageController = mainPageController;
     }
 
-    private MainPageController mainPageController;
+    private final MainPageController mainPageController;
 
     @FXML
     private AnchorPane pane;
@@ -57,6 +57,7 @@ public class HazardDescriptionCharacterizationController extends NavigationInter
         mainPageController.LoadPaneFromController("/fxml/mainviews/CHD.fxml", mainPageController.centerPane,
                 phase, "1", StepDescription.CHDSTEP);
         SetCurrentStep(1);
+        mainPageController.SetNavigationButton(false, false);
     }
 
     public Map<Integer, ToggleButton> CreateMap() {

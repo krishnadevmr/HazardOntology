@@ -7,7 +7,6 @@ package hazard.Helpers;
 
 import hazard.HazardAnalysis.DataBase.DataBaseConnection;
 import hazard.HazardClasses.Hazard2;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 
@@ -27,8 +26,6 @@ public class Helper {
     }
 
     public static void PopulateHazardTable(ObservableList<Hazard2> hazardList, TableView<Hazard2> hazardTable) {
-        //hazardList = FXCollections.observableArrayList();
-        //subHazardList = FXCollections.observableArrayList();
         DataBaseConnection.selectAll("hazard2", hazardList);
         hazardTable.setItems(hazardList);
     }

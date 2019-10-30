@@ -186,7 +186,6 @@ public class DE_Step1 extends InitializableWithLoad {
     public void PopulateHazardTable(int category) {
         hazardList = FXCollections.observableArrayList();
         DatabaseManager.GetHazardByCategory(category, hazardList);
-        //DataBaseConnection.selectAll("hazard2", hazardList);
         hazardTable.setItems(hazardList);
         UpdateHazardTableHeaders(category);
     }

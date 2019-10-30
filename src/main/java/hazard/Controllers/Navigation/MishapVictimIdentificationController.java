@@ -7,16 +7,13 @@ package hazard.Controllers.Navigation;
 
 import hazard.Constants.StepDescription;
 import hazard.Controllers.MainPageController;
-import hazard.Controllers.NavigationController;
 import hazard.Helpers.UIHelper;
-import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
@@ -53,6 +50,7 @@ public class MishapVictimIdentificationController extends NavigationInterface {
         mainPageController.LoadPaneFromController("/fxml/mainviews/MVI.fxml", mainPageController.centerPane,
                 phase, "1", StepDescription.MVISTEP);
         SetCurrentStep(1);
+        mainPageController.SetNavigationButton(false, false);
     }
 
     @Override
@@ -71,21 +69,4 @@ public class MishapVictimIdentificationController extends NavigationInterface {
         commands.put(1, step1);
         return commands;
     }
-
-    //@Override
-    public AnchorPane LoadPane() {
-        AnchorPane pane = new AnchorPane();
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SecondaryNavigationOHI2.fxml"));
-            pane = loader.load();
-        } catch (IOException ex) {
-        }
-        return pane;
-    }
-
-    //@Override
-    public AnchorPane LoadPane(MainPageController controller, NavigationController secondaryController) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

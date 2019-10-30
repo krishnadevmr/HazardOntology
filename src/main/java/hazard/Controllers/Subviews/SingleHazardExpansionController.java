@@ -100,7 +100,6 @@ public class SingleHazardExpansionController implements Initializable {
 
     private void PopulateExpansionTable() {
         expansionList = FXCollections.observableArrayList();
-        //DataBaseConnection.selectAll("hazardexpansion", expansionList);
         DataBaseConnection.selectHazardExpansionByRoleOrID(0, hazard.getId(), expansionList);
         hazardExpansionTable.setItems(expansionList);
 

@@ -154,7 +154,6 @@ public class CE_ICHA2Controller extends InitializableWithLoad {
         this.possibleCauseKind.setCellValueFactory((TableColumn.CellDataFeatures<Cause2, String> cellData)
                 -> Bindings.concat(cellData.getValue().getEnvironmentObject().getKind()));
         this.causeEvent.setCellValueFactory(new PropertyValueFactory<>("preInitiationEvent"));
-        //causeComplete
         this.causeComplete.setCellValueFactory((TableColumn.CellDataFeatures<Cause2, String> cellData) -> Bindings.concat(cellData.getValue().getIsComplete() == 1 ? "Yes" : "No"));
     }
 

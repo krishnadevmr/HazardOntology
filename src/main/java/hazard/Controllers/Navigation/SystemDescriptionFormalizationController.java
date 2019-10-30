@@ -25,20 +25,13 @@ import javafx.scene.layout.AnchorPane;
  */
 public class SystemDescriptionFormalizationController extends NavigationInterface {
 
-    public SystemDescriptionFormalizationController() {
-    }
-
     public SystemDescriptionFormalizationController(MainPageController mainController) {
-        this.mainController = mainController;
+        this.mainPageController = mainController;
     }
 
-    private MainPageController mainController;
+    private MainPageController mainPageController;
 
     public String phase = "System Description Formalization";
-
-    //public Integer currentStep;
-    
-    //Map<Integer, ToggleButton> stepMap;
 
     @FXML
     private ToggleGroup toggleGroup;
@@ -61,67 +54,56 @@ public class SystemDescriptionFormalizationController extends NavigationInterfac
     @FXML
     private ToggleButton step5;
 
-    //public String step1 =
     @FXML
     void onStep1(ActionEvent event) {
-        mainController.LoadPaneFromController("/fxml/mainviews/SDF1.fxml", mainController.centerPane,
+        mainPageController.LoadPaneFromController("/fxml/mainviews/SDF1.fxml", mainPageController.centerPane,
                 phase, "1", StepDescription.SDFSTEP1);
         SetCurrentStep(1);
+        mainPageController.SetNavigationButton(true, false);
     }
 
     @FXML
     void onStep2(ActionEvent event) {
-        mainController.LoadPaneFromController("/fxml/mainviews/SDF2.fxml", mainController.centerPane,
+        mainPageController.LoadPaneFromController("/fxml/mainviews/SDF2.fxml", mainPageController.centerPane,
                 phase, "2", StepDescription.SDFSTEP2);
         SetCurrentStep(2);
+        mainPageController.SetNavigationButton(false, false);
     }
 
     @FXML
     void onStep3(ActionEvent event) {
-        mainController.LoadPaneFromController("/fxml/mainviews/SDF3.fxml", mainController.centerPane,
+        mainPageController.LoadPaneFromController("/fxml/mainviews/SDF3.fxml", mainPageController.centerPane,
                 phase, "3", StepDescription.SDFSTEP3);
         SetCurrentStep(3);
+        mainPageController.SetNavigationButton(false, false);
     }
 
     @FXML
     void onStep4(ActionEvent event) {
-        mainController.LoadPaneFromController("/fxml/mainviews/SDF4.fxml", mainController.centerPane,
+        mainPageController.LoadPaneFromController("/fxml/mainviews/SDF4.fxml", mainPageController.centerPane,
                 phase, "4", StepDescription.SDFSTEP4);
         SetCurrentStep(4);
+        mainPageController.SetNavigationButton(false, false);
     }
 
     @FXML
     void onStep5(ActionEvent event) {
-        mainController.LoadPaneFromController("/fxml/mainviews/SDF5.fxml", mainController.centerPane,
+        mainPageController.LoadPaneFromController("/fxml/mainviews/SDF5.fxml", mainPageController.centerPane,
                 phase, "5", StepDescription.SDFSTEP5);
         SetCurrentStep(5);
+        mainPageController.SetNavigationButton(false, false);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         UIHelper.getAllButtonsToggle(pane);
+        
         stepMap = CreateMap();
         setStepMap(stepMap);
         setTotalSteps(stepMap.size());
-        SetInitialStep(mainController.isBackwardsNavigation);
+        SetInitialStep(mainPageController.isBackwardsNavigation);
     }
 
-    /*@Override
-    public void SetCurrentStep(Integer stepNumber) {
-        this.currentStep = stepNumber;
-    }*/
-/*
-    @Override
-    public void NextStep() {
-        Integer nextStep = currentStep + 1;
-        stepMap.get(nextStep).fire();
-    }
-
-    @Override
-    public void PreviousStep() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }*/
-    
     public Map<Integer, ToggleButton> CreateMap(){
         Map<Integer, ToggleButton> commands = new HashMap<>();
         commands.put(1, step1);
@@ -131,14 +113,4 @@ public class SystemDescriptionFormalizationController extends NavigationInterfac
         commands.put(5, step5);
         return commands;
     }
-/*
-    public void SetInitialStep(){
-        if (mainController != null && mainController.isBackwardsNavigation){
-            SetCurrentStep(totalSteps);
-            step5.fire();
-        } else {
-            SetCurrentStep(1);
-            step1.fire();
-        }
-    }*/
 }

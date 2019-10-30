@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 
@@ -56,6 +55,7 @@ public class CausesExplorationController extends NavigationInterface {
         mainPageController.LoadPaneFromController("/fxml/mainviews/CE_ICHA1.fxml", mainPageController.centerPane,
                 phase, "1", StepDescription.CESTEP1);
         SetCurrentStep(1);
+        mainPageController.SetNavigationButton(false, false);
     }
 
     @FXML
@@ -63,13 +63,12 @@ public class CausesExplorationController extends NavigationInterface {
         mainPageController.LoadPaneFromController("/fxml/mainviews/CE_ICHA2.fxml", mainPageController.centerPane,
                 phase, "2", StepDescription.CEICHASTEP2);
         SetCurrentStep(2);
+        mainPageController.SetNavigationButton(false, false);
     }
 
     @FXML
     void onICHAStep3(ActionEvent event) {
-        mainPageController.LoadPaneFromController("/fxml/mainviews/CE_ICHA3.fxml", mainPageController.centerPane,
-                phase, "3", StepDescription.CEICHASTEP3);
-        //SetCurrentStep(1);
+        //Does Nothing. Require Clarity from Paper
     }
 
     @FXML
@@ -77,6 +76,7 @@ public class CausesExplorationController extends NavigationInterface {
         mainPageController.LoadPaneFromController("/fxml/mainviews/CE_ICHA4.fxml", mainPageController.centerPane,
                 phase, "4", StepDescription.CEICHASTEP4);
         SetCurrentStep(3);
+        mainPageController.SetNavigationButton(false, false);
     }
 
     @FXML
@@ -84,6 +84,7 @@ public class CausesExplorationController extends NavigationInterface {
         mainPageController.LoadPaneFromController("/fxml/mainviews/CE_IEMS1.fxml", mainPageController.centerPane,
                 phase, "1", StepDescription.CESTEP1);
         SetCurrentStep(4);
+        mainPageController.SetNavigationButton(false, false);
     }
 
     @FXML
@@ -91,6 +92,7 @@ public class CausesExplorationController extends NavigationInterface {
         mainPageController.LoadPaneFromController("/fxml/mainviews/CE_IEMS2.fxml", mainPageController.centerPane,
                 phase, "2", StepDescription.CEIEMSSTEP2);
         SetCurrentStep(5);
+        mainPageController.SetNavigationButton(false, true);
     }
 
     @Override

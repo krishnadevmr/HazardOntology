@@ -6,7 +6,6 @@
 package hazard.Controllers.Views;
 
 import hazard.HazardAnalysis.DataBase.DataBaseConnection;
-import hazard.HazardClasses.Kind;
 import hazard.HazardClasses.MishapVictim2;
 import hazard.HazardClasses.Role;
 import hazard.Helpers.UIHelper;

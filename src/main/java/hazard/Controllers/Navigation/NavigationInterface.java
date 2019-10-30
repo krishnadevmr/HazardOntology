@@ -5,6 +5,7 @@
  */
 package hazard.Controllers.Navigation;
 
+import hazard.Controllers.MainPageController;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -47,7 +48,6 @@ public class NavigationInterface implements Initializable {
     }
 
     public Boolean PreviousStep() {
-        System.out.println("Current Step is " + currentStep);
         if (currentStep <= 1) {
             return false;
         } else {
@@ -71,5 +71,12 @@ public class NavigationInterface implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void LoadMainView(MainPageController mainPageController, String url,
+                            String phase, String step, String stepDescription, Integer stepNumber) {
+        mainPageController.LoadPaneFromController(url, mainPageController.centerPane,
+                phase, step, stepDescription);
+        SetCurrentStep(1);
     }
 }

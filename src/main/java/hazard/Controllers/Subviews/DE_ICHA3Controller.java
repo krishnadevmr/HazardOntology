@@ -5,8 +5,6 @@
  */
 package hazard.Controllers.Subviews;
 
-import hazard.Controllers.Views.CHDController;
-import hazard.Controllers.Views.DE_ICHA1Controller;
 import hazard.HazardAnalysis.DataBase.DataBaseConnection;
 import hazard.HazardClasses.HazardExpansion;
 import hazard.HazardClasses.Kind;
@@ -105,11 +103,6 @@ public class DE_ICHA3Controller implements Initializable {
     private ObservableList<Kind> allLinkedKindsList;
 
     @FXML
-    public void exitApplication(ActionEvent event) {
-        System.out.println("hazard.Controllers.Subviews.DE_ICHA3Controller.exitApplication()");
-    }
-
-    @FXML
     void onAddExpansion(ActionEvent event) {
         int index = allRoleTable.getSelectionModel().selectedIndexProperty().get();
         if (index != -1) {
@@ -190,14 +183,12 @@ public class DE_ICHA3Controller implements Initializable {
 
         for (Kind kind : allLinkedKindsList) {
             hazardExpansion.setLinkedKind(kind);
-            //expansionList.add(new HazardExpansion(hazardExpansion));
             DatabaseManager.InsertIntoHazardExpansion(hazardExpansion);
         }
     }
 
     private void PopulateExpansionTable() {
         expansionList = FXCollections.observableArrayList();
-        //DataBaseConnection.selectAll("hazardexpansion", expansionList);
         DataBaseConnection.selectHazardExpansionByRoleOrID(hazardExpansion.getRootRole().getId(), hazardExpansion.getHazardId(), expansionList);
         expansionTable.setItems(expansionList);
 

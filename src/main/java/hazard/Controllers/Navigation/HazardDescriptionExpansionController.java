@@ -73,6 +73,7 @@ public class HazardDescriptionExpansionController extends NavigationInterface {
         mainPageController.LoadPaneFromController("/fxml/mainviews/DE_ICHA1.fxml", controller, mainPageController.centerPane,
                 phase, "1-4", StepDescription.DEICHASTEP1);
         SetCurrentStep(1);
+        mainPageController.SetNavigationButton(false, false);
     }
 
     @FXML
@@ -81,6 +82,7 @@ public class HazardDescriptionExpansionController extends NavigationInterface {
         mainPageController.LoadPaneFromController("/fxml/mainviews/DE_IEMS.fxml", controller, mainPageController.centerPane,
                 phase, "1-4", StepDescription.DEICHASTEP1);
         SetCurrentStep(2);
+        mainPageController.SetNavigationButton(false, false);
     }
 
     @Override
@@ -96,9 +98,7 @@ public class HazardDescriptionExpansionController extends NavigationInterface {
     public Map<Integer, ToggleButton> CreateMap() {
         Map<Integer, ToggleButton> commands = new HashMap<>();
         commands.put(1, step1);
-        //SecondStep1
         commands.put(2, SecondStep1);
-        
         return commands;
     }
 

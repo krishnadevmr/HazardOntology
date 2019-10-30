@@ -120,7 +120,6 @@ public class MVI1Controller implements Initializable {
         DataBaseConnection.insertMishapVictim(pv.getRoleID(), pv.getRole(), pv.getKindID(), pv.getKind(),
                 pv.getRelatorID(), pv.getRelator());
         updateVictimList();
-        //victimsTable.setItems(victimList);
     }
 
     private void RemoveVictim(int index) {
@@ -165,7 +164,6 @@ public class MVI1Controller implements Initializable {
 
     private void PopulateVictimList() {
         updateVictimList();
-        //victimsTable.setItems(victimList);
     }
 
     public void updateVictimList() {
