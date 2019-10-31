@@ -35,7 +35,6 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
@@ -71,10 +70,8 @@ public class UIHelper {
         TextInputDialog dialog = new TextInputDialog("");
         dialog.setTitle("Add");
         dialog.setHeaderText("Enter a new " + type);
-        //dialog.setContentText("Please enter the role:");
         Button okButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
         TextField inputField = dialog.getEditor();
-        //inputField.setMinHeight(Region.USE_PREF_SIZE);
 
         inputField.textProperty().addListener(new ChangeListener<String>() {
             @Override
